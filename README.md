@@ -57,7 +57,22 @@ The browser saves chat history in that browser profile's local storage. The mode
 - Internet access for the initial software and model downloads. After downloading the model, chat can run without internet.
 - Free disk space for the selected model. The default `qwen2.5:3b` model download is about 1.9 GB. You do not need a GPU, but a compatible GPU can improve speed; CPU-only generation may be slower. Model memory needs and speed depend on your machine.
 
-Smaller alternatives such as `qwen2.5:1.5b` or `qwen2.5:0.5b` need less memory and disk space, but may give weaker answers. Model weights have separate licenses; check the model's terms before redistributing them.
+Model weights are downloaded separately by Ollama. Pick a model that fits your storage and computer; the download size below is **disk space**, not the total RAM needed while it is running. Smaller models are easier to run but can give weaker answers; larger ones need more memory and may be slower. Check each publisher's license before redistributing model weights.
+
+## Available models
+
+Puffx Ofline GPT starts with `qwen2.5:3b`. It can also use any text model that Ollama has downloaded on your computer. These are example choices from the [Ollama model library](https://ollama.com/library):
+
+| Model tag | Approx. download | Suggested use |
+| --- | ---: | --- |
+| `qwen2.5:0.5b` | 398 MB | Smallest Qwen option for low-storage or low-memory computers; simpler answers. |
+| `gemma3:1b` | 806 MB | Small text model when you want an alternative to Qwen. |
+| `qwen2.5:1.5b` | 986 MB | A small step up from 0.5B while keeping download size modest. |
+| `llama3.2:1b` | 1.3 GB | Compact multilingual model; the model publisher lists Hindi among its supported languages. |
+| `qwen2.5:3b` | 1.9 GB | Default balance of size and answer quality. |
+| `qwen2.5:7b` | 4.7 GB | Larger Qwen option; requires more storage and computer memory. |
+
+Sizes are approximate and can change when Ollama updates model builds or quantizations. See the [Qwen 2.5](https://ollama.com/library/qwen2.5), [Gemma 3](https://ollama.com/library/gemma3), and [Llama 3.2](https://ollama.com/library/llama3.2) model pages for current tags, details, and license information.
 
 ## Quick start
 
@@ -81,6 +96,7 @@ On Windows, use `py -3 server.py` instead of `python3 server.py`, or double-clic
 3. Type a question in the bottom message box and press **Enter** to send. Press **Shift+Enter** to add a new line.
 4. Use **New chat** to start a separate conversation. Select a conversation in the sidebar to return to it. The theme button switches between dark and light mode.
 5. Use **Ctrl+K** on Windows/Linux or **Command+K** on macOS to start a new chat. On a narrow screen, use the menu button to show the sidebar.
+6. Choose an installed model from the model dropdown in the top bar. Your selection is remembered in this browser. If a model is missing, download it with `ollama pull MODEL_TAG`, then wait for the model list to refresh (up to 20 seconds) or reload the page.
 
 The browser history belongs to the browser profile on this computer. It does not automatically sync between browsers or computers. If Ollama is not ready when you first open the page, start it and refresh the app.
 ## Detailed setup
@@ -296,15 +312,59 @@ python3 server.py
 
 For a ZIP download, change into the extracted project folder instead. Keep the app terminal open and visit [http://127.0.0.1:8000](http://127.0.0.1:8000). Stop it with **Ctrl+C**.
 
-## Choose another model
+## Download, select, and switch models
 
-Download a model first, for example:
+### 1. Download a model
+
+The first download needs an internet connection. Open PowerShell or Command Prompt on Windows, or Terminal on macOS/Linux, and run **one** `ollama pull` command with the exact model tag:
+
+**Small download for limited storage or memory:**
 
 ```text
-ollama pull qwen2.5:1.5b
+ollama pull qwen2.5:0.5b
 ```
 
-Stop the app server with **Ctrl+C**. Set `OLLAMA_MODEL` and restart it in the same terminal.
+**Other small options:**
+
+```text
+ollama pull gemma3:1b
+ollama pull qwen2.5:1.5b
+ollama pull llama3.2:1b
+```
+
+**Default model:**
+
+```text
+ollama pull qwen2.5:3b
+```
+
+**Larger model for a more capable computer:**
+
+```text
+ollama pull qwen2.5:7b
+```
+
+Do not paste the whole list as one command. Run the command for the model you want, wait until Ollama finishes, then see what is installed:
+
+```text
+ollama list
+```
+
+The output shows the model names available on this computer. You can download more than one model, but each uses additional disk space. To remove a model and free storage, first switch Puffx to a different model, then run `ollama rm MODEL_TAG` (for example, `ollama rm qwen2.5:0.5b`).
+
+### 2. Switch models in Puffx
+
+1. Start Ollama and the Puffx server as described in setup.
+2. In Puffx, open the model dropdown in the top bar beside the green status dot.
+3. Choose one of the downloaded models. Puffx updates the composer and workspace labels to show the selected model.
+4. Send your next message. The selected model answers it; you do not need to restart the Python server.
+5. Puffx remembers the selected model in that browser. Select another entry in the same dropdown any time to switch back.
+
+Only models already downloaded by Ollama appear as usable models. If the status says **Model not downloaded**, run `ollama pull EXACT_MODEL_TAG` in a terminal, wait for it to finish, then reload Puffx or wait up to 20 seconds for the list to refresh. The model tag must match what `ollama list` shows.
+
+### 3. Optional: change the server's fallback model
+
+The model dropdown is the normal way to switch. Advanced users can also set `OLLAMA_MODEL` before starting the server. This sets the fallback model when this browser has not saved a model choice yet.
 
 **PowerShell:**
 
@@ -313,7 +373,7 @@ $env:OLLAMA_MODEL = 'qwen2.5:1.5b'
 py -3 server.py
 ```
 
-**Windows CMD:**
+**Windows Command Prompt (CMD):**
 
 ```bat
 set OLLAMA_MODEL=qwen2.5:1.5b
@@ -326,7 +386,7 @@ py -3 server.py
 OLLAMA_MODEL=qwen2.5:1.5b python3 server.py
 ```
 
-The model tag must match a model shown by `ollama list`.
+Download the matching tag first with `ollama pull qwen2.5:1.5b`. If Puffx has already remembered a different choice in that browser, select the fallback model from the top-bar dropdown or clear the saved `offlinegpt_model` entry in that browser's site storage.
 
 ## Run offline
 
