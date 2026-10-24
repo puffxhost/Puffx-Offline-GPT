@@ -20,13 +20,9 @@ A private, ChatGPT-inspired chat app that runs an open-weight AI model on your o
    ```
    The download needs internet. After it finishes, the model runs locally and you can disconnect.
 3. Install Python 3.10 or newer if needed.
-4. In this folder, run:
-   ```powershell
-   python server.py
-   ```
-5. Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+4. Double-click `START_OFFLINEGPT.bat`. It opens the app at [http://127.0.0.1:8000](http://127.0.0.1:8000) and keeps a server window open. Close that window to stop the server.
 
-Ollama usually starts automatically after installation. If it is not running, open the Ollama app first. The default model is `qwen2.5:3b`; it can be changed with an environment variable:
+You can also run `python server.py` in PowerShell from this folder, then open the local URL above. Ollama usually starts automatically after installation. If it is not running, open the Ollama app first. The default model is `qwen2.5:3b`; it can be changed with an environment variable:
 
 ```powershell
 $env:OLLAMA_MODEL = "llama3.2:3b"
