@@ -2,6 +2,10 @@
 
 ![Puffx Ofline GPT animated banner](assets/puffx-motion.svg)
 
+### Animated app preview
+
+![Puffx Ofline GPT animated chat interface](assets/puffx-ui-motion.svg)
+
 
 Puffx Ofline GPT is a ChatGPT-inspired chat interface that sends prompts to an AI model running locally through [Ollama](https://ollama.com/). It is an independent project, is not affiliated with OpenAI, and does not run ChatGPT or OpenAI models.
 
@@ -458,6 +462,7 @@ Then open `http://127.0.0.1:8001`.
 ## License
 
 The Puffx Ofline GPT app code is licensed under MIT. See [LICENSE](LICENSE). Model licenses are separate.
+
 
 
 
