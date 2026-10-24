@@ -75,7 +75,7 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_json(400, {"error": "At least one message is required."})
             if any(
                 not isinstance(message, dict)
-                or message.get("role") not in {"system", "user", "assistant"}
+                or message.get("role") not in ("system", "user", "assistant")
                 or not isinstance(message.get("content"), str)
                 for message in messages
             ):
@@ -96,5 +96,7 @@ if __name__ == "__main__":
     host, port = "127.0.0.1", int(os.environ.get("PORT", "8000"))
     print(f"Puffx Ofline GPT ready at http://{host}:{port} (model: {MODEL})")
     ThreadingHTTPServer((host, port), Handler).serve_forever()
+
+
 
 
