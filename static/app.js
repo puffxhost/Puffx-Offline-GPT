@@ -60,7 +60,8 @@ function refreshModels(models, defaultModel) {
     const option = document.createElement('option');
     option.value = name;
     const isInstalled = installed.some(item => normalizeModelName(item) === normalizeModelName(name));
-    option.textContent = name.replace(/:latest$/, '') + (isInstalled ? '' : ' · not downloaded');
+    const isDefault = Boolean(defaultModel) && normalizeModelName(name) === normalizeModelName(defaultModel);
+    option.textContent = name.replace(/:latest$/, '') + (isDefault ? ' (default)' : '') + (isInstalled ? '' : ' · not downloaded');
     select.append(option);
   });
   selectedModel = options.includes(preferred) ? preferred : options[0] || 'qwen2.5:3b';
