@@ -114,9 +114,49 @@ function addMessage(role, content, typing = false) {
   if (typing) body.innerHTML = '<span></span><span></span><span></span>';
   else body.textContent = content;
   row.append(avatar, body);
+  if (role === 'assistant' && !typing) {
+    const copyButton = document.createElement('button');
+    copyButton.type = 'button';
+    copyButton.className = 'copy-message';
+    copyButton.textContent = 'Copy';
+    copyButton.setAttribute('aria-label', 'Copy assistant response');
+    copyButton.title = 'Copy response';
+    copyButton.addEventListener('click', async () => {
+      try {
+        await copyText(content);
+        copyButton.textContent = 'Copied';
+        copyButton.setAttribute('aria-label', 'Response copied');
+      } catch {
+        copyButton.textContent = 'Copy failed';
+        copyButton.setAttribute('aria-label', 'Could not copy response');
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy';
+        copyButton.setAttribute('aria-label', 'Copy assistant response');
+      }, 1600);
+    });
+    row.append(copyButton);
+  }
   messagesEl.append(row);
   scrollBottom();
   return row;
+}
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const field = document.createElement('textarea');
+  field.value = text;
+  field.setAttribute('readonly', '');
+  field.style.position = 'fixed';
+  field.style.left = '-9999px';
+  field.style.opacity = '0';
+  document.body.append(field);
+  field.select();
+  const copied = document.execCommand('copy');
+  field.remove();
+  if (!copied) throw new Error('Clipboard access is not available.');
 }
 function scrollBottom() {
   requestAnimationFrame(() => { conversation.scrollTop = conversation.scrollHeight; });
