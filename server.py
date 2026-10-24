@@ -8,8 +8,18 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
-MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b")
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
+MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b").strip()
+MAX_BODY_BYTES = 1_000_000
+
+
+def normalize_model_name(name: str) -> str:
+    """Normalize Ollama's implicit latest tag while preserving explicit tags."""
+    name = name.strip()
+    if ":" not in name.rsplit("/", 1)[-1]:
+        name += ":latest"
+    return name
+
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -32,7 +42,10 @@ class Handler(SimpleHTTPRequestHandler):
                 req = urllib.request.Request(f"{OLLAMA_URL}/api/tags")
                 with urllib.request.urlopen(req, timeout=3) as response:
                     models = json.load(response).get("models", [])
-                available = any(m.get("name", "").split(":")[0] == MODEL.split(":")[0] for m in models)
+                configured = normalize_model_name(MODEL)
+                available = any(
+                    normalize_model_name(m.get("name", "")) == configured for m in models
+                )
                 return self.send_json(200, {"online": True, "model": MODEL, "downloaded": available})
             except Exception:
                 return self.send_json(200, {"online": False, "model": MODEL, "downloaded": False})
@@ -42,10 +55,31 @@ class Handler(SimpleHTTPRequestHandler):
         if self.path != "/api/chat":
             return self.send_json(404, {"error": "Not found"})
         try:
-            body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))))
-            messages = body.get("messages", [])
-            if not messages:
+            raw_length = self.headers.get("Content-Length")
+            if raw_length is None:
+                return self.send_json(411, {"error": "Content-Length header is required."})
+            try:
+                length = int(raw_length)
+            except ValueError:
+                return self.send_json(400, {"error": "Invalid Content-Length header."})
+            if length < 0 or length > MAX_BODY_BYTES:
+                return self.send_json(413, {"error": "Request body must be 1 MB or smaller."})
+            try:
+                body = json.loads(self.rfile.read(length))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                return self.send_json(400, {"error": "Request body must be valid JSON."})
+            if not isinstance(body, dict):
+                return self.send_json(400, {"error": "Request body must be a JSON object."})
+            messages = body.get("messages")
+            if not isinstance(messages, list) or not messages:
                 return self.send_json(400, {"error": "At least one message is required."})
+            if any(
+                not isinstance(message, dict)
+                or message.get("role") not in {"system", "user", "assistant"}
+                or not isinstance(message.get("content"), str)
+                for message in messages
+            ):
+                return self.send_json(400, {"error": "Each message needs a valid role and text content."})
             payload = json.dumps({"model": MODEL, "messages": messages, "stream": False}).encode()
             req = urllib.request.Request(f"{OLLAMA_URL}/api/chat", data=payload, headers={"Content-Type": "application/json"})
             with urllib.request.urlopen(req, timeout=300) as response:
@@ -57,8 +91,10 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as exc:
             return self.send_json(503, {"error": f"Local AI unavailable. Start Ollama and download {MODEL}. Details: {exc}"})
 
+
 if __name__ == "__main__":
     host, port = "127.0.0.1", int(os.environ.get("PORT", "8000"))
-    print(f"Puffx Offline GPT ready at http://{host}:{port} (model: {MODEL})")
+    print(f"Puffx Ofline GPT ready at http://{host}:{port} (model: {MODEL})")
     ThreadingHTTPServer((host, port), Handler).serve_forever()
+
 
