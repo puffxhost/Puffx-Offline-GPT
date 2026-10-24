@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17151c">
+  <meta name="description" content="Preview Puffx Ofline GPT, a private local AI chat interface powered by Ollama.">
+  <title>Puffx Ofline GPT — Live UI Demo</title>
+  <style>
+    :root{color-scheme:dark;--bg:#111014;--panel:#1a181e;--line:#ffffff16;--text:#f2eff6;--muted:#aaa4b2;--lilac:#d2b8ff;--lilac-ink:#211a2c}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#49345d66,transparent 48%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    .wrap{width:min(1180px,calc(100% - 36px));margin:0 auto;padding:30px 0 64px}
+    header{display:flex;align-items:center;gap:12px;margin:0 0 58px}
+    .mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid #ceb2ff55;border-radius:13px;color:var(--lilac);background:#b58bff12;font-size:20px}
+    .brand{font-weight:700;letter-spacing:-.3px}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase}
+    .hero{text-align:center;max-width:800px;margin:0 auto 34px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 11px;border:1px solid var(--line);border-radius:999px;color:#c6b5dc;font-size:11px;letter-spacing:1.2px;text-transform:uppercase}
+    .eyebrow i{width:7px;height:7px;border-radius:50%;background:#7bd1a1;box-shadow:0 0 12px #7bd1a1;animation:pulse 1.8s ease-in-out infinite}
+    h1{margin:18px 0 12px;font-size:clamp(38px,7vw,68px);line-height:1.04;letter-spacing:-3px;background:linear-gradient(90deg,#fff,#d9c6fa 75%);color:transparent;background-clip:text}
+    .lead{max-width:620px;margin:0 auto;color:var(--muted);font-size:16px}
+    .actions{display:flex;justify-content:center;flex-wrap:wrap;gap:11px;margin:24px 0 34px}
+    .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 17px;border:1px solid var(--line);border-radius:11px;color:var(--text);text-decoration:none;font-weight:650;font-size:13px;transition:transform .2s,border-color .2s,background .2s}
+    .button:hover{transform:translateY(-2px);border-color:#d2b8ff66;background:#ffffff08}
+    .button.primary{color:var(--lilac-ink);border-color:transparent;background:linear-gradient(100deg,#e2d1ff,#bea0f3)}
+    .frame{overflow:hidden;border:1px solid #ffffff1a;border-radius:18px;background:#202020;box-shadow:0 30px 100px #0008;animation:rise .8s .15s both}
+    .frame img{display:block;width:100%;height:auto}
+    .note{display:flex;align-items:flex-start;gap:12px;max-width:760px;margin:24px auto 0;padding:15px 17px;border:1px solid #c9adf32b;border-radius:13px;background:#241e2c;color:#d4cbdc;font-size:13px}
+    .note strong{color:#eee5fb}
+    footer{margin-top:34px;text-align:center;color:#817b89;font-size:12px}
+    footer a{color:#c8aff4;text-decoration:none}footer a:hover{text-decoration:underline}
+    @keyframes pulse{50%{opacity:.45;transform:scale(.85)}}
+    @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:600px){.wrap{width:min(100% - 22px,1180px);padding-top:17px}header{margin-bottom:38px}.hero{margin-bottom:24px}h1{letter-spacing:-1.8px}.lead{font-size:14px}.frame{border-radius:12px}.note{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="mark" aria-hidden="true">✳</div>
+      <div class="brand">Puffx Ofline GPT<small>Powered by Puffx Host</small></div>
+    </header>
+    <section class="hero" aria-labelledby="title">
+      <span class="eyebrow"><i aria-hidden="true"></i> Live visual demo</span>
+      <h1 id="title">Private AI.<br>Right on your device.</h1>
+      <p class="lead">A first look at Puffx Ofline GPT: a clean local chat interface for an Ollama model running on your own computer.</p>
+      <nav class="actions" aria-label="Project links">
+        <a class="button primary" href="https://github.com/puffxhost/Puffx-Offline-GPT#quick-start">Set it up locally</a>
+        <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT">View source on GitHub</a>
+      </nav>
+    </section>
+    <figure class="frame">
+      <img src="puffx-ui-motion.svg" alt="Animated preview of the Puffx Ofline GPT chat interface, with sidebar, local model status, suggestions and message box">
+    </figure>
+    <aside class="note">
+      <span aria-hidden="true">ⓘ</span>
+      <div><strong>This hosted page is a visual preview only.</strong> GitHub Pages hosts static files; it does not run the Python server or Ollama model. To send real prompts, follow the setup guide and run the app and model on your own computer. This demo page does not collect or send chat prompts.</div>
+    </aside>
+    <footer>Developed by <strong>Nitin Mehta</strong> · <a href="https://puffxhost.com/">Puffx Host</a></footer>
+  </main>
+</body>
+</html>
+
+
