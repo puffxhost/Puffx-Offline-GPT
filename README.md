@@ -8,24 +8,6 @@
 
 Puffx Ofline GPT is a ChatGPT-inspired interface for chatting with a local language model through [Ollama](https://ollama.com/). It is an independent project and is not affiliated with OpenAI. It does not run ChatGPT or OpenAI models.
 
-## Contents
-
-- [Features](#features)
-- [Requirements](#requirements)
-- [Quick start](#quick-start)
-- [Detailed setup](#detailed-setup)
-  - [Get the project](#1-get-the-project)
-  - [Windows](#2-windows-10-or-newer)
-  - [macOS](#3-macos)
-  - [Linux](#4-linux)
-- [Choose another model](#choose-another-model)
-- [Run offline](#run-offline)
-- [Change the port or Ollama address](#change-the-port-or-ollama-address)
-- [Update the project](#update-the-project)
-- [Troubleshooting](#troubleshooting)
-- [Privacy and limitations](#privacy-and-limitations)
-- [Credits and license](#credits-and-license)
-
 ## Features
 
 - ChatGPT-inspired dark interface with light theme, prompt suggestions, and a conversation sidebar.
@@ -319,4 +301,5 @@ Start the app again with the same command. If you use the ZIP method, download a
 **Puffx Ofline GPT · Powered by Puffx Host · Made with Nitin Mehta.**
 
 The app code is licensed under the MIT License; see [LICENSE](LICENSE). Model weights have their own terms.
+
 
