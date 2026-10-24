@@ -3,3 +3,7 @@
 
 .credits{text-align:center;color:#625f63;font-size:9px;margin-top:5px}.credits strong{color:#827b87;font-weight:600}.credits span{padding:0 6px;color:#555}.light .credits{color:#888}.light .credits strong{color:#666}
 
+
+/* Brand motion: gentle, short, and disabled for reduced-motion preferences. */
+.welcome-orb{animation:orb-float 6s ease-in-out infinite;transition:box-shadow .35s,transform .35s}.welcome-orb:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 42px #b99ce822}.welcome-orb svg{animation:orb-turn 18s linear infinite}.suggestion{animation:card-in .55s both}.suggestion:nth-child(2){animation-delay:.08s}.suggestion:nth-child(3){animation-delay:.16s}.pulse{animation:status-pulse 2.4s ease-in-out infinite}@keyframes orb-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}@keyframes orb-turn{to{transform:rotate(360deg)}}@keyframes card-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes status-pulse{0%,100%{box-shadow:0 0 7px #74c69d66}50%{box-shadow:0 0 15px #74c69dcc}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
