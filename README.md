@@ -1,6 +1,8 @@
-# OfflineGPT
+# Puffx Offline GPT
 
-OfflineGPT is a ChatGPT-inspired chat interface that sends prompts to an AI model running locally through [Ollama](https://ollama.com/). It is an independent project, is not affiliated with OpenAI, and does not run ChatGPT or OpenAI models.
+Puffx Offline GPT is a ChatGPT-inspired chat interface that sends prompts to an AI model running locally through [Ollama](https://ollama.com/). It is an independent project, is not affiliated with OpenAI, and does not run ChatGPT or OpenAI models.
+
+**Powered by Puffx Host · Made with Nitin Mehta.**
 
 The app has no Python packages to install. It uses Python's standard library for its local web server. Your browser stores chat history in that browser's local storage. Chat messages go from the browser to this computer's Python server, then to Ollama at `127.0.0.1:11434`.
 
@@ -168,11 +170,11 @@ You can also try a smaller model if your computer has limited memory:
 ollama pull qwen2.5:1.5b
 ```
 
-If you choose a different model, set `OLLAMA_MODEL` when starting OfflineGPT (see **Choose another model** below).
+If you choose a different model, set `OLLAMA_MODEL` when starting Puffx Offline GPT (see **Choose another model** below).
 
-## 5. Start OfflineGPT
+## 5. Start Puffx Offline GPT
 
-Keep Ollama running. Start OfflineGPT from the project folder in a second terminal. The app server stays attached to that terminal; leave it open while chatting. Stop it with **Ctrl+C**.
+Keep Ollama running. Start Puffx Offline GPT from the project folder in a second terminal. The app server stays attached to that terminal; leave it open while chatting. Stop it with **Ctrl+C**.
 
 ### Windows: easiest way
 
@@ -248,7 +250,7 @@ First download the model, for example:
 ollama pull qwen2.5:1.5b
 ```
 
-Then stop OfflineGPT with Ctrl+C and restart it with the matching environment variable.
+Then stop Puffx Offline GPT with Ctrl+C and restart Puffx Offline GPT with the matching environment variable.
 
 PowerShell:
 
@@ -300,7 +302,7 @@ PORT=8001 python3 server.py
 
 Then open `http://127.0.0.1:8001`.
 
-**The app says Ollama is not running.** Open the Ollama app on Windows/macOS. On Linux, check `systemctl status ollama`, or run `ollama serve` in another terminal if there is no service. Then refresh the OfflineGPT page.
+**The app says Ollama is not running.** Open the Ollama app on Windows/macOS. On Linux, check `systemctl status ollama`, or run `ollama serve` in another terminal if there is no service. Then refresh the Puffx Offline GPT page.
 
 **The app says the model is not downloaded.** Run `ollama pull qwen2.5:3b`, wait for it to finish, then refresh the page.
 
@@ -314,8 +316,10 @@ Then open `http://127.0.0.1:8001`.
 - The browser stores conversation history in local storage on that browser profile. Clearing browser data removes that history.
 - The app loads fonts from Google Fonts when internet is available; the font request is separate from chat prompts. With no internet, system fonts are used.
 - Model output can be incorrect. Check important information.
-- OfflineGPT is a UI and local API bridge; model weights are downloaded separately and are governed by the model publisher's terms.
+- Puffx Offline GPT is a UI and local API bridge; model weights are downloaded separately and are governed by the model publisher's terms.
 
 ## License
 
-The OfflineGPT app code is licensed under MIT. See [LICENSE](LICENSE). Model licenses are separate.
+The Puffx Offline GPT app code is licensed under MIT. See [LICENSE](LICENSE). Model licenses are separate.
+
+
