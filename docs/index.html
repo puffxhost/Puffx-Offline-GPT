@@ -107,13 +107,50 @@
     const dialog = document.getElementById("demoDialog");
     const feed = document.getElementById("demoFeed");
     const input = document.getElementById("demoInput");
+    const rotatingPrompts = [
+      "Who is Nitin Mehta?",
+      "What is Puffx Host?",
+      "What does offline AI mean?",
+      "How does Ollama work?",
+      "Mujhe offline AI samjhao",
+      "Give me a simple study plan",
+      "Write a Python hello world",
+      "Suggest a creative project idea"
+    ];
+    let promptIndex = -1;
+    let placeholderTimer = null;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function stopPlaceholderRotation() {
+      window.clearInterval(placeholderTimer);
+      placeholderTimer = null;
+    }
+    function startPlaceholderRotation() {
+      stopPlaceholderRotation();
+      if (prefersReducedMotion || input.value.trim()) return;
+      const rotatePrompt = () => {
+        if (!dialog.open || input.value.trim()) {
+          stopPlaceholderRotation();
+          return;
+        }
+        promptIndex = (promptIndex + 1) % rotatingPrompts.length;
+        input.placeholder = rotatingPrompts[promptIndex];
+      };
+      rotatePrompt();
+      placeholderTimer = window.setInterval(rotatePrompt, 2600);
+    }
     function openDemo() {
       if (!dialog.open) dialog.showModal();
+      startPlaceholderRotation();
       input.focus();
     }
     document.getElementById("openDemo").addEventListener("click", openDemo);
     document.getElementById("previewGraphic").addEventListener("click", openDemo);
     document.getElementById("closeDemo").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", stopPlaceholderRotation);
+    input.addEventListener("input", () => {
+      if (input.value.trim()) stopPlaceholderRotation();
+      else if (dialog.open) startPlaceholderRotation();
+    });
     dialog.addEventListener("click", event => {
       if (event.target === dialog) dialog.close();
     });
@@ -126,6 +163,12 @@
     }
     function sampleReply(prompt) {
       const text = prompt.toLowerCase();
+      if (text.includes("nitin mehta") || text.includes("who is nitin")) {
+        return "Nitin Mehta is the developer of Puffx Ofline GPT. The project is maintained under the Puffx Host brand.";
+      }
+      if (text.includes("puffx host")) {
+        return "Puffx Host is the brand behind this project. Puffx Ofline GPT is developed by Nitin Mehta under Puffx Host.";
+      }
       if (text.includes("offline") || text.includes("internet") || text.includes("local")) {
         return "Offline AI runs a downloaded model on your own computer. Puffx sends your message to Ollama on that same device, so prompts do not need a cloud AI service. Download the model once while online, then run it locally.";
       }
