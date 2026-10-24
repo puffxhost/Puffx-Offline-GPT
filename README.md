@@ -1,6 +1,9 @@
-# Puffx Offline GPT
+# Puffx Ofline GPT
 
-Puffx Offline GPT is a ChatGPT-inspired chat interface that sends prompts to an AI model running locally through [Ollama](https://ollama.com/). It is an independent project, is not affiliated with OpenAI, and does not run ChatGPT or OpenAI models.
+![Puffx Ofline GPT animated banner](assets/puffx-motion.svg)
+
+
+Puffx Ofline GPT is a ChatGPT-inspired chat interface that sends prompts to an AI model running locally through [Ollama](https://ollama.com/). It is an independent project, is not affiliated with OpenAI, and does not run ChatGPT or OpenAI models.
 
 **Powered by Puffx Host · Made with Nitin Mehta.**
 
@@ -170,11 +173,11 @@ You can also try a smaller model if your computer has limited memory:
 ollama pull qwen2.5:1.5b
 ```
 
-If you choose a different model, set `OLLAMA_MODEL` when starting Puffx Offline GPT (see **Choose another model** below).
+If you choose a different model, set `OLLAMA_MODEL` when starting Puffx Ofline GPT (see **Choose another model** below).
 
-## 5. Start Puffx Offline GPT
+## 5. Start Puffx Ofline GPT
 
-Keep Ollama running. Start Puffx Offline GPT from the project folder in a second terminal. The app server stays attached to that terminal; leave it open while chatting. Stop it with **Ctrl+C**.
+Keep Ollama running. Start Puffx Ofline GPT from the project folder in a second terminal. The app server stays attached to that terminal; leave it open while chatting. Stop it with **Ctrl+C**.
 
 ### Windows: easiest way
 
@@ -250,7 +253,7 @@ First download the model, for example:
 ollama pull qwen2.5:1.5b
 ```
 
-Then stop Puffx Offline GPT with Ctrl+C and restart Puffx Offline GPT with the matching environment variable.
+Then stop Puffx Ofline GPT with Ctrl+C and restart Puffx Ofline GPT with the matching environment variable.
 
 PowerShell:
 
@@ -275,6 +278,140 @@ OLLAMA_MODEL=qwen2.5:1.5b python3 server.py
 ## Offline use
 
 You need internet once to install Ollama and download the model. After the model is downloaded, open/run Ollama and start `server.py`; the chat itself uses the local model and does not call a cloud AI API. If internet is off, externally hosted fonts may not load, but the interface falls back to system fonts.
+
+
+## Complete setup checklist
+
+Use this checklist if this is your first time setting up the project. The quick steps above are enough for most computers; this section includes terminal-specific commands and recovery checks.
+
+### Windows: install prerequisites with winget (optional)
+
+Open PowerShell or Windows Terminal. If `winget` is available, install Git, Python, and Ollama:
+
+```powershell
+winget install --id Git.Git -e
+winget install --id Python.Python.3.12 -e
+winget install --id Ollama.Ollama -e
+```
+
+Close and reopen the terminal after installation so PATH changes take effect. Check the tools:
+
+```powershell
+git --version
+py -3 --version
+ollama --version
+```
+
+If `winget` is missing or a package ID is unavailable, use the official installers linked in the sections above. In the Python installer, enable **Add Python to PATH** if shown. For Windows CMD, the equivalent version checks are `git --version`, `py -3 --version`, and `ollama --version`.
+
+### Get the source and enter the folder
+
+PowerShell and CMD:
+
+```powershell
+git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
+cd Puffx-Offline-GPT
+```
+
+macOS and Linux:
+
+```bash
+git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
+cd Puffx-Offline-GPT
+```
+
+The repository is private; GitHub must be signed in to an account that has access. If Git asks you to authenticate, use GitHub's supported browser sign-in or credential manager. Do not put a personal access token in the clone URL or save one in this project. If you downloaded a ZIP, extract it first and `cd` into the extracted project directory instead.
+
+### Download and verify a model
+
+Start/open Ollama, then use the same model tag the app is configured for:
+
+```text
+ollama pull qwen2.5:3b
+ollama list
+```
+
+The app's default is `qwen2.5:3b`. Model tags matter: having `qwen2.5:7b` does not count as having `qwen2.5:3b`. A model download needs internet and several GB of free disk space during download. Once the pull finishes, you can disconnect from the internet for local chatting.
+
+Optional smaller models for lower-memory machines:
+
+```text
+ollama pull qwen2.5:1.5b
+ollama pull qwen2.5:0.5b
+```
+
+Select the model you downloaded by setting `OLLAMA_MODEL` in the same terminal used to start the web server. Examples are in **Choose another model**. To confirm Ollama answers independently of the web UI, run `ollama run qwen2.5:3b`, ask it a question, then type `/bye` to exit.
+
+### Start the web app in each terminal
+
+Keep Ollama running in the background (or in its own terminal), then start the Python server from the project folder:
+
+| System / shell | Command |
+| --- | --- |
+| Windows PowerShell | `py -3 server.py` |
+| Windows CMD | `py -3 server.py` |
+| macOS | `python3 server.py` |
+| Linux | `python3 server.py` |
+
+The first-party Windows launcher `START_OFFLINEGPT.bat` can start the server and open the browser. If Windows blocks the launcher, right-click it and choose **Open**, or run `py -3 server.py` in PowerShell/CMD. Keep the server terminal open, then visit `http://127.0.0.1:8000` on that same computer. Stop the server with **Ctrl+C**.
+
+### Linux service and alternate shell notes
+
+On systemd Linux installations, inspect and start Ollama with:
+
+```bash
+sudo systemctl status ollama
+sudo systemctl start ollama
+```
+
+If your system does not use systemd, open a second terminal and run `ollama serve`, leaving it open. If `python3` is missing, install the OS package `python3`; if `git` is missing, install `git`. On Debian/Ubuntu/Mint use `sudo apt install python3 git`; Fedora uses `sudo dnf install python3 git`; Arch/Manjaro uses `sudo pacman -S python git`; openSUSE uses `sudo zypper install python3 git`.
+
+macOS users can install Git and Python using Apple's Command Line Tools and the official Python installer, or use Homebrew if already installed (`brew install git python`). Ollama's macOS desktop app must be opened once to start its local service.
+
+### Network, port, and custom Ollama endpoint
+
+This project intentionally listens on loopback (`127.0.0.1`) so another machine on your network cannot reach it by default. If port 8000 is busy, choose another local port:
+
+PowerShell:
+
+```powershell
+$env:PORT = '8001'
+py -3 server.py
+```
+
+CMD:
+
+```bat
+set PORT=8001
+py -3 server.py
+```
+
+macOS/Linux:
+
+```bash
+PORT=8001 python3 server.py
+```
+
+Then open `http://127.0.0.1:8001`. If Ollama runs on a different local endpoint, set `OLLAMA_URL` before starting the server; it must be reachable from the same computer. PowerShell: `$env:OLLAMA_URL = 'http://127.0.0.1:11434'`; CMD: `set OLLAMA_URL=http://127.0.0.1:11434`; macOS/Linux: `OLLAMA_URL=http://127.0.0.1:11434 python3 server.py`.
+
+### Update the project later
+
+From the project folder, close the running app with Ctrl+C, then update source files with Git:
+
+```text
+git pull
+```
+
+Restart it using the same command as before. If you used the ZIP method, download and extract the latest ZIP, then move any local changes you need before replacing the old folder.
+
+### Fast diagnostic order
+
+1. Check `python --version`/`py -3 --version`/`python3 --version` and `ollama --version`.
+2. Check `ollama list` and confirm the exact configured model tag is present.
+3. Open the Ollama app, or start its service (`ollama serve` where applicable).
+4. Start `server.py` and keep the terminal open; read any startup error printed there.
+5. Visit the exact loopback URL and refresh after Ollama or the model starts.
+6. If the port is in use, set `PORT` in that terminal and visit the matching port.
 
 ## Troubleshooting
 
@@ -302,7 +439,7 @@ PORT=8001 python3 server.py
 
 Then open `http://127.0.0.1:8001`.
 
-**The app says Ollama is not running.** Open the Ollama app on Windows/macOS. On Linux, check `systemctl status ollama`, or run `ollama serve` in another terminal if there is no service. Then refresh the Puffx Offline GPT page.
+**The app says Ollama is not running.** Open the Ollama app on Windows/macOS. On Linux, check `systemctl status ollama`, or run `ollama serve` in another terminal if there is no service. Then refresh the Puffx Ofline GPT page.
 
 **The app says the model is not downloaded.** Run `ollama pull qwen2.5:3b`, wait for it to finish, then refresh the page.
 
@@ -316,11 +453,15 @@ Then open `http://127.0.0.1:8001`.
 - The browser stores conversation history in local storage on that browser profile. Clearing browser data removes that history.
 - The app loads fonts from Google Fonts when internet is available; the font request is separate from chat prompts. With no internet, system fonts are used.
 - Model output can be incorrect. Check important information.
-- Puffx Offline GPT is a UI and local API bridge; model weights are downloaded separately and are governed by the model publisher's terms.
+- Puffx Ofline GPT is a UI and local API bridge; model weights are downloaded separately and are governed by the model publisher's terms.
 
 ## License
 
-The Puffx Offline GPT app code is licensed under MIT. See [LICENSE](LICENSE). Model licenses are separate.
+The Puffx Ofline GPT app code is licensed under MIT. See [LICENSE](LICENSE). Model licenses are separate.
+
+
+
+
 
 
 
