@@ -390,13 +390,39 @@ Start the app again with the same command. If you use the ZIP method, download a
 - Model replies can be inaccurate. Verify important information independently.
 - Ollama downloads the model weights separately. Model availability and license terms are controlled by the model publisher.
 
-## Credits and license
+## 🛟 Support & Contact
 
-**Puffx Ofline GPT · Powered by Puffx Host · Made with Nitin Mehta.**
+Need help or want to report an issue?
 
-The app code is licensed under the MIT License; see [LICENSE](LICENSE). Model weights have their own terms.
+- 🌐 Website: [puffxhost.com/contact](https://puffxhost.com/contact)
+- 📧 Email: [support@puffxhost.in](mailto:support@puffxhost.in)
+- 📞 Call: [+91 8602967573](tel:+918602967573)
+- 💬 WhatsApp: [+91 7354336624](https://wa.me/917354336624)
+- 📷 Instagram: [@nitinmehta.codes](https://www.instagram.com/nitinmehta.codes/)
 
+## 🙌 Contributing
 
+Contributions are welcome. Fork the repository, make your changes on a branch, and open a pull request with a clear description of what you changed.
 
+## ⭐ Give a Star
 
+If you find Puffx Ofline GPT useful, please consider starring the repository on GitHub. It helps others discover the project and supports its development.
+
+## 🔗 About
+
+Puffx Ofline GPT is a local text-chat interface for an AI model running through Ollama on your computer. Download a compatible model once while online; after setup, you can chat locally without an internet connection. It does not generate images, browse the web, or run ChatGPT/OpenAI models.
+
+## 🧠 Puffx Host
+
+**Puffx Ofline GPT** is developed by **Nitin Mehta** and maintained under the **Puffx Host** brand.
+
+Official site: [puffxhost.com](https://puffxhost.com/) · Support: [puffxhost.com/contact](https://puffxhost.com/contact) · Instagram: [@nitinmehta.codes](https://www.instagram.com/nitinmehta.codes/)
+
+---
+
+Made with ❤️ by **Puffx Host**.
+
+## 📜 License
+
+This project's app code is licensed under the MIT License. See [LICENSE](LICENSE) for full details. Model weights are downloaded separately and follow their own license terms; see [Requirements](#requirements) and [Privacy and limitations](#privacy-and-limitations).
 
