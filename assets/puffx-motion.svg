@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Puffx Ofline GPT — private local AI</title>
+  <desc id="desc">A dark animated banner showing a glowing local AI orb and the Puffx Ofline GPT brand.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17151c"/><stop offset="1" stop-color="#282332"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#c6a7ff" stop-opacity=".27"/><stop offset="1" stop-color="#c6a7ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="text" x1="0" x2="1"><stop stop-color="#f4efff"/><stop offset="1" stop-color="#bca0f2"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1200" height="360" rx="28" fill="url(#bg)"/>
+  <circle cx="940" cy="165" r="160" fill="url(#glow)" filter="url(#blur)">
+    <animate attributeName="r" values="145;172;145" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values=".65;1;.65" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <g fill="none" stroke="#c7adf7" stroke-opacity=".22">
+    <circle cx="940" cy="165" r="104"><animate attributeName="r" values="92;118;92" dur="6s" repeatCount="indefinite"/></circle>
+    <circle cx="940" cy="165" r="132"><animate attributeName="r" values="132;146;132" dur="7s" repeatCount="indefinite"/></circle>
+  </g>
+  <g transform="translate(940 165)">
+    <rect x="-50" y="-50" width="100" height="100" rx="28" fill="#282331" stroke="#b99ce8" stroke-opacity=".5">
+      <animateTransform attributeName="transform" type="rotate" values="0;5;0;-5;0" dur="9s" repeatCount="indefinite"/>
+    </rect>
+    <path d="M0-33 29-17v34L0 33-29 17v-34L0-33Z" stroke="#e2d4ff" stroke-width="2" fill="none"/>
+    <path d="m-14-8 14-8 14 8v16L0 16l-14-8V-8Zm0 0 14 8 14-8M0 0v16" stroke="#c8adf6" stroke-width="2" fill="none"/>
+  </g>
+  <g fill="#c8adf6" opacity=".7">
+    <circle cx="775" cy="93" r="3"><animate attributeName="opacity" values=".2;1;.2" dur="2.3s" repeatCount="indefinite"/></circle>
+    <circle cx="1090" cy="245" r="4"><animate attributeName="opacity" values="1;.2;1" dur="3.1s" repeatCount="indefinite"/></circle>
+    <circle cx="1080" cy="93" r="2"><animate attributeName="opacity" values=".2;.9;.2" dur="2.7s" repeatCount="indefinite"/></circle>
+  </g>
+  <text x="76" y="105" fill="#cab6f3" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4">PRIVATE AI · RUNS ON YOUR DEVICE</text>
+  <text x="72" y="180" fill="url(#text)" font-family="Arial,sans-serif" font-size="54" font-weight="700" letter-spacing="-2">Puffx Ofline GPT</text>
+  <text x="78" y="222" fill="#aaa5b2" font-family="Arial,sans-serif" font-size="19">Your local model. Your conversations. Your computer.</text>
+  <rect x="78" y="264" width="260" height="38" rx="19" fill="#ffffff" fill-opacity=".055" stroke="#ffffff" stroke-opacity=".11"/>
+  <circle cx="100" cy="283" r="5" fill="#80d7a9"><animate attributeName="opacity" values="1;.35;1" dur="1.7s" repeatCount="indefinite"/></circle>
+  <text x="116" y="288" fill="#d4cedc" font-family="Arial,sans-serif" font-size="13">Powered by Puffx Host</text>
+  <text x="78" y="330" fill="#817b88" font-family="Arial,sans-serif" font-size="12">Made with Nitin Mehta</text>
+</svg>
+
+
