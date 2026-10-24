@@ -22,6 +22,20 @@ def normalize_model_name(name: str) -> str:
     return name
 
 
+def get_ollama_models() -> list[str]:
+    """Return model tags already present in the local Ollama installation."""
+    req = urllib.request.Request(f"{OLLAMA_URL}/api/tags")
+    with urllib.request.urlopen(req, timeout=5) as response:
+        result = json.load(response)
+    if not isinstance(result, dict) or not isinstance(result.get("models"), list):
+        raise ValueError("Ollama returned an invalid model list")
+    return sorted({
+        item["name"].strip()
+        for item in result["models"]
+        if isinstance(item, dict) and isinstance(item.get("name"), str) and item["name"].strip()
+    })
+
+
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT / "static"), **kwargs)
@@ -46,15 +60,15 @@ class Handler(SimpleHTTPRequestHandler):
                     result = json.load(response)
                 if not isinstance(result, dict) or not isinstance(result.get("models"), list):
                     raise ValueError("Ollama returned an invalid model list")
-                models = result["models"]
+                models = get_ollama_models()
                 configured = normalize_model_name(MODEL)
-                available = any(
-                    isinstance(item, dict)
-                    and isinstance(item.get("name"), str)
-                    and normalize_model_name(item["name"]) == configured
-                    for item in models
-                )
-                return self.send_json(200, {"online": True, "model": MODEL, "downloaded": available})
+                available = any(normalize_model_name(name) == configured for name in models)
+                return self.send_json(200, {
+                    "online": True,
+                    "model": MODEL,
+                    "downloaded": available,
+                    "models": models,
+                })
             except Exception:
                 return self.send_json(200, {"online": False, "model": MODEL, "downloaded": False})
         return super().do_GET()
@@ -62,6 +76,7 @@ class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
         if self.path != "/api/chat":
             return self.send_json(404, {"error": "Not found"})
+        requested_model = MODEL
         try:
             raw_length = self.headers.get("Content-Length")
             if raw_length is None:
@@ -89,7 +104,17 @@ class Handler(SimpleHTTPRequestHandler):
             ):
                 return self.send_json(400, {"error": "Each message needs a valid role and text content."})
 
-            payload = json.dumps({"model": MODEL, "messages": messages, "stream": False}).encode()
+            requested_model = body.get("model", MODEL)
+            if not isinstance(requested_model, str) or not requested_model.strip():
+                return self.send_json(400, {"error": "Choose a valid local model name."})
+            requested_model = requested_model.strip()
+            installed_models = get_ollama_models()
+            if not any(normalize_model_name(name) == normalize_model_name(requested_model) for name in installed_models):
+                return self.send_json(400, {
+                    "error": f"Model '{requested_model}' is not downloaded. Run: ollama pull {requested_model}"
+                })
+
+            payload = json.dumps({"model": requested_model, "messages": messages, "stream": False}).encode()
             req = urllib.request.Request(
                 f"{OLLAMA_URL}/api/chat",
                 data=payload,
@@ -102,12 +127,12 @@ class Handler(SimpleHTTPRequestHandler):
             message = result.get("message")
             if not isinstance(message, dict) or not isinstance(message.get("content"), str):
                 return self.send_json(502, {"error": "Ollama response did not include message text."})
-            return self.send_json(200, {"reply": message["content"], "model": MODEL})
+            return self.send_json(200, {"reply": message["content"], "model": requested_model})
         except urllib.error.HTTPError as exc:
             message = exc.read().decode(errors="replace")
             return self.send_json(502, {"error": f"Ollama error: {message[:500]}"})
         except Exception as exc:
-            return self.send_json(503, {"error": f"Local AI unavailable. Start Ollama and download {MODEL}. Details: {exc}"})
+            return self.send_json(503, {"error": f"Local AI unavailable for {requested_model}. Start Ollama and make sure this model is downloaded. Details: {exc}"})
 
 
 def main() -> int:
