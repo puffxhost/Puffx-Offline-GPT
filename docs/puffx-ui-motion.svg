@@ -7,6 +7,14 @@
     <radialGradient id="halo"><stop stop-color="#c8aaff" stop-opacity=".25"/><stop offset="1" stop-color="#c8aaff" stop-opacity="0"/></radialGradient>
     <linearGradient id="button" x1="0" x2="1"><stop stop-color="#e9dcff"/><stop offset="1" stop-color="#cdb2ff"/></linearGradient>
     <filter id="soft"><feGaussianBlur stdDeviation="22"/></filter>
+    <clipPath id="prompt-clip-1" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip1" x="294" y="704" height="26" style="--end:145px"/></clipPath>
+    <clipPath id="prompt-clip-2" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip2" x="294" y="704" height="26" style="--end:145px"/></clipPath>
+    <clipPath id="prompt-clip-3" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip3" x="294" y="704" height="26" style="--end:190px"/></clipPath>
+    <clipPath id="prompt-clip-4" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip4" x="294" y="704" height="26" style="--end:178px"/></clipPath>
+    <clipPath id="prompt-clip-5" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip5" x="294" y="704" height="26" style="--end:218px"/></clipPath>
+    <clipPath id="prompt-clip-6" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip6" x="294" y="704" height="26" style="--end:153px"/></clipPath>
+    <clipPath id="prompt-clip-7" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip7" x="294" y="704" height="26" style="--end:224px"/></clipPath>
+    <clipPath id="prompt-clip-8" clipPathUnits="userSpaceOnUse"><rect class="clip-width clip8" x="294" y="704" height="26" style="--end:183px"/></clipPath>
     <style>
       .enter{opacity:0;animation:rise .8s cubic-bezier(.2,.8,.2,1) forwards}
       .card1{animation-delay:.25s}.card2{animation-delay:.42s}.card3{animation-delay:.59s}.composer{animation-delay:.75s}
@@ -16,10 +24,19 @@
       .dot2{animation-delay:.22s}.dot3{animation-delay:.44s}
       .type-dot{animation:typing .9s ease-in-out infinite alternate}
       .caret{animation:blink 1s steps(2,start) infinite}
-      .prompt{opacity:0;animation:prompt-cycle 24s linear infinite}
+      .prompt{opacity:0;animation:prompt-window 24s linear infinite}
       .prompt2{animation-delay:3s}.prompt3{animation-delay:6s}.prompt4{animation-delay:9s}
       .prompt5{animation-delay:12s}.prompt6{animation-delay:15s}.prompt7{animation-delay:18s}.prompt8{animation-delay:21s}
-      @keyframes prompt-cycle{0%,2%,9%{opacity:1}10.4%,100%{opacity:0}}
+      .clip-width{width:0;animation:clip-type 24s linear infinite}
+      .clip2{animation-delay:3s}.clip3{animation-delay:6s}.clip4{animation-delay:9s}
+      .clip5{animation-delay:12s}.clip6{animation-delay:15s}.clip7{animation-delay:18s}.clip8{animation-delay:21s}
+      .prompt-caret{visibility:hidden;animation:caret-move 24s linear infinite,cursor-window 24s steps(1,end) infinite,blink .8s steps(2,start) infinite}
+      .prompt-caret2{animation-delay:3s,3s,3s}.prompt-caret3{animation-delay:6s,6s,6s}.prompt-caret4{animation-delay:9s,9s,9s}
+      .prompt-caret5{animation-delay:12s,12s,12s}.prompt-caret6{animation-delay:15s,15s,15s}.prompt-caret7{animation-delay:18s,18s,18s}.prompt-caret8{animation-delay:21s,21s,21s}
+      @keyframes prompt-window{0%,10.4%{opacity:1}10.5%,100%{opacity:0}}
+      @keyframes clip-type{0%{width:0;animation-timing-function:steps(24,end)}6.25%{width:var(--end);animation-timing-function:linear}8.5%{width:var(--end);animation-timing-function:steps(24,end)}10.4%,100%{width:0}}
+      @keyframes caret-move{0%{transform:translateX(0);animation-timing-function:steps(24,end)}6.25%{transform:translateX(var(--end));animation-timing-function:linear}8.5%{transform:translateX(var(--end));animation-timing-function:steps(24,end)}10.4%,100%{transform:translateX(0)}}
+      @keyframes cursor-window{0%,10.4%{visibility:visible}10.5%,100%{visibility:hidden}}
       .orbit{transform-box:fill-box;transform-origin:center;animation:spin 18s linear infinite}
       @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
       @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
@@ -28,7 +45,7 @@
       @keyframes typing{to{opacity:.3;transform:translateY(-3px)}}
       @keyframes blink{50%{opacity:0}}
       @keyframes spin{to{transform:rotate(360deg)}}
-      @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}.prompt{animation:none!important;opacity:0!important}.prompt1{opacity:1!important}}
+      @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}.prompt{animation:none!important;opacity:0!important}.prompt1{opacity:1!important}.clip-width{animation:none!important;width:0!important}.clip1{width:145px!important}.prompt-caret{display:none!important}}
     </style>
   </defs>
   <rect width="1200" height="820" rx="18" fill="url(#screen)"/>
@@ -112,15 +129,23 @@
   <!-- Composer -->
   <g class="enter composer">
     <rect x="274" y="690" width="872" height="77" rx="17" fill="#292929" stroke="#ffffff" stroke-opacity=".14"/>
-    <g font-family="Arial,sans-serif" font-size="14" fill="#b9b5bd" aria-label="Rotating example questions">
-      <text class="prompt prompt1" x="294" y="724">Who is Nitin Mehta?</text>
-      <text class="prompt prompt2" x="294" y="724">What is Puffx Host?</text>
-      <text class="prompt prompt3" x="294" y="724">What is Puffx Ofline GPT?</text>
-      <text class="prompt prompt4" x="294" y="724">How does offline AI work?</text>
-      <text class="prompt prompt5" x="294" y="724">Can I use AI without internet?</text>
-      <text class="prompt prompt6" x="294" y="724">What can Ollama do?</text>
-      <text class="prompt prompt7" x="294" y="724">Help me write a Python program</text>
-      <text class="prompt prompt8" x="294" y="724">Give me an idea for today</text>
+    <g font-family="Arial,sans-serif" font-size="14" fill="#b9b5bd" aria-label="Typing example questions">
+      <text class="prompt prompt1" x="294" y="724" clip-path="url(#prompt-clip-1)">Who is Nitin Mehta?</text>
+      <text class="prompt prompt2" x="294" y="724" clip-path="url(#prompt-clip-2)">What is Puffx Host?</text>
+      <text class="prompt prompt3" x="294" y="724" clip-path="url(#prompt-clip-3)">What is Puffx Ofline GPT?</text>
+      <text class="prompt prompt4" x="294" y="724" clip-path="url(#prompt-clip-4)">How does offline AI work?</text>
+      <text class="prompt prompt5" x="294" y="724" clip-path="url(#prompt-clip-5)">Can I use AI without internet?</text>
+      <text class="prompt prompt6" x="294" y="724" clip-path="url(#prompt-clip-6)">What can Ollama do?</text>
+      <text class="prompt prompt7" x="294" y="724" clip-path="url(#prompt-clip-7)">Help me write a Python program</text>
+      <text class="prompt prompt8" x="294" y="724" clip-path="url(#prompt-clip-8)">Give me an idea for today</text>
+      <rect class="prompt-caret prompt-caret1" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:145px"/>
+      <rect class="prompt-caret prompt-caret2" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:145px"/>
+      <rect class="prompt-caret prompt-caret3" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:190px"/>
+      <rect class="prompt-caret prompt-caret4" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:178px"/>
+      <rect class="prompt-caret prompt-caret5" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:218px"/>
+      <rect class="prompt-caret prompt-caret6" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:153px"/>
+      <rect class="prompt-caret prompt-caret7" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:224px"/>
+      <rect class="prompt-caret prompt-caret8" x="294" y="710" width="1.5" height="17" fill="#d2b8ff" style="--end:183px"/>
     </g>
     <rect class="caret" x="458" y="711" width="1.5" height="18" fill="#c8adf6"/>
     <text x="294" y="751" fill="#ceb4f7" font-family="Arial,sans-serif" font-size="13">✳</text>
