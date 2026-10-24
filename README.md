@@ -45,6 +45,7 @@ The browser saves chat history in that browser profile's local storage. The mode
 - ChatGPT-inspired dark interface with light theme, prompt suggestions, and a conversation sidebar.
 - Runs inference through an Ollama model on your computer; no cloud AI API key is needed.
 - Keeps conversation history in your browser's local storage.
+- Copy any assistant response with one click; copied text remains on your device.
 - Python web server uses only Python's standard library; no Python packages or build tools are required.
 - Binds to `127.0.0.1` by default, so the web app is only available on the same computer.
 - Animated interface preview above. The app respects the operating system's reduced-motion preference.
