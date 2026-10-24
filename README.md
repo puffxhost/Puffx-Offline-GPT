@@ -61,7 +61,7 @@ Model weights are downloaded separately by Ollama. Pick a model that fits your s
 
 ## Model choices and suggestions
 
-**Default model: `qwen2.5:3b` (~1.9 GB).** For a smaller download, start with **`qwen2.5:0.5b` (~398 MB)**; it uses less storage but may give simpler answers. Puffx can also use any text model downloaded in Ollama. The model dropdown marks the current default with **(default)**. These are example choices from the [Ollama model library](https://ollama.com/library):
+**Default and recommended for most users: `qwen2.5:3b` (~1.9 GB).** It is the project's default and a middle ground between download size and capability. If your computer has limited storage or memory, start with **`qwen2.5:0.5b` (~398 MB)** instead; it is smaller but may give simpler answers. Puffx can also use any text model downloaded in Ollama. The model dropdown marks the current default with **(default)**. These are example choices from the [Ollama model library](https://ollama.com/library):
 
 | Model tag | Approx. download | Suggested use |
 | --- | ---: | --- |
@@ -69,7 +69,7 @@ Model weights are downloaded separately by Ollama. Pick a model that fits your s
 | `gemma3:1b` | 806 MB | Small text model when you want an alternative to Qwen. |
 | `qwen2.5:1.5b` | 986 MB | A small step up from 0.5B while keeping download size modest. |
 | `llama3.2:1b` | 1.3 GB | Compact multilingual model; the model publisher lists Hindi among its supported languages. |
-| `qwen2.5:3b` | 1.9 GB | Default balance of size and answer quality. |
+| `qwen2.5:3b` | 1.9 GB | **Default and recommended for most users**; balances download size and capability. |
 | `qwen2.5:7b` | 4.7 GB | Larger Qwen option; requires more storage and computer memory. |
 
 Sizes are approximate and can change when Ollama updates model builds or quantizations. See the [Qwen 2.5](https://ollama.com/library/qwen2.5), [Gemma 3](https://ollama.com/library/gemma3), and [Llama 3.2](https://ollama.com/library/llama3.2) model pages for current tags, details, and license information.
