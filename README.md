@@ -6,7 +6,37 @@
 
 ![Animated Puffx Ofline GPT chat interface](assets/puffx-ui-motion.svg)
 
-Puffx Ofline GPT is a ChatGPT-inspired interface for chatting with a local language model through [Ollama](https://ollama.com/). It is an independent project and is not affiliated with OpenAI. It does not run ChatGPT or OpenAI models.
+Puffx Ofline GPT is a ChatGPT-inspired interface for chatting with an AI model running on your own computer through [Ollama](https://ollama.com/). It is an independent project and is not affiliated with OpenAI. The name describes the interface; this project does **not** contain ChatGPT, OpenAI models, or model weights.
+
+## What this repository is for
+
+This repository gives you a simple browser-based chat screen and a small local Python server that passes your conversation to Ollama. Install Ollama, download a supported model once, start the app, and chat in your browser. You do not need an OpenAI account, cloud API key, subscription, Node.js, or Python packages.
+
+Use it for local text conversations such as asking questions, explaining topics, brainstorming, drafting text, or getting coding help. The exact quality and speed depend on the model you choose and your computer. The default model is `qwen2.5:3b`; this is a compact text model, not a copy of ChatGPT. The app does not browse the web, generate images, or attach documents.
+
+### How a message travels
+
+```mermaid
+flowchart LR
+    A[Your browser] -->|Chat request on this computer| B["Puffx Python server (127.0.0.1:8000)"]
+    B -->|Local Ollama API request| C["Ollama service (127.0.0.1:11434)"]
+    C --> D["Model weights stored on this computer"]
+    D --> C --> B --> A
+```
+
+The browser saves chat history in that browser profile's local storage. The model is downloaded separately by Ollama. By default, the Python server accepts connections only from this computer; the app is not a hosted website for other devices.
+
+### What is in the repository
+
+| File or folder | Purpose |
+| --- | --- |
+| `server.py` | Serves the web interface and forwards chat requests to Ollama. Uses only Python's standard library. |
+| `static/index.html` | Chat page layout and branding. |
+| `static/style.css` | Responsive dark/light interface and motion effects. |
+| `static/app.js` | Chat history, status display, theme, and browser interactions. |
+| `START_OFFLINEGPT.bat` | Optional Windows launcher that starts the server and opens the local page. |
+| `assets/` | Animated README preview graphics. |
+| `LICENSE` | MIT license for this project's code. |
 
 ## Features
 
@@ -23,7 +53,7 @@ Puffx Ofline GPT is a ChatGPT-inspired interface for chatting with a local langu
 - Python 3.11 or newer.
 - Ollama installed and running.
 - Internet access for the initial software and model downloads. After downloading the model, chat can run without internet.
-- Free disk space for the selected model. The default `qwen2.5:3b` download is about 1.9 GB; RAM and generation speed depend on your computer.
+- Free disk space for the selected model. The default `qwen2.5:3b` model download is about 1.9 GB. You do not need a GPU, but a compatible GPU can improve speed; CPU-only generation may be slower. Model memory needs and speed depend on your machine.
 
 Smaller alternatives such as `qwen2.5:1.5b` or `qwen2.5:0.5b` need less memory and disk space, but may give weaker answers. Model weights have separate licenses; check the model's terms before redistributing them.
 
@@ -42,6 +72,15 @@ On Windows, use `py -3 server.py` instead of `python3 server.py`, or double-clic
 
 > This repository is private. You must be signed in to GitHub with an account that has access. If you do not use Git, download the ZIP from **Code → Download ZIP**, extract it, and open a terminal in the extracted folder.
 
+## Use the chat screen
+
+1. Start Ollama and the Puffx Python server, then open `http://127.0.0.1:8000` in a browser on the same computer.
+2. Check the status pill at the top: **Running locally** means Ollama is reachable and the selected model is downloaded. **Model not downloaded** means Ollama is reachable but needs the configured model tag. **Ollama not running** means start/open Ollama and refresh.
+3. Type a question in the bottom message box and press **Enter** to send. Press **Shift+Enter** to add a new line.
+4. Use **New chat** to start a separate conversation. Select a conversation in the sidebar to return to it. The theme button switches between dark and light mode.
+5. Use **Ctrl+K** on Windows/Linux or **Command+K** on macOS to start a new chat. On a narrow screen, use the menu button to show the sidebar.
+
+The browser history belongs to the browser profile on this computer. It does not automatically sync between browsers or computers. If Ollama is not ready when you first open the page, start it and refresh the app.
 ## Detailed setup
 
 ### 1. Get the project
@@ -61,7 +100,7 @@ cd Puffx-Offline-GPT
 
 #### Install Python, Git, and Ollama
 
-Install Python 3.11+ from [python.org](https://www.python.org/downloads/). In the installer, enable **Add Python to PATH** if offered. Install Ollama from [ollama.com/download/windows](https://ollama.com/download/windows), then open the Ollama app once. Git is needed only if you use the clone option above.
+Install Python 3.11+ from [python.org](https://www.python.org/downloads/). In the installer, enable **Add Python to PATH** if offered. Install Ollama from [ollama.com/download/windows](https://ollama.com/download/windows), then open the Ollama app once. If you prefer the official PowerShell installer, run `irm https://ollama.com/install.ps1 | iex` in PowerShell. Git is needed only if you use the clone option above.
 
 If you have `winget`, you can install the tools from PowerShell or Windows Terminal:
 
@@ -291,7 +330,7 @@ Start the app again with the same command. If you use the ZIP method, download a
 ## Privacy and limitations
 
 - Chat prompts travel from your browser to this computer's Python server and then to Ollama at `127.0.0.1:11434` by default. This app does not send prompts to OpenAI or another cloud AI API.
-- Conversation history is stored in local storage in the browser profile you use. Clearing that browser's site data deletes the saved history.
+- Conversation history is stored in local storage in the browser profile you use. Clearing that browser's site data deletes the saved history. This app does not encrypt that history or provide user accounts/passwords; anyone with access to the same browser profile can access it.
 - Google Fonts may be requested when internet is available; chat prompts are not sent with those font requests. Offline, system fonts are used.
 - Model replies can be inaccurate. Verify important information independently.
 - Ollama downloads the model weights separately. Model availability and license terms are controlled by the model publisher.
@@ -301,5 +340,7 @@ Start the app again with the same command. If you use the ZIP method, download a
 **Puffx Ofline GPT · Powered by Puffx Host · Made with Nitin Mehta.**
 
 The app code is licensed under the MIT License; see [LICENSE](LICENSE). Model weights have their own terms.
+
+
 
 
