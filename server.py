@@ -55,11 +55,6 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/api/status":
             try:
-                req = urllib.request.Request(f"{OLLAMA_URL}/api/tags")
-                with urllib.request.urlopen(req, timeout=3) as response:
-                    result = json.load(response)
-                if not isinstance(result, dict) or not isinstance(result.get("models"), list):
-                    raise ValueError("Ollama returned an invalid model list")
                 models = get_ollama_models()
                 configured = normalize_model_name(MODEL)
                 available = any(normalize_model_name(name) == configured for name in models)
