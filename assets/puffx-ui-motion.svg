@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
   <title id="title">Puffx Ofline GPT animated chat interface preview</title>
-  <desc id="desc">Animated dark local AI chat app mockup with sidebar, model status, welcome message, prompt cards and a composer whose example questions rotate.</desc>
+  <desc id="desc">Animated dark local AI chat app mockup with sidebar, model status, welcome message, prompt cards and a composer that types rotating example questions.</desc>
   <defs>
     <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202020"/><stop offset="1" stop-color="#242323"/></linearGradient>
     <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#443851"/><stop offset="1" stop-color="#25222b"/></linearGradient>
