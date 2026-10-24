@@ -25,6 +25,28 @@
     .button.primary{color:var(--lilac-ink);border-color:transparent;background:linear-gradient(100deg,#e2d1ff,#bea0f3)}
     .frame{overflow:hidden;border:1px solid #ffffff1a;border-radius:18px;background:#202020;box-shadow:0 30px 100px #0008;animation:rise .8s .15s both}
     .frame img{display:block;width:100%;height:auto}
+    .preview-trigger{position:relative;display:block;width:100%;padding:0;text-align:left;color:inherit;cursor:pointer}
+    .preview-trigger:focus-visible{outline:3px solid var(--lilac);outline-offset:4px}
+    .preview-hint{position:absolute;z-index:1;right:16px;bottom:16px;padding:9px 13px;border:1px solid #ffffff35;border-radius:999px;background:#17151ce8;color:#f5eaff;font-size:12px;font-weight:700;box-shadow:0 8px 26px #0008;transition:transform .2s}
+    .preview-trigger:hover .preview-hint{transform:translateY(-3px)}
+    dialog{width:min(720px,calc(100% - 28px));max-height:min(800px,calc(100% - 30px));padding:0;border:1px solid #ffffff24;border-radius:20px;background:#17151c;color:var(--text);box-shadow:0 30px 120px #000c}
+    dialog::backdrop{background:#07060bd9;backdrop-filter:blur(8px)}
+    .demo-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 20px;border-bottom:1px solid var(--line)}
+    .demo-brand{font-weight:700}.demo-brand small{display:block;color:var(--muted);font-size:11px;font-weight:500}
+    .icon-button{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:#ffffff08;color:var(--text);font-size:20px;cursor:pointer}
+    .demo-feed{display:flex;flex-direction:column;gap:16px;min-height:270px;max-height:48vh;overflow:auto;padding:22px}
+    .bubble{max-width:88%;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:#ffffff08;white-space:pre-wrap}
+    .bubble.user{align-self:flex-end;border-color:#cdb1ff33;background:#b995ff1b}
+    .bubble.assistant{align-self:flex-start}
+    .demo-suggestions{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 16px}
+    .suggestion{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:transparent;color:#ddd2eb;font:inherit;font-size:12px;cursor:pointer}
+    .suggestion:hover{border-color:#d2b8ff88}
+    .demo-form{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line)}
+    .demo-input{flex:1;min-width:0;resize:vertical;max-height:110px;padding:12px 14px;border:1px solid #ffffff20;border-radius:13px;background:#201e25;color:var(--text);font:inherit}
+    .demo-input:focus{outline:2px solid #d2b8ff88}
+    .send-button{align-self:flex-end;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:linear-gradient(100deg,#e2d1ff,#bea0f3);color:var(--lilac-ink);font-weight:750;cursor:pointer}
+    .demo-caption{margin:0;padding:0 20px 16px;color:#a9a1b0;font-size:11px}
+    .demo-local{display:inline-block;margin:0 20px 18px;color:#d1baff;font-size:12px}
     .note{display:flex;align-items:flex-start;gap:12px;max-width:760px;margin:24px auto 0;padding:15px 17px;border:1px solid #c9adf32b;border-radius:13px;background:#241e2c;color:#d4cbdc;font-size:13px}
     .note strong{color:#eee5fb}
     footer{margin-top:34px;text-align:center;color:#817b89;font-size:12px}
@@ -46,20 +68,91 @@
       <h1 id="title">Private AI.<br>Right on your device.</h1>
       <p class="lead">A first look at Puffx Ofline GPT: a clean local chat interface for an Ollama model running on your own computer.</p>
       <nav class="actions" aria-label="Project links">
-        <a class="button primary" href="https://github.com/puffxhost/Puffx-Offline-GPT#quick-start">Set it up locally</a>
+        <button class="button primary" type="button" id="openDemo">Try the interactive demo</button>
+        <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT#quick-start">Set it up locally</a>
         <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT">View source on GitHub</a>
       </nav>
     </section>
-    <figure class="frame">
-      <img src="puffx-ui-motion.svg" alt="Animated preview of the Puffx Ofline GPT chat interface, with sidebar, local model status, suggestions and message box">
-    </figure>
+    <button class="frame preview-trigger" type="button" id="previewGraphic" aria-label="Click to open the interactive chat demo">
+      <span class="preview-hint">Click the preview to try the demo ↗</span>
+      <img src="puffx-ui-motion.svg" alt="Animated preview of the Puffx Ofline GPT chat interface. Click to open the interactive chat demo.">
+    </button>
+    <dialog id="demoDialog" aria-labelledby="demoTitle">
+      <div class="demo-head">
+        <div class="demo-brand" id="demoTitle">✳ Puffx Ofline GPT <small>Interactive UI preview · sample replies</small></div>
+        <button class="icon-button" id="closeDemo" type="button" aria-label="Close demo">×</button>
+      </div>
+      <div class="demo-feed" id="demoFeed" aria-live="polite">
+        <div class="bubble assistant">Hi! This is an interactive preview of the Puffx chat screen. Send a message to see how the interface works.</div>
+      </div>
+      <div class="demo-suggestions" aria-label="Try a sample prompt">
+        <button class="suggestion" type="button">Explain offline AI</button>
+        <button class="suggestion" type="button">Give me a study plan</button>
+        <button class="suggestion" type="button">Write a Python hello world</button>
+      </div>
+      <form class="demo-form" id="demoForm">
+        <textarea class="demo-input" id="demoInput" rows="1" placeholder="Message Puffx Ofline GPT…" aria-label="Type a demo message"></textarea>
+        <button class="send-button" type="submit">Send</button>
+      </form>
+      <p class="demo-caption">Preview mode: replies are sample text, not generated by an AI model. Messages stay in this page and are not sent anywhere.</p>
+      <a class="demo-local" href="http://127.0.0.1:8000">Already running it locally? Open your real Ollama chat ↗</a>
+    </dialog>
     <aside class="note">
       <span aria-hidden="true">ⓘ</span>
       <div><strong>This hosted page is a visual preview only.</strong> GitHub Pages hosts static files; it does not run the Python server or Ollama model. To send real prompts, follow the setup guide and run the app and model on your own computer. This demo page does not collect or send chat prompts.</div>
     </aside>
     <footer>Developed by <strong>Nitin Mehta</strong> · <a href="https://puffxhost.com/">Puffx Host</a></footer>
   </main>
-</body>
+<script>
+    const dialog = document.getElementById("demoDialog");
+    const feed = document.getElementById("demoFeed");
+    const input = document.getElementById("demoInput");
+    function openDemo() {
+      if (!dialog.open) dialog.showModal();
+      input.focus();
+    }
+    document.getElementById("openDemo").addEventListener("click", openDemo);
+    document.getElementById("previewGraphic").addEventListener("click", openDemo);
+    document.getElementById("closeDemo").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", event => {
+      if (event.target === dialog) dialog.close();
+    });
+    function addBubble(text, role) {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble " + role;
+      bubble.textContent = text;
+      feed.appendChild(bubble);
+      feed.scrollTop = feed.scrollHeight;
+    }
+    function sampleReply(prompt) {
+      const text = prompt.toLowerCase();
+      if (text.includes("offline") || text.includes("internet") || text.includes("local")) {
+        return "Offline AI runs a downloaded model on your own computer. Puffx sends your message to Ollama on that same device, so prompts do not need a cloud AI service. Download the model once while online, then run it locally.";
+      }
+      if (text.includes("study") || text.includes("plan")) {
+        return "Here is a simple study plan:\n\n1. Choose one clear topic.\n2. Study it for 25 minutes.\n3. Take a 5-minute break.\n4. Write down three key points from memory.\n5. Review them tomorrow.";
+      }
+      if (text.includes("python") || text.includes("code") || text.includes("hello")) {
+        return "A Python hello-world example:\n\nprint(\"Hello, world!\")\n\nSave it as hello.py and run it with: python hello.py";
+      }
+      return "Thanks for trying Puffx Ofline GPT! This hosted page is a UI preview and uses sample replies. Run Puffx locally with Ollama to get responses from your selected AI model.";
+    }
+    document.getElementById("demoForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const prompt = input.value.trim();
+      if (!prompt) return;
+      addBubble(prompt, "user");
+      input.value = "";
+      window.setTimeout(() => addBubble(sampleReply(prompt), "assistant"), 320);
+    });
+    document.querySelectorAll(".suggestion").forEach(button => {
+      button.addEventListener("click", () => {
+        input.value = button.textContent;
+        document.getElementById("demoForm").requestSubmit();
+      });
+    });
+  </script>
+  </body>
 </html>
 
 
