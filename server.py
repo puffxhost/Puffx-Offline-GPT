@@ -59,5 +59,6 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     host, port = "127.0.0.1", int(os.environ.get("PORT", "8000"))
-    print(f"OfflineGPT ready at http://{host}:{port} (model: {MODEL})")
+    print(f"Puffx Offline GPT ready at http://{host}:{port} (model: {MODEL})")
     ThreadingHTTPServer((host, port), Handler).serve_forever()
+
