@@ -6,6 +6,8 @@
 
 ![Animated Puffx Ofline GPT chat interface](assets/puffx-ui-motion.svg)
 
+**[🌐 Open the Live UI Demo](https://puffxhost.github.io/Puffx-Offline-GPT/)** · Visual preview only; run the app with Ollama locally for real AI chat.
+
 Puffx Ofline GPT is a ChatGPT-inspired interface for chatting with an AI model running on your own computer through [Ollama](https://ollama.com/). It is an independent project and is not affiliated with OpenAI. The name describes the interface; this project does **not** contain ChatGPT, OpenAI models, or model weights.
 
 ## What this repository is for
