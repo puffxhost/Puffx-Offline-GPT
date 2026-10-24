@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">Puffx Ofline GPT animated chat interface preview</title>
+  <desc id="desc">Animated dark local AI chat app mockup with sidebar, model status, welcome message, prompt cards and composer.</desc>
+  <defs>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202020"/><stop offset="1" stop-color="#242323"/></linearGradient>
+    <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#443851"/><stop offset="1" stop-color="#25222b"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#c8aaff" stop-opacity=".25"/><stop offset="1" stop-color="#c8aaff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="button" x1="0" x2="1"><stop stop-color="#e9dcff"/><stop offset="1" stop-color="#cdb2ff"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="22"/></filter>
+    <style>
+      .enter{opacity:0;animation:rise .8s cubic-bezier(.2,.8,.2,1) forwards}
+      .card1{animation-delay:.25s}.card2{animation-delay:.42s}.card3{animation-delay:.59s}.composer{animation-delay:.75s}
+      .orb{transform-box:fill-box;transform-origin:center;animation:float 5s ease-in-out infinite}
+      .halo{animation:halo 4s ease-in-out infinite}
+      .live{animation:pulse 1.8s ease-in-out infinite}
+      .dot2{animation-delay:.22s}.dot3{animation-delay:.44s}
+      .type-dot{animation:typing .9s ease-in-out infinite alternate}
+      .caret{animation:blink 1s steps(2,start) infinite}
+      .orbit{transform-box:fill-box;transform-origin:center;animation:spin 18s linear infinite}
+      @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+      @keyframes halo{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+      @keyframes pulse{0%,100%{opacity:.65;filter:drop-shadow(0 0 2px #81d5a7)}50%{opacity:1;filter:drop-shadow(0 0 7px #81d5a7)}}
+      @keyframes typing{to{opacity:.3;transform:translateY(-3px)}}
+      @keyframes blink{50%{opacity:0}}
+      @keyframes spin{to{transform:rotate(360deg)}}
+      @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+    </style>
+  </defs>
+  <rect width="1200" height="820" rx="18" fill="url(#screen)"/>
+  <path d="M18 0h246v820H18A18 18 0 0 1 0 802V18A18 18 0 0 1 18 0Z" fill="#171717"/>
+  <path d="M264 0v820" stroke="#ffffff" stroke-opacity=".055"/>
+  <!-- Sidebar brand and navigation -->
+  <g class="enter" style="animation-delay:.04s">
+    <g transform="translate(40 38)" fill="none" stroke="#d8c2ff" stroke-width="2">
+      <path d="M0-15 14-7v16L0 17-14 9V-7L0-15Z"/><path d="m-7-5 7-4 7 4v9l-7 4-7-4v-9Zm0 0 7 4 7-4M0-1v9"/>
+    </g>
+    <text x="66" y="44" fill="#efedf1" font-family="Arial,sans-serif" font-size="17" font-weight="700">Puffx Ofline GPT</text>
+    <rect x="14" y="78" width="236" height="45" rx="11" fill="none" stroke="#ffffff" stroke-opacity=".16"/>
+    <text x="34" y="107" fill="#d9c4ff" font-family="Arial,sans-serif" font-size="20" font-weight="700">+</text>
+    <text x="57" y="105" fill="#e6e4e6" font-family="Arial,sans-serif" font-size="14">New chat</text>
+    <text x="207" y="104" fill="#77737b" font-family="Arial,sans-serif" font-size="11">⌘ K</text>
+    <text x="26" y="164" fill="#706b75" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2">YOUR SPACE</text>
+  </g>
+  <g class="enter" style="animation-delay:.3s">
+    <rect x="14" y="690" width="236" height="60" rx="11" fill="#202020" stroke="#ffffff" stroke-opacity=".08"/>
+    <circle class="live" cx="31" cy="714" r="4" fill="#80d6a8"/>
+    <text x="45" y="718" fill="#d9d6db" font-family="Arial,sans-serif" font-size="12" font-weight="700">Private by design</text>
+    <text x="45" y="737" fill="#828087" font-family="Arial,sans-serif" font-size="10">Your chats stay on this device</text>
+    <path d="M14 771h236" stroke="#ffffff" stroke-opacity=".08"/>
+    <rect x="20" y="785" width="30" height="25" rx="8" fill="#433754"/>
+    <text x="30" y="802" fill="#eadfff" font-family="Arial,sans-serif" font-size="11">Y</text>
+    <text x="60" y="798" fill="#dad7de" font-family="Arial,sans-serif" font-size="11" font-weight="700">Your workspace</text>
+    <text x="60" y="813" fill="#88838b" font-family="Arial,sans-serif" font-size="9">qwen2.5 3b</text>
+  </g>
+  <!-- Header / model state -->
+  <g class="enter" style="animation-delay:.08s">
+    <circle class="live" cx="300" cy="29" r="4" fill="#7bd1a1"/>
+    <text x="315" y="34" fill="#dedbdf" font-family="Arial,sans-serif" font-size="13" font-weight="600">qwen2.5 3b</text>
+    <path d="m391 26 4 5 4-5" stroke="#8e8991" fill="none"/>
+    <rect x="1018" y="16" width="131" height="27" rx="14" fill="none" stroke="#ffffff" stroke-opacity=".12"/>
+    <circle class="live" cx="1035" cy="29" r="3" fill="#7bd1a1"/>
+    <text x="1047" y="33" fill="#c3c0c5" font-family="Arial,sans-serif" font-size="10">Running locally</text>
+    <circle cx="1180" cy="29" r="7" fill="none" stroke="#9c989e"/>
+    <path d="M1180 16v4m0 18v4m-13-13h4m18 0h4m-22-9 3 3m12 12 3 3m0-18-3 3m-12 12-3 3" stroke="#9c989e"/>
+  </g>
+  <!-- Welcome graphic -->
+  <circle class="halo" cx="600" cy="195" r="105" fill="url(#halo)" filter="url(#soft)"/>
+  <circle class="orbit" cx="600" cy="195" r="77" fill="none" stroke="#d1b5ff" stroke-opacity=".13" stroke-dasharray="2 9"/>
+  <g class="orb">
+    <rect x="568" y="163" width="64" height="64" rx="20" fill="url(#orb)" stroke="#b99ce8" stroke-opacity=".3"/>
+    <path d="M600 171 620 182v24l-20 11-20-11v-24l20-11Z" fill="none" stroke="#d7c2ff" stroke-width="1.7"/>
+    <path d="m590 188 10-6 10 6v12l-10 6-10-6v-12Zm0 0 10 6 10-6m-10 6v12" fill="none" stroke="#d7c2ff" stroke-width="1.5"/>
+  </g>
+  <g class="enter" style="animation-delay:.15s">
+    <circle cx="523" cy="266" r="2.5" fill="#d6baff"/>
+    <text x="537" y="270" fill="#b3a3c5" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2">YOUR OWN PRIVATE AI</text>
+    <text x="600" y="329" text-anchor="middle" fill="#f0eef0" font-family="Arial,sans-serif" font-size="38" font-weight="700" letter-spacing="-1.4">Good to see you.</text>
+    <text x="600" y="378" text-anchor="middle" fill="#a29da4" font-family="Arial,sans-serif" font-size="37" font-weight="700" letter-spacing="-1.4">What’s on your mind?</text>
+    <text x="600" y="420" text-anchor="middle" fill="#8c888e" font-family="Arial,sans-serif" font-size="13">A capable AI, running right here on your computer.</text>
+    <text x="600" y="442" text-anchor="middle" fill="#8c888e" font-family="Arial,sans-serif" font-size="13">Your conversations never leave this device.</text>
+  </g>
+  <!-- Suggestion cards -->
+  <g class="enter card1">
+    <rect x="274" y="478" width="283" height="77" rx="13" fill="#282828" stroke="#ffffff" stroke-opacity=".09"/>
+    <rect x="291" y="500" width="32" height="32" rx="9" fill="#3a3048"/>
+    <text x="301" y="522" fill="#decaff" font-family="Arial,sans-serif" font-size="16">✳</text>
+    <text x="335" y="513" fill="#e5e2e5" font-family="Arial,sans-serif" font-size="12" font-weight="700">Explain something</text>
+    <text x="335" y="532" fill="#97939a" font-family="Arial,sans-serif" font-size="10">Make a complex idea simple</text>
+    <text x="539" y="492" fill="#75717a" font-family="Arial,sans-serif" font-size="13">↗</text>
+  </g>
+  <g class="enter card2">
+    <rect x="568" y="478" width="283" height="77" rx="13" fill="#282828" stroke="#ffffff" stroke-opacity=".09"/>
+    <rect x="585" y="500" width="32" height="32" rx="9" fill="#49382f"/>
+    <text x="595" y="522" fill="#ffd0a7" font-family="Arial,sans-serif" font-size="15">✎</text>
+    <text x="629" y="513" fill="#e5e2e5" font-family="Arial,sans-serif" font-size="12" font-weight="700">Brainstorm ideas</text>
+    <text x="629" y="532" fill="#97939a" font-family="Arial,sans-serif" font-size="10">Get unstuck and get inspired</text>
+    <text x="833" y="492" fill="#75717a" font-family="Arial,sans-serif" font-size="13">↗</text>
+  </g>
+  <g class="enter card3">
+    <rect x="862" y="478" width="283" height="77" rx="13" fill="#282828" stroke="#ffffff" stroke-opacity=".09"/>
+    <rect x="879" y="500" width="32" height="32" rx="9" fill="#2e4039"/>
+    <text x="888" y="521" fill="#a8e3c9" font-family="Arial,sans-serif" font-size="14">⌘</text>
+    <text x="923" y="513" fill="#e5e2e5" font-family="Arial,sans-serif" font-size="12" font-weight="700">Write something</text>
+    <text x="923" y="532" fill="#97939a" font-family="Arial,sans-serif" font-size="10">Words, code, plans, and more</text>
+    <text x="1127" y="492" fill="#75717a" font-family="Arial,sans-serif" font-size="13">↗</text>
+  </g>
+  <!-- Composer -->
+  <g class="enter composer">
+    <rect x="274" y="690" width="872" height="77" rx="17" fill="#292929" stroke="#ffffff" stroke-opacity=".14"/>
+    <text x="294" y="724" fill="#818087" font-family="Arial,sans-serif" font-size="14">Message Puffx Ofline GPT…</text>
+    <rect class="caret" x="458" y="711" width="1.5" height="18" fill="#c8adf6"/>
+    <text x="294" y="751" fill="#ceb4f7" font-family="Arial,sans-serif" font-size="13">✳</text>
+    <text x="311" y="751" fill="#aaa6ae" font-family="Arial,sans-serif" font-size="10">Local &amp; private</text>
+    <text x="387" y="751" fill="#69666e" font-family="Arial,sans-serif" font-size="10">·</text>
+    <text x="402" y="751" fill="#aaa6ae" font-family="Arial,sans-serif" font-size="10">qwen2.5 3b</text>
+    <rect x="1097" y="713" width="32" height="32" rx="10" fill="url(#button)"/>
+    <path d="M1113 736v-14m0 0-6 6m6-6 6 6" fill="none" stroke="#30283a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g class="enter" style="animation-delay:.9s">
+    <text x="710" y="793" text-anchor="middle" fill="#737078" font-family="Arial,sans-serif" font-size="9">Puffx Ofline GPT can make mistakes. Check important information.</text>
+    <text x="710" y="810" text-anchor="middle" fill="#827d87" font-family="Arial,sans-serif" font-size="9">Powered by Puffx Host  ·  Made with Nitin Mehta</text>
+  </g>
+</svg>
+
