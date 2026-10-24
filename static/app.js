@@ -5,16 +5,33 @@ const promptEl = $('#prompt');
 const welcome = $('#welcome');
 const CHAT_KEY = 'offlinegpt_chats';
 const LIGHT_KEY = 'offlinegpt_light';
+const VALID_ROLES = new Set(['user', 'assistant']);
 
+function readSetting(key, fallback = null) {
+  try { return localStorage.getItem(key) ?? fallback; }
+  catch { return fallback; }
+}
+function writeSetting(key, value) {
+  try { localStorage.setItem(key, value); return true; }
+  catch { return false; }
+}
 function loadChats() {
   try {
-    const saved = JSON.parse(localStorage.getItem(CHAT_KEY) || '[]');
-    return Array.isArray(saved) ? saved.filter(chat => chat && typeof chat.id === 'string' && Array.isArray(chat.messages)) : [];
-  } catch {
-    localStorage.removeItem(CHAT_KEY);
-    return [];
-  }
+    const saved = JSON.parse(readSetting(CHAT_KEY, '[]'));
+    if (!Array.isArray(saved)) return [];
+    const seen = new Set();
+    return saved.filter(chat => {
+      if (!chat || typeof chat.id !== 'string' || !Array.isArray(chat.messages) || seen.has(chat.id)) return false;
+      seen.add(chat.id);
+      chat.title = typeof chat.title === 'string' ? chat.title : 'New conversation';
+      chat.messages = chat.messages.filter(message =>
+        message && VALID_ROLES.has(message.role) && typeof message.content === 'string'
+      );
+      return true;
+    });
+  } catch { return []; }
 }
+
 let chats = loadChats();
 let activeId = null;
 let busy = false;
@@ -28,8 +45,9 @@ function setModelName(name) {
 setModelName('qwen2.5:3b');
 
 function persist() {
-  try { localStorage.setItem(CHAT_KEY, JSON.stringify(chats)); }
-  catch { showNotice('Chat history could not be saved. Browser storage may be full.'); }
+  if (!writeSetting(CHAT_KEY, JSON.stringify(chats))) {
+    showNotice('Chat history could not be saved. Check browser storage or privacy settings.');
+  }
   renderHistory();
 }
 function renderHistory() {
@@ -67,7 +85,9 @@ function addMessage(role, content, typing = false) {
   scrollBottom();
   return row;
 }
-function scrollBottom() { requestAnimationFrame(() => conversation.scrollTop = conversation.scrollHeight); }
+function scrollBottom() {
+  requestAnimationFrame(() => { conversation.scrollTop = conversation.scrollHeight; });
+}
 function showNotice(message) {
   const notice = document.createElement('div');
   notice.className = 'empty-hint';
@@ -85,42 +105,52 @@ function newChat() {
 function makeId() {
   return globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
+function newChatShortcut() {
+  const label = $('.new-chat kbd');
+  if (label) label.textContent = /mac/i.test(navigator.platform || '') ? '⌘ K' : 'Ctrl K';
+}
+newChatShortcut();
+
 async function send(text = promptEl.value.trim()) {
   if (!text || busy) return;
   promptEl.value = '';
   promptEl.style.height = 'auto';
   welcome.style.display = 'none';
-  if (!activeId) {
+  let chat = chats.find(item => item.id === activeId);
+  if (!chat) {
     activeId = makeId();
-    chats.push({ id: activeId, title: text.slice(0, 42), messages: [] });
+    chat = { id: activeId, title: text.slice(0, 42), messages: [] };
+    chats.push(chat);
   }
-  const chatId = activeId;
-  const chat = chats.find(item => item.id === chatId);
+  const chatId = chat.id;
   chat.messages.push({ role: 'user', content: text });
   addMessage('user', text);
   persist();
+
   busy = true;
   $('#send').disabled = true;
   const thinking = addMessage('assistant', '', true);
   try {
     const response = await fetch('/api/chat', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: chat.messages })
     });
-    const data = await response.json();
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error(`The local server returned an unreadable response (${response.status}).`); }
     if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`);
-    const reply = typeof data.reply === 'string' ? data.reply : '';
-    chat.messages.push({ role: 'assistant', content: reply });
+    if (typeof data.reply !== 'string') throw new Error('The local model returned an invalid response.');
+    chat.messages.push({ role: 'assistant', content: data.reply });
     if (activeId === chatId) {
       thinking.remove();
-      addMessage('assistant', reply);
+      addMessage('assistant', data.reply);
     }
     persist();
   } catch (error) {
-    const message = 'I couldn’t reach your local model. Make sure Ollama is running and the model is downloaded.\n\n' + error.message;
     if (activeId === chatId) {
       thinking.remove();
-      addMessage('assistant', message);
+      addMessage('assistant', 'I couldn’t reach your local model. Make sure Ollama is running and the selected model is downloaded.\n\n' + error.message);
     }
   } finally {
     busy = false;
@@ -131,6 +161,7 @@ async function send(text = promptEl.value.trim()) {
 
 $('#send').onclick = () => send();
 promptEl.addEventListener('keydown', event => {
+  if (event.isComposing || event.keyCode === 229) return;
   if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }
 });
 promptEl.addEventListener('input', () => {
@@ -138,14 +169,17 @@ promptEl.addEventListener('input', () => {
   promptEl.style.height = Math.min(promptEl.scrollHeight, 160) + 'px';
 });
 $('#newChat').onclick = newChat;
-document.querySelectorAll('.suggestion').forEach(button => button.onclick = () => send(button.dataset.prompt));
+document.querySelectorAll('.suggestion').forEach(button => { button.onclick = () => send(button.dataset.prompt); });
 $('#openSidebar').onclick = () => $('#sidebar').classList.remove('hidden');
 $('#closeSidebar').onclick = () => $('#sidebar').classList.add('hidden');
 $('#themeToggle').onclick = () => {
-  document.body.classList.toggle('light');
-  localStorage.setItem(LIGHT_KEY, document.body.classList.contains('light'));
+  const light = document.body.classList.toggle('light');
+  $('#themeToggle').setAttribute('aria-pressed', String(light));
+  if (!writeSetting(LIGHT_KEY, String(light))) showNotice('Theme changed, but this browser could not save the preference.');
 };
-if (localStorage.getItem(LIGHT_KEY) === 'true') document.body.classList.add('light');
+const savedTheme = readSetting(LIGHT_KEY, 'false') === 'true';
+if (savedTheme) document.body.classList.add('light');
+$('#themeToggle').setAttribute('aria-pressed', String(savedTheme));
 document.addEventListener('keydown', event => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); newChat(); }
   if (event.key === 'Escape' && innerWidth <= 760) $('#sidebar').classList.add('hidden');
@@ -154,10 +188,11 @@ document.addEventListener('keydown', event => {
 async function checkStatus() {
   const pill = $('#connection');
   try {
-    const response = await fetch('/api/status');
+    const response = await fetch('/api/status', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Status request failed');
     const data = await response.json();
     setModelName(data.model);
-    pill.textContent = '';
+    pill.replaceChildren();
     const dot = document.createElement('i');
     pill.append(dot, document.createTextNode(data.online && data.downloaded ? ' Running locally' : data.online ? ' Model not downloaded' : ' Ollama not running'));
     pill.classList.toggle('offline', !data.online || !data.downloaded);
@@ -167,5 +202,8 @@ async function checkStatus() {
   }
 }
 checkStatus();
+window.setInterval(() => { if (!document.hidden) checkStatus(); }, 20000);
+window.addEventListener('focus', checkStatus);
 renderHistory();
+
 
