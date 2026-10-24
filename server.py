@@ -2,14 +2,15 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import urllib.error
 import urllib.request
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
-MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b").strip()
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434").strip().rstrip("/") or "http://127.0.0.1:11434"
+MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:3b").strip() or "qwen2.5:3b"
 MAX_BODY_BYTES = 1_000_000
 
 
@@ -33,6 +34,7 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(data)
 
@@ -41,10 +43,16 @@ class Handler(SimpleHTTPRequestHandler):
             try:
                 req = urllib.request.Request(f"{OLLAMA_URL}/api/tags")
                 with urllib.request.urlopen(req, timeout=3) as response:
-                    models = json.load(response).get("models", [])
+                    result = json.load(response)
+                if not isinstance(result, dict) or not isinstance(result.get("models"), list):
+                    raise ValueError("Ollama returned an invalid model list")
+                models = result["models"]
                 configured = normalize_model_name(MODEL)
                 available = any(
-                    normalize_model_name(m.get("name", "")) == configured for m in models
+                    isinstance(item, dict)
+                    and isinstance(item.get("name"), str)
+                    and normalize_model_name(item["name"]) == configured
+                    for item in models
                 )
                 return self.send_json(200, {"online": True, "model": MODEL, "downloaded": available})
             except Exception:
@@ -80,11 +88,21 @@ class Handler(SimpleHTTPRequestHandler):
                 for message in messages
             ):
                 return self.send_json(400, {"error": "Each message needs a valid role and text content."})
+
             payload = json.dumps({"model": MODEL, "messages": messages, "stream": False}).encode()
-            req = urllib.request.Request(f"{OLLAMA_URL}/api/chat", data=payload, headers={"Content-Type": "application/json"})
+            req = urllib.request.Request(
+                f"{OLLAMA_URL}/api/chat",
+                data=payload,
+                headers={"Content-Type": "application/json"},
+            )
             with urllib.request.urlopen(req, timeout=300) as response:
                 result = json.load(response)
-            return self.send_json(200, {"reply": result.get("message", {}).get("content", ""), "model": MODEL})
+            if not isinstance(result, dict):
+                return self.send_json(502, {"error": "Ollama returned an invalid response."})
+            message = result.get("message")
+            if not isinstance(message, dict) or not isinstance(message.get("content"), str):
+                return self.send_json(502, {"error": "Ollama response did not include message text."})
+            return self.send_json(200, {"reply": message["content"], "model": MODEL})
         except urllib.error.HTTPError as exc:
             message = exc.read().decode(errors="replace")
             return self.send_json(502, {"error": f"Ollama error: {message[:500]}"})
@@ -92,11 +110,34 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json(503, {"error": f"Local AI unavailable. Start Ollama and download {MODEL}. Details: {exc}"})
 
 
-if __name__ == "__main__":
-    host, port = "127.0.0.1", int(os.environ.get("PORT", "8000"))
+def main() -> int:
+    try:
+        port = int(os.environ.get("PORT", "8000"))
+    except ValueError:
+        print("PORT must be a number between 1 and 65535.", file=sys.stderr)
+        return 2
+    if not 1 <= port <= 65535:
+        print("PORT must be a number between 1 and 65535.", file=sys.stderr)
+        return 2
+
+    host = "127.0.0.1"
+    try:
+        server = ThreadingHTTPServer((host, port), Handler)
+    except OSError as exc:
+        print(f"Could not start the local server on {host}:{port}: {exc}", file=sys.stderr)
+        print("If the port is already in use, choose another with PORT=8001.", file=sys.stderr)
+        return 1
+
     print(f"Puffx Ofline GPT ready at http://{host}:{port} (model: {MODEL})")
-    ThreadingHTTPServer((host, port), Handler).serve_forever()
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nStopping Puffx Ofline GPT.")
+    finally:
+        server.server_close()
+    return 0
 
 
-
+if __name__ == "__main__":
+    raise SystemExit(main())
 
