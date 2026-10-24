@@ -59,9 +59,9 @@ The browser saves chat history in that browser profile's local storage. The mode
 
 Model weights are downloaded separately by Ollama. Pick a model that fits your storage and computer; the download size below is **disk space**, not the total RAM needed while it is running. Smaller models are easier to run but can give weaker answers; larger ones need more memory and may be slower. Check each publisher's license before redistributing model weights.
 
-## Available models
+## Model choices and suggestions
 
-Puffx Ofline GPT starts with `qwen2.5:3b`. It can also use any text model that Ollama has downloaded on your computer. These are example choices from the [Ollama model library](https://ollama.com/library):
+**Default model: `qwen2.5:3b` (~1.9 GB).** For a smaller download, start with **`qwen2.5:0.5b` (~398 MB)**; it uses less storage but may give simpler answers. Puffx can also use any text model downloaded in Ollama. The model dropdown marks the current default with **(default)**. These are example choices from the [Ollama model library](https://ollama.com/library):
 
 | Model tag | Approx. download | Suggested use |
 | --- | ---: | --- |
@@ -96,7 +96,7 @@ On Windows, use `py -3 server.py` instead of `python3 server.py`, or double-clic
 3. Type a question in the bottom message box and press **Enter** to send. Press **Shift+Enter** to add a new line.
 4. Use **New chat** to start a separate conversation. Select a conversation in the sidebar to return to it. The theme button switches between dark and light mode.
 5. Use **Ctrl+K** on Windows/Linux or **Command+K** on macOS to start a new chat. On a narrow screen, use the menu button to show the sidebar.
-6. Choose an installed model from the model dropdown in the top bar. Your selection is remembered in this browser. If a model is missing, download it with `ollama pull MODEL_TAG`, then wait for the model list to refresh (up to 20 seconds) or reload the page.
+6. Choose an installed model from the model dropdown in the top bar. The default option is marked **(default)**; your selection is remembered in this browser. If a model is missing, download it with `ollama pull MODEL_TAG`, then wait for the model list to refresh (up to 20 seconds) or reload the page.
 
 The browser history belongs to the browser profile on this computer. It does not automatically sync between browsers or computers. If Ollama is not ready when you first open the page, start it and refresh the app.
 ## Detailed setup
@@ -197,7 +197,7 @@ ollama pull qwen2.5:3b
 ollama list
 ```
 
-Wait for `pull` to finish. Confirm that `ollama list` shows the exact `qwen2.5:3b` tag. The model download needs internet; chatting with the downloaded local model does not. If the PC has limited memory, try the smaller `qwen2.5:1.5b` model instead; see [Choose another model](#choose-another-model).
+Wait for `pull` to finish. Confirm that `ollama list` shows the exact `qwen2.5:3b` tag. The model download needs internet; chatting with the downloaded local model does not. If the PC has limited memory, try `qwen2.5:0.5b` or `qwen2.5:1.5b`; see [model choices and download steps](#model-choices-and-suggestions).
 
 #### Step 5: Start the Puffx web app
 
@@ -221,7 +221,7 @@ When the terminal reports that Puffx Ofline GPT is ready, open [http://127.0.0.1
 
 #### Step 6: Optional Windows settings
 
-To select another downloaded model or free up port 8000, follow [Choose another model](#choose-another-model) or [Change the port or Ollama address](#change-the-port-or-ollama-address). In PowerShell, settings use `$env:NAME = 'value'`; in CMD, use `set NAME=value`. Start the server from that same terminal so it receives the setting.
+To select another downloaded model or free up port 8000, follow [model choices and download steps](#model-choices-and-suggestions) or [Change the port or Ollama address](#change-the-port-or-ollama-address). In PowerShell, settings use `$env:NAME = 'value'`; in CMD, use `set NAME=value`. Start the server from that same terminal so it receives the setting.
 ### 3. macOS
 
 #### Install the tools
