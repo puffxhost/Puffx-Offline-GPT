@@ -25,8 +25,8 @@ This repository is private. Sign in to GitHub with an account that has access, t
 **Git:** install Git, then clone the repository:
 
 ```bash
-git clone https://github.com/puffxhost/OfflineGPT.git
-cd OfflineGPT
+git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
+cd Puffx-Offline-GPT
 ```
 
 ## 2. Install Python
@@ -215,18 +215,18 @@ python server.py
 Open Terminal, change to the extracted/cloned project folder, then run:
 
 ```bash
-cd ~/Downloads/OfflineGPT
+cd ~/Downloads/Puffx-Offline-GPT
 python3 server.py
 ```
 
-Replace `~/Downloads/OfflineGPT` with the actual folder path if you extracted it somewhere else. You can drag the folder into Terminal after typing `cd ` to insert its path.
+Replace `~/Downloads/Puffx-Offline-GPT` with the actual folder path if you extracted it somewhere else. You can drag the folder into Terminal after typing `cd ` to insert its path.
 
 ### Linux Terminal
 
 Change to the project folder and start the server:
 
 ```bash
-cd ~/Downloads/OfflineGPT
+cd ~/Downloads/Puffx-Offline-GPT
 python3 server.py
 ```
 
@@ -321,5 +321,6 @@ Then open `http://127.0.0.1:8001`.
 ## License
 
 The Puffx Offline GPT app code is licensed under MIT. See [LICENSE](LICENSE). Model licenses are separate.
+
 
 
