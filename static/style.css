@@ -11,3 +11,7 @@
 
 
 
+
+
+/* Assistant response actions */
+.copy-message{align-self:flex-start;flex-shrink:0;margin:2px 0 0 auto;padding:5px 9px;border:1px solid transparent;border-radius:8px;background:transparent;color:#8d8992;font:11px 'DM Sans',sans-serif;cursor:pointer;opacity:0;transition:opacity .18s,background .18s,border-color .18s,color .18s}.message.assistant:hover .copy-message,.message.assistant:focus-within .copy-message{opacity:1}.copy-message:hover,.copy-message:focus-visible{opacity:1;background:#ffffff0b;border-color:#ffffff17;color:#e7d7ff;outline:0}.light .copy-message{color:#666}.light .copy-message:hover,.light .copy-message:focus-visible{background:#00000008;border-color:#00000018;color:#543d75}@media(max-width:760px){.copy-message{opacity:1;padding:6px 8px}}
