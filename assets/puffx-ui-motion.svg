@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
   <title id="title">Puffx Ofline GPT animated chat interface preview</title>
-  <desc id="desc">Animated dark local AI chat app mockup with sidebar, model status, welcome message, prompt cards and composer.</desc>
+  <desc id="desc">Animated dark local AI chat app mockup with sidebar, model status, welcome message, prompt cards and a composer whose example questions rotate.</desc>
   <defs>
     <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202020"/><stop offset="1" stop-color="#242323"/></linearGradient>
     <linearGradient id="orb" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#443851"/><stop offset="1" stop-color="#25222b"/></linearGradient>
@@ -16,6 +16,10 @@
       .dot2{animation-delay:.22s}.dot3{animation-delay:.44s}
       .type-dot{animation:typing .9s ease-in-out infinite alternate}
       .caret{animation:blink 1s steps(2,start) infinite}
+      .prompt{opacity:0;animation:prompt-cycle 24s linear infinite}
+      .prompt2{animation-delay:3s}.prompt3{animation-delay:6s}.prompt4{animation-delay:9s}
+      .prompt5{animation-delay:12s}.prompt6{animation-delay:15s}.prompt7{animation-delay:18s}.prompt8{animation-delay:21s}
+      @keyframes prompt-cycle{0%,2%,9%{opacity:1}10.4%,100%{opacity:0}}
       .orbit{transform-box:fill-box;transform-origin:center;animation:spin 18s linear infinite}
       @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
       @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
@@ -24,7 +28,7 @@
       @keyframes typing{to{opacity:.3;transform:translateY(-3px)}}
       @keyframes blink{50%{opacity:0}}
       @keyframes spin{to{transform:rotate(360deg)}}
-      @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+      @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}.prompt{animation:none!important;opacity:0!important}.prompt1{opacity:1!important}}
     </style>
   </defs>
   <rect width="1200" height="820" rx="18" fill="url(#screen)"/>
@@ -108,7 +112,16 @@
   <!-- Composer -->
   <g class="enter composer">
     <rect x="274" y="690" width="872" height="77" rx="17" fill="#292929" stroke="#ffffff" stroke-opacity=".14"/>
-    <text x="294" y="724" fill="#818087" font-family="Arial,sans-serif" font-size="14">Message Puffx Ofline GPT…</text>
+    <g font-family="Arial,sans-serif" font-size="14" fill="#b9b5bd" aria-label="Rotating example questions">
+      <text class="prompt prompt1" x="294" y="724">Who is Nitin Mehta?</text>
+      <text class="prompt prompt2" x="294" y="724">What is Puffx Host?</text>
+      <text class="prompt prompt3" x="294" y="724">What is Puffx Ofline GPT?</text>
+      <text class="prompt prompt4" x="294" y="724">How does offline AI work?</text>
+      <text class="prompt prompt5" x="294" y="724">Can I use AI without internet?</text>
+      <text class="prompt prompt6" x="294" y="724">What can Ollama do?</text>
+      <text class="prompt prompt7" x="294" y="724">Help me write a Python program</text>
+      <text class="prompt prompt8" x="294" y="724">Give me an idea for today</text>
+    </g>
     <rect class="caret" x="458" y="711" width="1.5" height="18" fill="#c8adf6"/>
     <text x="294" y="751" fill="#ceb4f7" font-family="Arial,sans-serif" font-size="13">✳</text>
     <text x="311" y="751" fill="#aaa6ae" font-family="Arial,sans-serif" font-size="10">Local &amp; private</text>
