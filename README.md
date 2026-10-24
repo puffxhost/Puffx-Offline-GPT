@@ -99,7 +99,37 @@ On Windows, use `py -3 server.py` instead of `python3 server.py`, or double-clic
 6. Choose an installed model from the model dropdown in the top bar. The default option is marked **(default)**; your selection is remembered in this browser. If a model is missing, download it with `ollama pull MODEL_TAG`, then wait for the model list to refresh (up to 20 seconds) or reload the page.
 
 The browser history belongs to the browser profile on this computer. It does not automatically sync between browsers or computers. If Ollama is not ready when you first open the page, start it and refresh the app.
-## Detailed setup
+## Installation
+
+### New to setup? Start here
+
+You do not need to know programming. Follow these steps in order. Copy and run **one command at a time** in the terminal; wait for it to finish before running the next one.
+
+1. **Install Ollama.** Download it from [ollama.com/download](https://ollama.com/download) and install it for your operating system. On Windows and macOS, open the Ollama app after installation and leave it running.
+2. **Install Python 3.11 or newer.** Get it from [python.org/downloads](https://www.python.org/downloads/). On Windows, tick **Add Python to PATH** in the installer. You can skip installing Git if you use the ZIP download below.
+3. **Download this project.** On this GitHub page click **Code → Download ZIP**. After it downloads, right-click the ZIP and choose **Extract All**. Open the extracted `Puffx-Offline-GPT` folder. Keep this folder; it contains the app.
+4. **Open a terminal in that folder.** In File Explorer, open the extracted folder, click the address bar at the top, type `powershell`, and press Enter. A PowerShell window opens in the correct folder. On macOS/Linux, open Terminal and use `cd` to move into the extracted folder. The operating-system sections below show commands.
+5. **Download the default AI model.** Make sure the Ollama app/service is running, then type this command and press Enter:
+   ```text
+   ollama pull qwen2.5:3b
+   ```
+   This download is about 1.9 GB and needs internet. Wait until Ollama says it has completed. If your computer has limited storage or memory, use the smaller model instead:
+   ```text
+   ollama pull qwen2.5:0.5b
+   ```
+6. **Start Puffx.** In that same terminal, run the command for your system:
+   - Windows PowerShell or CMD: `py -3 server.py`
+   - macOS or Linux: `python3 server.py`
+7. **Open the app.** When the terminal says Puffx Ofline GPT is ready, open a browser on the same computer and visit [http://127.0.0.1:8000](http://127.0.0.1:8000). Type a message and press **Enter**. Use **Shift+Enter** for a new line.
+8. **Finish.** Keep the terminal and Ollama running while you chat. To stop Puffx, go to its terminal and press **Ctrl+C**. The model is kept on your computer; you do not need to download it again.
+
+**What these commands mean:** `ollama pull` downloads the AI model; `py -3 server.py` or `python3 server.py` starts the Puffx web app. The browser page is the chat screen. If the page does not open, check that the server terminal is still running and that you typed the address exactly.
+
+**Want another model?** Once the app opens, use the model dropdown beside the green status dot. To add a model, run `ollama pull MODEL_TAG` in a terminal, then choose it in Puffx. See [Model choices and suggestions](#model-choices-and-suggestions) and [Download, select, and switch models](#download-select-and-switch-models).
+
+### Detailed steps by operating system
+
+The instructions below show how to install prerequisites and run the app on Windows, macOS, and Linux. Choose the section matching your computer.
 
 ### 1. Get the project
 
