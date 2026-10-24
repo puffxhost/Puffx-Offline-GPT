@@ -5,6 +5,7 @@ const promptEl = $('#prompt');
 const welcome = $('#welcome');
 const CHAT_KEY = 'offlinegpt_chats';
 const LIGHT_KEY = 'offlinegpt_light';
+const MODEL_KEY = 'offlinegpt_model';
 const VALID_ROLES = new Set(['user', 'assistant']);
 
 function readSetting(key, fallback = null) {
@@ -35,14 +36,44 @@ function loadChats() {
 let chats = loadChats();
 let activeId = null;
 let busy = false;
+let selectedModel = readSetting(MODEL_KEY, '') || '';
 
 function setModelName(name) {
-  const label = (name || 'Local model').replace(/:latest$/, '').replace(/:/g, ' ');
+  const label = (name || 'qwen2.5:3b').replace(/:latest$/, '').replace(/:/g, ' ');
   $('#composerModel').textContent = label;
   $('#modelLabel').textContent = label;
-  $('#topModel').textContent = label;
 }
-setModelName('qwen2.5:3b');
+function normalizeModelName(name) {
+  const tag = String(name || '').trim();
+  return tag.includes(':') ? tag : tag + ':latest';
+}
+function refreshModels(models, defaultModel) {
+  const select = $('#modelSelect');
+  const installed = Array.isArray(models) ? models.filter(name => typeof name === 'string' && name.trim()) : [];
+  const preferred = selectedModel || defaultModel || 'qwen2.5:3b';
+  const options = [...new Set(installed)];
+  for (const name of [defaultModel, preferred]) {
+    if (name && !options.some(item => normalizeModelName(item) === normalizeModelName(name))) options.push(name);
+  }
+  select.replaceChildren();
+  options.forEach(name => {
+    const option = document.createElement('option');
+    option.value = name;
+    const isInstalled = installed.some(item => normalizeModelName(item) === normalizeModelName(name));
+    option.textContent = name.replace(/:latest$/, '') + (isInstalled ? '' : ' · not downloaded');
+    select.append(option);
+  });
+  selectedModel = options.includes(preferred) ? preferred : options[0] || 'qwen2.5:3b';
+  select.value = selectedModel;
+  setModelName(selectedModel);
+}
+refreshModels([], selectedModel || 'qwen2.5:3b');
+$('#modelSelect').addEventListener('change', () => {
+  selectedModel = $('#modelSelect').value;
+  writeSetting(MODEL_KEY, selectedModel);
+  setModelName(selectedModel);
+  checkStatus();
+});
 
 function persist() {
   if (!writeSetting(CHAT_KEY, JSON.stringify(chats))) {
@@ -134,7 +165,7 @@ async function send(text = promptEl.value.trim()) {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chat.messages })
+      body: JSON.stringify({ messages: chat.messages, model: selectedModel })
     });
     let data;
     try { data = await response.json(); }
@@ -191,11 +222,13 @@ async function checkStatus() {
     const response = await fetch('/api/status', { cache: 'no-store' });
     if (!response.ok) throw new Error('Status request failed');
     const data = await response.json();
-    setModelName(data.model);
+    refreshModels(data.models, data.model);
+    const selectedDownloaded = (data.models || []).some(name => normalizeModelName(name) === normalizeModelName(selectedModel));
     pill.replaceChildren();
     const dot = document.createElement('i');
-    pill.append(dot, document.createTextNode(data.online && data.downloaded ? ' Running locally' : data.online ? ' Model not downloaded' : ' Ollama not running'));
-    pill.classList.toggle('offline', !data.online || !data.downloaded);
+    const status = data.online && selectedDownloaded ? ' Running locally' : data.online ? ' Model not downloaded' : ' Ollama not running';
+    pill.append(dot, document.createTextNode(status));
+    pill.classList.toggle('offline', !data.online || !selectedDownloaded);
   } catch {
     pill.textContent = ' Local model unavailable';
     pill.classList.add('offline');
