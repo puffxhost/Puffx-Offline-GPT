@@ -61,7 +61,8 @@ function refreshModels(models, defaultModel) {
     option.value = name;
     const isInstalled = installed.some(item => normalizeModelName(item) === normalizeModelName(name));
     const isDefault = Boolean(defaultModel) && normalizeModelName(name) === normalizeModelName(defaultModel);
-    option.textContent = name.replace(/:latest$/, '') + (isDefault ? ' (default)' : '') + (isInstalled ? '' : ' · not downloaded');
+    const isRecommended = normalizeModelName(name) === 'qwen2.5:3b:latest';
+    option.textContent = name.replace(/:latest$/, '') + (isDefault ? (isRecommended ? ' (default · recommended)' : ' (default)') : '') + (isInstalled ? '' : ' · not downloaded');
     select.append(option);
   });
   selectedModel = options.includes(preferred) ? preferred : options[0] || 'qwen2.5:3b';
