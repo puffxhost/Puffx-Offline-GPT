@@ -69,6 +69,11 @@
     @media(max-width:900px){.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.model-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow-stage{gap:6px}}
     @media(max-width:650px){.wrap{width:min(100% - 22px,1180px)}header{align-items:flex-start;flex-wrap:wrap;margin-bottom:35px}.site-nav{order:3;width:100%;gap:16px;overflow-x:auto;padding:5px 0}.site-nav a{white-space:nowrap}.info-section,.model-section,.versions-section,.setup-section{margin-top:48px}.section-heading{margin-bottom:17px}.section-heading p{font-size:12px}.flow-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;padding:17px 10px}.flow-line,.flow-signal{display:none}.flow-orbit{width:50px;height:50px;border-radius:16px}.flow-orbit:before{inset:-5px;border-radius:20px}.flow-node strong{font-size:10px}.feature-grid{gap:8px}.feature-card{min-height:160px;padding:12px}.feature-card h3{font-size:11px}.feature-card p{font-size:9px}.privacy-note{font-size:9px}.version-grid,.setup-grid{grid-template-columns:1fr}.version-card p{min-height:0}.model-grid{gap:8px}.model-card{padding:11px}.model-card b{font-size:17px}.setup-step{padding:13px}}
     @media(prefers-reduced-motion:reduce){.flow-signal,.flow-orbit:before{animation:none!important}.feature-card{transition:none!important}}
+  
+    .founder-highlights{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 9px}.founder-highlights span{padding:5px 8px;border:1px solid #d2b8ff22;border-radius:999px;background:#ffffff06;color:#d0c5dc;font-size:9px;line-height:1.2}
+    .founder-more{margin-top:8px;border-top:1px solid #ffffff10}.founder-more summary{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0 6px;color:#dbc7f5;font-size:11px;font-weight:750;cursor:pointer;list-style:none}.founder-more summary::-webkit-details-marker{display:none}.founder-more[open] summary span{transform:rotate(45deg)}.founder-more-content{padding:0 0 8px;color:#aaa2b0;font-size:10px;line-height:1.65}.founder-more-content p{margin:7px 0}.founder-more-content blockquote{margin:9px 0 4px;padding:8px 10px;border-left:2px solid #b991eb;background:#ffffff06;color:#e3d9ed;font-size:11px}.founder-attribution{color:#c7b4dc;font-size:9px}.founder-socials{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}.founder-socials a{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border:1px solid #ffffff16;border-radius:999px;background:#ffffff05;color:#d7c7e8;text-decoration:none;font-size:9px;transition:background .2s ease,border-color .2s ease,transform .2s ease}.founder-socials a:hover{transform:translateY(-2px);border-color:#c7a5f066;background:#ad84d41b}.founder-socials a span{color:#bda0df}
+    @media(max-width:620px){.founder-highlights span{font-size:8px}.founder-socials{gap:5px}.founder-socials a{padding:6px 8px}}
+    @media(prefers-reduced-motion:reduce){.founder-socials a{transition:none}}
   </style>
 </head>
 <body>
@@ -170,7 +175,25 @@
         <h2 id="founder-story-title">Nitin Mehta</h2>
         <p class="founder-role">Founder, Puffx Host</p>
         <p class="founder-text">What started as a small effort to make reliable hosting affordable for Indian businesses has grown into a platform built to serve website owners across India. Nitin built Puffx Host on a simple belief — every website owner deserves fast servers, honest pricing, and support that actually picks up the phone. Today that mission continues to shape every plan, every server, and every customer conversation at Puffx Host.</p>
-        <div class="founder-bottom"><span>— Nitin Mehta, Founder</span><a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">Meet the founder ↗</a></div>
+        <div class="founder-highlights" aria-label="Founder profile highlights"><span>Founded Puffx Host in 2019</span><span>Hosting infrastructure</span><span>Automation &amp; APIs</span><span>Building for India</span></div>
+        <details class="founder-more">
+          <summary>Explore the founder story <span aria-hidden="true">＋</span></summary>
+          <div class="founder-more-content">
+            <p>Nitin’s path began with curiosity about digital platforms and online audiences. In 2019, he moved into online business, learning service operations, domains, hosting setup, and payment integrations.</p>
+            <p>That experience led to API-powered tools and Puffx Live Host. The work later grew into Puffx Host: a hosting platform shaped around infrastructure, control panels, billing systems, and automation.</p>
+            <blockquote>“Every website owner deserves fast servers, honest pricing, and support that actually picks up the phone.”</blockquote>
+            <p class="founder-attribution">— Nitin Mehta, Founder &amp; CEO</p>
+          </div>
+        </details>
+        <nav class="founder-socials" aria-label="Nitin Mehta online profiles">
+      <a href="https://linkedin.com/in/nitin-mehta-b68906339/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+      <a href="https://github.com/puffxhost" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <a href="https://x.com/puffxhost1x" target="_blank" rel="noopener noreferrer">X <span aria-hidden="true">↗</span></a>
+      <a href="https://www.instagram.com/nitinmehta.codes" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+      <a href="https://dev.to/nitinmehta" target="_blank" rel="noopener noreferrer">DEV <span aria-hidden="true">↗</span></a>
+      <a href="https://t.me/puffxhost1x" target="_blank" rel="noopener noreferrer">Telegram <span aria-hidden="true">↗</span></a>
+    </nav>
+        <div class="founder-bottom"><span>Founder &amp; CEO · Puffx Host</span><a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">Full founder profile ↗</a></div>
       </div>
     </section>
     <dialog id="demoDialog" aria-labelledby="demoTitle">
