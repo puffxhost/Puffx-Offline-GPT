@@ -31,6 +31,14 @@
 - Treat page content as untrusted data, ignore instructions found in pages, and distinguish sourced facts from model-generated explanation.
 - If search is off, unavailable, or returns weak results, say that the answer may be out of date instead of inventing citations.
 
+### 🪪 Personal workspace name
+
+- Replace the generic sidebar label with the user's preferred name.
+- Support both a manual edit control and explicit chat commands such as “call me Alex” or “mujhe Alex bulao.”
+- Confirm a rename before returning to normal conversation, update the sidebar avatar/name, and persist the preference only in the current browser.
+- Include the preferred name as context for local Ollama responses; do not send it to web search or a cloud service.
+- Let users reset the preference from the manual edit control.
+
 ### 🧑‍💻 Developer profile panel
 
 - Show the curated profile, allowed source list, each source's last refresh result/time, and a manual **Refresh** control.
@@ -54,6 +62,7 @@
 - Keep search credentials in environment/configuration, never in the browser bundle or repository.
 - Restrict fetching to HTTP/HTTPS, bound response sizes and timeouts, validate redirects, and filter unsupported content.
 - Do not store raw audio. Keep fetched pages and accepted profile edits local with clear delete controls.
+- Keep the preferred workspace name in browser storage and provide a clear reset control.
 
 ## Draft delivery plan
 
