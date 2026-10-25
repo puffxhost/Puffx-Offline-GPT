@@ -23,6 +23,7 @@ Use it for local text conversations such as asking questions, explaining topics,
 | Feature | V1 — available now ✅ | V2 — planned draft 🛠️ |
 | --- | --- | --- |
 | AI chat | ✅ Local text chat through Ollama; choose an installed model. | ✅ Planned: keep local Ollama as the default and improve the chat experience. |
+| Default chat model & download size | ✅ `qwen2.5:3b` (~1.9 GB download); other downloaded Ollama models can be selected. | ✅ Planned default: `qwen2.5:3b` (~1.9 GB download), same as V1. Additional local speech model sizes are not finalized yet. |
 | Voice chat | ❌ Not included. | ✅ Planned: call-like voice mode with push-to-talk or turn-taking, mute/stop, and spoken answers. Local speech processing is the priority; any browser/cloud speech fallback must be opt-in and clearly disclosed. |
 | Voice search | ❌ Not included. | ✅ Planned: speak a query, review its transcript, then search and receive source-linked results. |
 | Web search | ❌ No general web search. | ✅ Planned: explicit, configurable search with title, domain, link, and retrieval time. Developer questions check approved profile sources first; broader search needs a configured provider. |
@@ -31,6 +32,8 @@ Use it for local text conversations such as asking questions, explaining topics,
 | Offline use | ✅ Text chat works offline after installing Ollama and downloading a model. | ✅ Planned: preserve offline local chat and local voice where supported; search is unavailable offline and should say so. |
 | Workspace name | ❌ Fixed generic label; no personal name setting. | ✅ Planned: set a preferred name manually or with a clear chat command; save it in this browser and use it for local Ollama replies. |
 | Install/version | ✅ Current GitHub release and the `latest` Docker image. | ✅ Planned: separate V2 preview/release and Docker tags; keep V1 stable until V2 is reviewed and explicitly released. |
+
+Model sizes are approximate downloads, not RAM requirements. See the [Ollama Qwen 2.5 model page](https://ollama.com/library/qwen2.5:3b) for the current tag size. V2's speech-to-text and text-to-speech models, if shipped locally, will be separate downloads and their sizes are not decided yet.
 
 ### V2 roadmap
 
