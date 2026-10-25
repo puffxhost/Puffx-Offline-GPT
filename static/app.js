@@ -244,6 +244,7 @@ $('#workspaceName').textContent = initialWorkspaceName;
 $('#workspaceAvatar').textContent = Array.from(initialWorkspaceName)[0].toUpperCase();
 const nameDialog = $('#nameDialog');
 const workspaceNameInput = $('#workspaceNameInput');
+workspaceNameInput.addEventListener('input', () => workspaceNameInput.setCustomValidity(''));
 $('#editWorkspace').addEventListener('click', () => {
   workspaceNameInput.value = $('#workspaceName').textContent;
   nameDialog.showModal();
