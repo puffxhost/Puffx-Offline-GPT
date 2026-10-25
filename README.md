@@ -12,9 +12,9 @@ Puffx Ofline GPT is a ChatGPT-inspired interface for chatting with an AI model r
 
 ## What this repository is for
 
-This repository gives you a simple browser-based chat screen and a small local Python server that passes your conversation to Ollama. Install Ollama, download a supported model once, start the app, and chat in your browser. You do not need an OpenAI account, cloud API key, subscription, Node.js, or Python packages.
+This repository gives you a simple browser-based chat screen and a small local Python server that passes your conversation to Ollama. Install Ollama, download a supported model once, start the app, and chat in your browser. You do not need an OpenAI account, cloud API key, subscription, Node.js, or Python packages. Developer-related questions can also use a bundled professional profile plus refreshed text from the linked public profile pages.
 
-Use it for local text conversations such as asking questions, explaining topics, brainstorming, drafting text, or getting coding help. The exact quality and speed depend on the model you choose and your computer. The default model is `qwen2.5:3b`; this is a compact text model, not a copy of ChatGPT. The app does not browse the web, generate images, or attach documents.
+Use it for local text conversations such as asking questions, explaining topics, brainstorming, drafting text, or getting coding help. The exact quality and speed depend on the model you choose and your computer. The default model is `qwen2.5:3b`; this is a compact text model, not a copy of ChatGPT. It does not provide general web search, image generation, or file attachments. For developer-related questions only, it refreshes a small allowlist of public profile pages when online; this is retrieval context, not model training.
 
 ### How a message travels
 
@@ -32,7 +32,8 @@ The browser saves chat history in that browser profile's local storage. The mode
 
 | File or folder | Purpose |
 | --- | --- |
-| `server.py` | Serves the web interface and forwards chat requests to Ollama. Uses only Python's standard library. |
+| `server.py` | Serves the web interface, forwards chat requests to Ollama, and retrieves developer-profile context for related questions. Uses only Python's standard library. |
+| `developer_profile.md` | Curated professional profile used as local fallback knowledge. |
 | `static/index.html` | Chat page layout and branding. |
 | `static/style.css` | Responsive dark/light interface and motion effects. |
 | `static/app.js` | Chat history, status display, theme, and browser interactions. |
@@ -49,13 +50,14 @@ The browser saves chat history in that browser profile's local storage. The mode
 - Python web server uses only Python's standard library; no Python packages or build tools are required.
 - Binds to `127.0.0.1` by default, so the web app is only available on the same computer.
 - Animated interface preview above. The app respects the operating system's reduced-motion preference.
+- Uses curated developer-profile facts and refreshes the linked public profile pages on developer-related questions (six-hour in-memory cache).
 
 ## Requirements
 
 - Windows 10 or newer, macOS, or a supported Linux distribution.
 - Python 3.11 or newer.
 - Ollama installed and running.
-- Internet access for the initial software and model downloads. After downloading the model, chat can run without internet.
+- Internet access for initial software/model downloads and optional live profile refresh. After downloading the model, core chat works offline; developer questions then use the bundled profile.
 - Free disk space for the selected model. The default `qwen2.5:3b` model download is about 1.9 GB. You do not need a GPU, but a compatible GPU can improve speed; CPU-only generation may be slower. Model memory needs and speed depend on your machine.
 
 Model weights are downloaded separately by Ollama. Pick a model that fits your storage and computer; the download size below is **disk space**, not the total RAM needed while it is running. Smaller models are easier to run but can give weaker answers; larger ones need more memory and may be slower. Check each publisher's license before redistributing model weights.
@@ -416,6 +418,12 @@ docker pull ghcr.io/puffxhost/puffx-offline-gpt:latest
 Docker Compose is recommended because it also starts Ollama and connects Puffx to it on a private container network.
 
 ---
+## 🧑‍💻 Developer profile knowledge
+
+The app includes professional profile facts in `developer_profile.md`. When a conversation asks about Nitin Mehta, Puffx Host, Morena Startup, or Puffx Tools, the local server adds that profile to the selected Ollama model's context. If internet is available, it also fetches text from the profile URLs listed in that file. Results are cached in memory for up to six hours; words such as “latest” or “refresh” trigger an immediate refresh.
+
+This is retrieval, not fine-tuning: the model's weights are not changed and no profile data is permanently learned by the model. The server only requests the listed public pages; it does not send the user's question to a search engine or to those websites. General web search is not enabled. If pages are offline or block access, the bundled profile remains available.
+
 ## Download, select, and switch models
 
 ### 1. Download a model
@@ -550,7 +558,7 @@ Start the app again with the same command. If you use the ZIP method, download a
 
 ## Privacy and limitations
 
-- Chat prompts travel from your browser to this computer's Python server and then to Ollama at `127.0.0.1:11434` by default. This app does not send prompts to OpenAI or another cloud AI API.
+- Chat prompts travel from your browser to this computer's Python server and then to Ollama at `127.0.0.1:11434` by default. This app does not send prompts to OpenAI or another cloud AI API. For developer-related questions, the server may fetch the fixed public profile URLs listed in `developer_profile.md`; those requests contain no chat text, and extracted text is added only to the local Ollama request.
 - Conversation history is stored in local storage in the browser profile you use. Clearing that browser's site data deletes the saved history. This app does not encrypt that history or provide user accounts/passwords; anyone with access to the same browser profile can access it.
 - Google Fonts may be requested when internet is available; chat prompts are not sent with those font requests. Offline, system fonts are used.
 - Model replies can be inaccurate. Verify important information independently.
