@@ -1,0 +1,22 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  puffx:
+    image: ghcr.io/puffxhost/puffx-offline-gpt:latest
+    depends_on:
+      - ollama
+    ports:
+      - "127.0.0.1:${PUFFX_PORT:-8000}:8000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8000
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:3b}
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
