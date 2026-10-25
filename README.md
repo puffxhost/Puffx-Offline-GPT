@@ -109,11 +109,11 @@ Choose the setup for your computer below. Each section has its own commands, in 
 1. **Install Python 3.11 or newer** from [python.org/downloads](https://www.python.org/downloads/). On Windows, select **Add Python to PATH** in the installer.
 2. **Install Ollama** from [ollama.com/download](https://ollama.com/download). On Windows and macOS, open the Ollama app after installing it. On Linux, follow the Linux section below.
 3. **Download this project** using Git or the ZIP instructions below.
-4. **Download a model** once, while connected to the internet. The default is \`qwen2.5:3b\` (about 1.9 GB):
-   \`\`\`text
+4. **Download a model** once, while connected to the internet. The default is `qwen2.5:3b` (about 1.9 GB):
+   ```text
    ollama pull qwen2.5:3b
-   \`\`\`
-   If you need a smaller download, use \`ollama pull qwen2.5:0.5b\` (about 398 MB). Model download sizes and computer memory needs differ; see [Model choices and suggestions](#model-choices-and-suggestions).
+   ```
+   If you need a smaller download, use `ollama pull qwen2.5:0.5b` (about 398 MB). Model download sizes and computer memory needs differ; see [Model choices and suggestions](#model-choices-and-suggestions).
 
 > 💡 Run one command at a time and wait for it to finish. Once the model is downloaded, chat works locally without internet.
 
@@ -124,26 +124,26 @@ Choose the setup for your computer below. Each section has its own commands, in 
 Install Git first, then open a terminal where you want the project folder.
 
 **Windows PowerShell or CMD:**
-\`\`\`text
+```text
 git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
 cd Puffx-Offline-GPT
-\`\`\`
+```
 
 **macOS or Linux Terminal:**
-\`\`\`bash
+```bash
 git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
 cd Puffx-Offline-GPT
-\`\`\`
+```
 
 #### Option B: Download ZIP (no Git needed)
 
 1. Open the [repository page](https://github.com/puffxhost/Puffx-Offline-GPT).
 2. Click **Code → Download ZIP**.
-3. Extract the ZIP. Keep the extracted \`Puffx-Offline-GPT\` folder.
+3. Extract the ZIP. Keep the extracted `Puffx-Offline-GPT` folder.
 4. Open a terminal **inside that folder**:
-   - **Windows:** Open the folder in File Explorer, click the address bar, type \`powershell\` or \`cmd\`, then press Enter.
-   - **macOS:** Open Terminal, type \`cd \`, drag the extracted folder into Terminal, then press Enter.
-   - **Linux:** Open Terminal and use \`cd /path/to/Puffx-Offline-GPT\` (replace the example path with your folder's actual location).
+   - **Windows:** Open the folder in File Explorer, click the address bar, type `powershell` or `cmd`, then press Enter.
+   - **macOS:** Open Terminal, type `cd `, drag the extracted folder into Terminal, then press Enter.
+   - **Linux:** Open Terminal and use `cd /path/to/Puffx-Offline-GPT` (replace the example path with your folder's actual location).
 
 ---
 
@@ -159,46 +159,46 @@ Windows has two command-line choices below. Use **PowerShell** or **Command Prom
 - Install [Ollama for Windows](https://ollama.com/download/windows), then open Ollama from the Start menu and leave it running.
 - Install Git only if you want to use the clone method.
 
-If you use Windows Package Manager (\`winget\`), you can install Git, Python, and Ollama from PowerShell:
-\`\`\`powershell
+If you use Windows Package Manager (`winget`), you can install Git, Python, and Ollama from PowerShell:
+```powershell
 winget install --id Git.Git -e
 winget install --id Python.Python.3.12 -e
 winget install --id Ollama.Ollama -e
-\`\`\`
-After installation, close and reopen PowerShell. If \`winget\` is unavailable, use the official installers above.
+```
+After installation, close and reopen PowerShell. If `winget` is unavailable, use the official installers above.
 
 **2. Download the project**
 
 If using Git:
-\`\`\`powershell
+```powershell
 git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
 Set-Location Puffx-Offline-GPT
-\`\`\`
+```
 
 If using ZIP, extract it, then open PowerShell in that extracted folder. To navigate there manually (edit the path if your folder is elsewhere):
-\`\`\`powershell
+```powershell
 Set-Location "$HOME\Downloads\Puffx-Offline-GPT"
-\`\`\`
+```
 
 **3. Check that the commands are available**
-\`\`\`powershell
+```powershell
 py -3 --version
 ollama --version
-\`\`\`
-Python must report version 3.11 or newer. If \`py\` is not recognized, try \`python --version\`. If \`ollama\` is not recognized, reopen Ollama and start a new PowerShell window.
+```
+Python must report version 3.11 or newer. If `py` is not recognized, try `python --version`. If `ollama` is not recognized, reopen Ollama and start a new PowerShell window.
 
 **4. Download the AI model**
-\`\`\`powershell
+```powershell
 ollama pull qwen2.5:3b
 ollama list
-\`\`\`
-Wait for the download to complete. Confirm \`qwen2.5:3b\` appears in the list. For a smaller model, pull \`qwen2.5:0.5b\` instead.
+```
+Wait for the download to complete. Confirm `qwen2.5:3b` appears in the list. For a smaller model, pull `qwen2.5:0.5b` instead.
 
 **5. Start the app**
-\`\`\`powershell
+```powershell
 py -3 server.py
-\`\`\`
-If \`py\` is unavailable but \`python --version\` works, use \`python server.py\`.
+```
+If `py` is unavailable but `python --version` works, use `python server.py`.
 
 **6. Open Puffx and keep it running**
 
@@ -210,46 +210,46 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser on the same com
 
 Install Python 3.11+ from [python.org](https://www.python.org/downloads/windows/) and select **Add Python to PATH**. Install [Ollama](https://ollama.com/download/windows) and open it from the Start menu. Install Git only if you plan to clone the project.
 
-If \`winget\` is installed, these commands can be run in CMD:
-\`\`\`bat
+If `winget` is installed, these commands can be run in CMD:
+```bat
 winget install --id Git.Git -e
 winget install --id Python.Python.3.12 -e
 winget install --id Ollama.Ollama -e
-\`\`\`
+```
 Close and reopen CMD after installation. Otherwise, use the official installers.
 
 **2. Download the project**
 
 With Git:
-\`\`\`bat
+```bat
 git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
 cd /d Puffx-Offline-GPT
-\`\`\`
+```
 
-With ZIP, extract the folder and open CMD inside it using File Explorer's address bar (type \`cmd\` and press Enter). Or navigate manually; change the example path if needed:
-\`\`\`bat
+With ZIP, extract the folder and open CMD inside it using File Explorer's address bar (type `cmd` and press Enter). Or navigate manually; change the example path if needed:
+```bat
 cd /d "%USERPROFILE%\Downloads\Puffx-Offline-GPT"
-\`\`\`
+```
 
 **3. Check the tools**
-\`\`\`bat
+```bat
 py -3 --version
 ollama --version
-\`\`\`
-Python must be 3.11 or newer. If \`py\` is not recognized, try \`python --version\`. If \`ollama\` is not recognized, reopen Ollama and launch a fresh CMD window.
+```
+Python must be 3.11 or newer. If `py` is not recognized, try `python --version`. If `ollama` is not recognized, reopen Ollama and launch a fresh CMD window.
 
 **4. Download a model**
-\`\`\`bat
+```bat
 ollama pull qwen2.5:3b
 ollama list
-\`\`\`
-Wait until the download completes and check that the model appears in the list. For a smaller download, use \`ollama pull qwen2.5:0.5b\`.
+```
+Wait until the download completes and check that the model appears in the list. For a smaller download, use `ollama pull qwen2.5:0.5b`.
 
 **5. Start Puffx**
-\`\`\`bat
+```bat
 py -3 server.py
-\`\`\`
-If \`py\` is unavailable but \`python --version\` works, run \`python server.py\` instead.
+```
+If `py` is unavailable but `python --version` works, run `python server.py` instead.
 
 **6. Open the chat**
 
@@ -257,7 +257,7 @@ Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser on this PC. Le
 
 #### 🖱️ Windows one-click launcher
 
-After installing Ollama and downloading a model, you can start the app without typing the server command: open the project folder and double-click \`START_OFFLINEGPT.bat\`. The launcher starts the local server and opens the browser. Keep its server window open while chatting; press **Ctrl+C** in that window to stop it.
+After installing Ollama and downloading a model, you can start the app without typing the server command: open the project folder and double-click `START_OFFLINEGPT.bat`. The launcher starts the local server and opens the browser. Keep its server window open while chatting; press **Ctrl+C** in that window to stop it.
 
 ---
 
@@ -266,40 +266,40 @@ After installing Ollama and downloading a model, you can start the app without t
 **1. Install Python and Git**
 
 Install Python 3.11+ from [python.org](https://www.python.org/downloads/macos/). If you use Homebrew, you can install Python and Git with:
-\`\`\`bash
+```bash
 brew install python git
-\`\`\`
+```
 Git is optional when using the ZIP method.
 
 **2. Install and open Ollama**
 
 Download Ollama from [ollama.com/download](https://ollama.com/download), install it, and open the Ollama app. Check that Terminal can find the tools:
-\`\`\`bash
+```bash
 python3 --version
 ollama --version
-\`\`\`
+```
 Python should report 3.11 or newer.
 
 **3. Get the project**
 
 With Git:
-\`\`\`bash
+```bash
 git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
 cd Puffx-Offline-GPT
-\`\`\`
-With ZIP, extract the archive and use \`cd\` to enter the extracted project directory.
+```
+With ZIP, extract the archive and use `cd` to enter the extracted project directory.
 
 **4. Download the model**
-\`\`\`bash
+```bash
 ollama pull qwen2.5:3b
 ollama list
-\`\`\`
-Wait for the pull to finish. Use \`qwen2.5:0.5b\` instead if you need a smaller download.
+```
+Wait for the pull to finish. Use `qwen2.5:0.5b` instead if you need a smaller download.
 
 **5. Start the app and chat**
-\`\`\`bash
+```bash
 python3 server.py
-\`\`\`
+```
 Keep Terminal open and visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser. Stop the server with **Ctrl+C**.
 
 ---
@@ -308,62 +308,62 @@ Keep Terminal open and visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in y
 
 **1. Install Python, Git, and curl**
 
-Use the command for your distribution. Python must be 3.11 or newer; check with \`python3 --version\`.
+Use the command for your distribution. Python must be 3.11 or newer; check with `python3 --version`.
 
 **Ubuntu, Debian, or Linux Mint:**
-\`\`\`bash
+```bash
 sudo apt update
 sudo apt install -y python3 git curl
-\`\`\`
+```
 
 **Fedora:**
-\`\`\`bash
+```bash
 sudo dnf install -y python3 git curl
-\`\`\`
+```
 
 **Arch Linux or Manjaro:**
-\`\`\`bash
+```bash
 sudo pacman -Syu --needed python git curl
-\`\`\`
+```
 
 **openSUSE:**
-\`\`\`bash
+```bash
 sudo zypper install python3 git curl
-\`\`\`
+```
 
 **2. Install Ollama**
 
 Use the official Ollama installer:
-\`\`\`bash
+```bash
 curl -fsSL https://ollama.com/install.sh | sh
-\`\`\`
+```
 On systemd-based Linux, check the service and start it if needed:
-\`\`\`bash
+```bash
 systemctl status ollama
 sudo systemctl start ollama
-\`\`\`
-If your system does not use systemd, open another terminal and run \`ollama serve\`; leave that terminal open. Confirm the CLI works with \`ollama --version\`.
+```
+If your system does not use systemd, open another terminal and run `ollama serve`; leave that terminal open. Confirm the CLI works with `ollama --version`.
 
 **3. Get the project**
 
 With Git:
-\`\`\`bash
+```bash
 git clone https://github.com/puffxhost/Puffx-Offline-GPT.git
 cd Puffx-Offline-GPT
-\`\`\`
+```
 With ZIP, extract the archive and change into its project directory.
 
 **4. Download the model**
-\`\`\`bash
+```bash
 ollama pull qwen2.5:3b
 ollama list
-\`\`\`
-Wait for completion before continuing. For a smaller download, pull \`qwen2.5:0.5b\`.
+```
+Wait for completion before continuing. For a smaller download, pull `qwen2.5:0.5b`.
 
 **5. Start Puffx and open it**
-\`\`\`bash
+```bash
 python3 server.py
-\`\`\`
+```
 Keep this terminal open and visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser on the same computer. Stop the server with **Ctrl+C**.
 
 ### 🧭 After setup
@@ -371,8 +371,8 @@ Keep this terminal open and visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
 - The browser page is the chat screen; the Python server terminal must stay open during use.
 - Ollama must be running, and the selected model must already be downloaded.
 - The app's status indicator explains whether Ollama is reachable and whether the model is available.
-- Use the model dropdown to select another downloaded model. To install one, run \`ollama pull MODEL_TAG\`, then choose it in Puffx.
-- To stop the app, press **Ctrl+C** in the terminal running \`server.py\`. Your downloaded model stays on your computer.
+- Use the model dropdown to select another downloaded model. To install one, run `ollama pull MODEL_TAG`, then choose it in Puffx.
+- To stop the app, press **Ctrl+C** in the terminal running `server.py`. Your downloaded model stays on your computer.
 - For model switching, offline use, changing the port, updates, and troubleshooting, use the guides below.
 
 ## Download, select, and switch models
