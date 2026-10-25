@@ -45,8 +45,8 @@ let workspaceName = normalizeWorkspaceName(readSetting(WORKSPACE_NAME_KEY, '')) 
 function normalizeWorkspaceName(value) {
   const cleaned = String(value || '')
     .normalize('NFKC')
-    .replace(/[\\u0000-\\u001f\\u007f<>]/g, ' ')
-    .replace(/\\s+/g, ' ')
+    .replace(/[\u0000-\u001f\u007f<>]/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim()
     .replace(/^["'“”‘’]+|["'“”‘’]+$/g, '');
   return Array.from(cleaned).slice(0, 32).join('');
@@ -72,10 +72,10 @@ function setWorkspaceName(value) {
 }
 function parseWorkspaceNameCommand(text) {
   const patterns = [
-    /^\\s*(?:call me|my name is|set (?:my )?name to|set (?:my )?workspace name to|rename me to)\\s+([^.!?\\n]+?)\\s*[.!?]*\\s*$/i,
-    /^\\s*(?:मेरा\\s+नाम|mera\\s+naam)\\s+(.+?)\\s+(?:है|hai|रखो|rakho|रखना|rakhna)\\s*[.!?।]*\\s*$/iu,
-    /^\\s*(?:मुझे|mujhe)\\s+(.+?)\\s+(?:बुलाओ|bulao|बोलो|bolo|कहो|kaho)\\s*[.!?।]*\\s*$/iu,
-    /^\\s*(?:(?:my|meri|mera|मेरे|मेरी)\\s+)?(?:workspace|वर्कस्पेस)\\s+(?:ka\\s+naam|का\\s+नाम)\\s+(.+?)\\s+(?:रखो|rakho|रखना|rakhna|कर\\s+दो|kar\\s+do)\\s*[.!?।]*\\s*$/iu
+    /^\s*(?:call me|my name is|set (?:my )?name to|set (?:my )?workspace name to|rename me to)\s+([^.!?\n]+?)\s*[.!?]*\s*$/i,
+    /^\s*(?:मेरा\s+नाम|mera\s+naam)\s+(.+?)\s+(?:है|hai|रखो|rakho|रखना|rakhna)\s*[.!?।]*\s*$/iu,
+    /^\s*(?:मुझे|mujhe)\s+(.+?)\s+(?:बुलाओ|bulao|बोलो|bolo|कहो|kaho)\s*[.!?।]*\s*$/iu,
+    /^\s*(?:(?:my|meri|mera|मेरे|मेरी)\s+)?(?:workspace|वर्कस्पेस)\s+(?:ka\s+naam|का\s+नाम)\s+(.+?)\s+(?:रखो|rakho|रखना|rakhna|कर\s+दो|kar\s+do)\s*[.!?।]*\s*$/iu
   ];
   for (const pattern of patterns) {
     const match = String(text || '').match(pattern);
