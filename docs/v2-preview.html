@@ -28,7 +28,9 @@
     .toast{position:fixed;left:50%;bottom:72px;z-index:8;transform:translateX(-50%);max-width:min(520px,calc(100% - 24px));padding:9px 12px;border:1px solid #ffffff1e;border-radius:9px;background:#302a36;color:#f0e7fb;font-size:10px;box-shadow:0 9px 30px #0007}.hidden{display:none!important}
     .light{--bg:#f8f7f6;--side:#eeedeb;color:#222}.light .sidebar{background:var(--side)}.light .brand,.light .model-select,.light .welcome h1{color:#222}.light .welcome h1 span{color:#888}.light .suggestion,.light .composer{background:#fff;color:#333;border-color:#00000016}.light .profile-copy strong,.light .local-card strong{color:#333}.light .message-content{color:#333}.light .user .message-content{background:#eee;color:#333}.light .topbar .icon-btn{color:#555}
     @keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-    @media(max-width:760px){.sidebar{position:absolute;inset:0 auto 0 0;width:270px;box-shadow:20px 0 50px #0006}.sidebar.hidden{margin-left:-280px}.menu{display:grid}.collapse{display:grid}.topbar{padding:0 12px}.welcome{padding-top:24px}.suggestions{grid-template-columns:1fr;max-width:400px;margin:auto}.suggestion{padding:9px 11px}.suggestion small{font-size:9px}.welcome h1{font-size:32px}.welcome-sub{font-size:11px}.messages,.composer-wrap{width:calc(100% - 24px)}.composer-tools{flex-wrap:wrap}.composer-hint{order:2}.composer-actions{margin-left:auto}.disclaimer,.credits{font-size:8px}}
+    .demo-link{padding:5px 8px;border:1px solid #ffffff18;border-radius:8px;color:#c8b3e1;text-decoration:none;font-size:9px;font-weight:700;white-space:nowrap}.demo-link:hover{border-color:#d2b8ff66;background:#ffffff08}
+    .light .profile-sources,.light .local-card{background:#fff;border-color:#00000018}.light .source-title,.light .profile-copy strong,.light .local-card strong{color:#333}.light .source-links a{color:#664d86}.light .refresh-sources,.light .tool{color:#51485a;border-color:#00000020}.light .offline-pill{color:#5e4a78;background:#fff}.light .suggestion small,.light .profile-copy small,.light .local-card small{color:#777}
+    @media(max-width:760px){.demo-link{display:none}.sidebar{position:absolute;inset:0 auto 0 0;width:270px;box-shadow:20px 0 50px #0006}.sidebar.hidden{margin-left:-280px}.menu{display:grid}.collapse{display:grid}.topbar{padding:0 12px}.welcome{padding-top:24px}.suggestions{grid-template-columns:1fr;max-width:400px;margin:auto}.suggestion{padding:9px 11px}.suggestion small{font-size:9px}.welcome h1{font-size:32px}.welcome-sub{font-size:11px}.messages,.composer-wrap{width:calc(100% - 24px)}.composer-tools{flex-wrap:wrap}.composer-hint{order:2}.composer-actions{margin-left:auto}.disclaimer,.credits{font-size:8px}}
     @media(max-width:470px){.offline-pill{font-size:0;padding:7px}.offline-pill i{width:7px;height:7px}.model-label{font-size:10px}.topbar{gap:5px}.composer-hint{font-size:8px}.search-toggle{font-size:8px}.tool{font-size:8px;padding:5px}.welcome{width:calc(100% - 28px)}}
     @media(min-width:761px){.sidebar.hidden~.main .menu{display:grid}}
   </style>
@@ -36,7 +38,7 @@
 <body>
 <div class="app-shell">
   <aside class="sidebar" id="sidebar">
-    <div class="side-top"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">✳</span><span>Puffx Ofline GPT</span></a><button class="icon-btn collapse" id="closeSidebar" type="button" aria-label="Close sidebar">‹</button></div>
+    <div class="side-top"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4.5 26 10v12L16 27.5 6 22V10L16 4.5Z" stroke="currentColor" stroke-width="1.7"/><path d="m11 13 5-3 5 3v6l-5 3-5-3v-6Z" stroke="currentColor" stroke-width="1.5"/><path d="m11 13 5 3 5-3M16 16v6" stroke="currentColor" stroke-width="1.5"/></svg></span><span>Puffx Ofline GPT</span></a><button class="icon-btn collapse" id="closeSidebar" type="button" aria-label="Close sidebar">‹</button></div>
     <button class="new-chat" id="newChat" type="button"><span class="plus">＋</span> New chat <kbd>Ctrl K</kbd></button>
     <div class="side-label">YOUR SPACE</div>
     <nav class="history" id="history" aria-label="Demo conversations">
@@ -66,7 +68,7 @@
     <header class="topbar">
       <button class="icon-btn menu" id="openSidebar" type="button" aria-label="Open sidebar">☰</button>
       <div class="model-select" aria-label="Planned default model and download size"><span class="model-dot"></span><span class="model-label">qwen2.5:3b · ~1.9 GB</span></div>
-      <div class="top-actions"><span class="offline-pill"><i></i> V2 concept preview</span><button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">☼</button></div>
+      <div class="top-actions"><a class="demo-link" href="./#v1-demo">V1 demo ↗</a><span class="offline-pill"><i></i> V2 concept preview</span><button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">☼</button></div>
     </header>
     <section class="conversation" id="conversation">
       <div class="welcome" id="welcome">
@@ -240,6 +242,8 @@
   $("#openSidebar").addEventListener("click", () => sidebar.classList.remove("hidden"));
   $("#closeSidebar").addEventListener("click", () => sidebar.classList.add("hidden"));
   $("#themeToggle").addEventListener("click", () => document.body.classList.toggle("light"));
+  if (window.innerWidth <= 760) sidebar.classList.add("hidden");
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && window.innerWidth <= 760) sidebar.classList.add("hidden"); });
 </script>
 </body>
 </html>
