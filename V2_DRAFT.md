@@ -5,6 +5,7 @@
 ## Goals
 
 - Keep local Ollama chat as the default and preserve V1's simple startup.
+- Use the V1 default chat model, `qwen2.5:3b` (~1.9 GB download), for the initial V2 proposal so the core chat model does not add a larger download.
 - Let users talk to the assistant in a hands-free, call-like voice mode.
 - Add explicit, source-linked web search for questions that need current information.
 - Give users a profile/source panel to inspect and refresh developer knowledge.
@@ -16,7 +17,7 @@
 
 - Add **push-to-talk** and an optional **conversation mode** with turn-taking, mute, stop, and interruption controls.
 - Speak prompts into the chat; optionally speak the assistant response aloud.
-- Prefer **local speech-to-text and text-to-speech** so voice stays on the user's computer. Keep browser speech services as an opt-in fallback only, with a clear disclosure before microphone use.
+- Prefer **local speech-to-text and text-to-speech** so voice stays on the user's computer. Keep browser speech services as an opt-in fallback only, with a clear disclosure before microphone use. Local speech model download sizes and supported hardware requirements must be documented separately before release; they are not part of the chat-model size.
 - Ask for microphone permission only after the user presses the microphone button. Provide text-only mode for unsupported browsers and accessibility.
 - Voice search uses the recognized transcript as the search query and shows the same source links as typed search.
 
