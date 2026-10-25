@@ -30,5 +30,6 @@ This file gives Puffx Ofline GPT a small, local reference for questions about it
 - Puffx Host home page: https://puffxhost.com/
 - Developer KnowledgeBase page: https://wikipedia.puffxhost.com/index.php/Nitin_Mehta
 - Morena Startup founder section: https://app.morenastartup.com/#founder
+- Developer's public DEV Community profile: https://dev.to/nitinmehta
 
 Only professional details are included here. Do not volunteer personal contact details, exact birth date, relationship status, or unrelated personal information. If sources disagree or a page cannot be reached, say so instead of guessing.

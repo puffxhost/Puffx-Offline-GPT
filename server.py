@@ -26,12 +26,14 @@ DEVELOPER_PROFILE_SOURCES = (
     ("Puffx Host", "https://puffxhost.com/"),
     ("Developer KnowledgeBase", "https://wikipedia.puffxhost.com/index.php/Nitin_Mehta"),
     ("Morena Startup", "https://app.morenastartup.com/"),
+    ("DEV Community profile", "https://dev.to/nitinmehta"),
 )
 DEVELOPER_PROFILE_ALLOWED_HOSTS = {
     "nitinmehta.puffxhost.com",
     "puffxhost.com",
     "wikipedia.puffxhost.com",
     "app.morenastartup.com",
+    "dev.to",
 }
 DEVELOPER_QUERY_PATTERN = re.compile(
     r"\b(?:nitin(?:\s+mehta)?|mehta|puffx\s*host|puffxhost|morena\s*startup|puffx\s*tools)\b"

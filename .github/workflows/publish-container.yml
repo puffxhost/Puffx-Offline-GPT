@@ -8,6 +8,7 @@ on:
       - Dockerfile
       - docker-compose.yml
       - server.py
+      - developer_profile.md
       - static/**
       - .github/workflows/publish-container.yml
   release:
