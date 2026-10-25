@@ -29,9 +29,14 @@ Use it for local text conversations such as asking questions, explaining topics,
 | Developer knowledge | ✅ Bundled professional profile plus refresh from listed public pages for developer-related questions; six-hour in-memory cache. | ✅ Planned: profile panel with source status, last refresh, manual refresh, review-before-save, change history, and clear-data controls. |
 | Privacy | ✅ Chat goes to Ollama on this computer. Profile page requests contain no chat prompt. | ✅ Planned: ask before using the microphone; never send full chat history to search; don't store raw audio; explain when a selected provider sends data online. |
 | Offline use | ✅ Text chat works offline after installing Ollama and downloading a model. | ✅ Planned: preserve offline local chat and local voice where supported; search is unavailable offline and should say so. |
+| Workspace name | ❌ Fixed generic label; no personal name setting. | ✅ Planned: set a preferred name manually or with a clear chat command; save it in this browser and use it for local Ollama replies. |
 | Install/version | ✅ Current GitHub release and the `latest` Docker image. | ✅ Planned: separate V2 preview/release and Docker tags; keep V1 stable until V2 is reviewed and explicitly released. |
 
 ### V2 roadmap
+
+### Set your workspace name
+
+V2 will let you choose the name shown in the sidebar with its pencil button, or tell Puffx in chat. Example commands include “My name is Alex,” “Call me Alex,” “Mera naam Alex hai,” “Mujhe Alex bulao,” and “workspace ka naam Alex rakho.” The app will confirm the change, save it in this browser, and use it as local context for Ollama replies. Leave the manual name field blank to reset it. This is a planned V2 feature; it is not part of V1 yet.
 
 1. 🧑‍💻 Build the profile panel and safe refresh/review controls.
 2. 🎙️ Add voice controls and speech adapters, prioritizing local speech-to-text and text-to-speech.
