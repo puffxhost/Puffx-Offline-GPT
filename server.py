@@ -140,7 +140,7 @@ def main() -> int:
         print("PORT must be a number between 1 and 65535.", file=sys.stderr)
         return 2
 
-    host = "127.0.0.1"
+    host = os.environ.get("HOST", "127.0.0.1").strip() or "127.0.0.1"
     try:
         server = ThreadingHTTPServer((host, port), Handler)
     except OSError as exc:
