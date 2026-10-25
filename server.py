@@ -155,18 +155,27 @@ def normalize_model_name(name: str) -> str:
     return name
 
 
-def get_ollama_models() -> list[str]:
-    """Return model tags already present in the local Ollama installation."""
+def get_ollama_model_inventory() -> list[dict]:
+    """Return installed model tags and Ollama's local on-disk size metadata."""
     req = urllib.request.Request(f"{OLLAMA_URL}/api/tags")
     with urllib.request.urlopen(req, timeout=5) as response:
         result = json.load(response)
     if not isinstance(result, dict) or not isinstance(result.get("models"), list):
         raise ValueError("Ollama returned an invalid model list")
-    return sorted({
-        item["name"].strip()
-        for item in result["models"]
-        if isinstance(item, dict) and isinstance(item.get("name"), str) and item["name"].strip()
-    })
+    inventory = []
+    for item in result["models"]:
+        if not isinstance(item, dict) or not isinstance(item.get("name"), str) or not item["name"].strip():
+            continue
+        size = item.get("size")
+        if isinstance(size, bool) or not isinstance(size, (int, float)) or size <= 0:
+            size = None
+        inventory.append({"name": item["name"].strip(), "size": size})
+    return sorted(inventory, key=lambda item: item["name"])
+
+
+def get_ollama_models() -> list[str]:
+    """Return installed model tags for request validation."""
+    return [item["name"] for item in get_ollama_model_inventory()]
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -188,9 +197,9 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/api/status":
             try:
-                models = get_ollama_models()
+                models = get_ollama_model_inventory()
                 configured = normalize_model_name(MODEL)
-                available = any(normalize_model_name(name) == configured for name in models)
+                available = any(normalize_model_name(item["name"]) == configured for item in models)
                 return self.send_json(200, {
                     "online": True,
                     "model": MODEL,
