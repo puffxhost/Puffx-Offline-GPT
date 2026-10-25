@@ -619,7 +619,7 @@ Official site: [puffxhost.com](https://puffxhost.com/) · Support: [puffxhost.co
 
 ---
 
-Made with ❤️ by **Puffx Host**.
+Made with ❤️ by **Nitin Mehta**.
 
 ## 📜 License
 
