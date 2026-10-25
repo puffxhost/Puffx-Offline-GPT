@@ -375,6 +375,47 @@ Keep this terminal open and visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
 - To stop the app, press **Ctrl+C** in the terminal running `server.py`. Your downloaded model stays on your computer.
 - For model switching, offline use, changing the port, updates, and troubleshooting, use the guides below.
 
+## 🐳 Docker image (GitHub Packages)
+
+A prebuilt container image is published to GitHub Container Registry (GHCR). Docker Compose starts Puffx and a local Ollama service together; the model is downloaded into a persistent Docker volume.
+
+### Requirements
+
+- Docker Desktop on Windows/macOS, or Docker Engine and the Docker Compose plugin on Linux.
+- Internet access for the container images and the first model download.
+
+### Start Puffx with Docker Compose
+
+1. Download this repository as a ZIP and extract it, or clone it with Git. Open a terminal in the project folder containing `docker-compose.yml`.
+2. Start the services:
+
+   ```bash
+   docker compose up -d
+   ```
+
+3. Download the default model into the Ollama container:
+
+   ```bash
+   docker compose exec ollama ollama pull qwen2.5:3b
+   ```
+
+4. Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser on this computer.
+
+To use a smaller model, run `docker compose exec ollama ollama pull qwen2.5:0.5b`, then select it in Puffx. Set `OLLAMA_MODEL` in a `.env` file beside `docker-compose.yml` before the first start to choose a different default.
+
+Stop the app with `docker compose down`. Downloaded models remain in the `ollama_data` volume. To also delete the model data, use `docker compose down -v`.
+
+The web interface is bound to `127.0.0.1` on the host by default. To use another local port, set `PUFFX_PORT=8001` in the `.env` file and visit `http://127.0.0.1:8001`.
+
+### Pull the image directly
+
+```bash
+docker pull ghcr.io/puffxhost/puffx-offline-gpt:latest
+```
+
+Docker Compose is recommended because it also starts Ollama and connects Puffx to it on a private container network.
+
+---
 ## Download, select, and switch models
 
 ### 1. Download a model
