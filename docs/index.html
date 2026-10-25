@@ -140,13 +140,11 @@
       placeholderTimer = window.setInterval(rotatePrompt, 2600);
     }
     function openDemo() {
-      if (!dialog.open) dialog.showModal();
-      startPlaceholderRotation();
-      input.focus();
+      window.location.href = "v1-preview.html";
     }
     document.getElementById("openDemo").addEventListener("click", openDemo);
     document.getElementById("previewGraphic").addEventListener("click", openDemo);
-    if (window.location.hash === "#v1-demo") openDemo();
+    if (window.location.hash === "#v1-demo") window.location.replace("v1-preview.html");
     document.getElementById("closeDemo").addEventListener("click", () => dialog.close());
     dialog.addEventListener("close", stopPlaceholderRotation);
     input.addEventListener("input", () => {
