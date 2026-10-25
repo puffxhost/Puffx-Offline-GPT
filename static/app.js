@@ -38,6 +38,7 @@ let chats = loadChats();
 let activeId = null;
 let busy = false;
 let selectedModel = readSetting(MODEL_KEY, '') || '';
+let modelSizes = new Map();
 
 const DEFAULT_WORKSPACE_NAME = 'Your workspace';
 let workspaceName = normalizeWorkspaceName(readSetting(WORKSPACE_NAME_KEY, '')) || DEFAULT_WORKSPACE_NAME;
@@ -88,10 +89,17 @@ function parseWorkspaceNameCommand(text) {
 renderWorkspaceName();
 
 
+function formatModelSize(bytes) {
+  if (!Number.isFinite(bytes) || bytes <= 0) return '';
+  if (bytes >= 1_000_000_000) return (bytes / 1_000_000_000).toFixed(1) + ' GB';
+  return Math.round(bytes / 1_000_000) + ' MB';
+}
 function setModelName(name) {
   const label = (name || 'qwen2.5:3b').replace(/:latest$/, '').replace(/:/g, ' ');
-  $('#composerModel').textContent = label;
-  $('#modelLabel').textContent = label;
+  const size = formatModelSize(modelSizes.get(name));
+  const display = size ? label + ' · ' + size : label;
+  $('#composerModel').textContent = display;
+  $('#modelLabel').textContent = display;
 }
 function normalizeModelName(name) {
   const tag = String(name || '').trim();
@@ -99,20 +107,37 @@ function normalizeModelName(name) {
 }
 function refreshModels(models, defaultModel) {
   const select = $('#modelSelect');
-  const installed = Array.isArray(models) ? models.filter(name => typeof name === 'string' && name.trim()) : [];
+  const inventory = new Map();
+  for (const model of Array.isArray(models) ? models : []) {
+    const name = typeof model === 'string' ? model : model?.name;
+    if (typeof name !== 'string' || !name.trim()) continue;
+    const size = typeof model === 'object' && model && Number.isFinite(model.size) && model.size > 0
+      ? model.size
+      : null;
+    inventory.set(name.trim(), size);
+  }
+  modelSizes = inventory;
+  const installed = [...inventory.keys()];
   const preferred = selectedModel || defaultModel || 'qwen2.5:3b';
-  const options = [...new Set(installed)];
+  const options = [...installed];
   for (const name of [defaultModel, preferred]) {
-    if (name && !options.some(item => normalizeModelName(item) === normalizeModelName(name))) options.push(name);
+    if (name && !options.some(item => normalizeModelName(item) === normalizeModelName(name))) {
+      options.push(name);
+      modelSizes.set(name, null);
+    }
   }
   select.replaceChildren();
   options.forEach(name => {
     const option = document.createElement('option');
     option.value = name;
+    const sizeLabel = formatModelSize(modelSizes.get(name));
     const isInstalled = installed.some(item => normalizeModelName(item) === normalizeModelName(name));
     const isDefault = Boolean(defaultModel) && normalizeModelName(name) === normalizeModelName(defaultModel);
     const isRecommended = normalizeModelName(name) === 'qwen2.5:3b';
-    option.textContent = name.replace(/:latest$/, '') + (isDefault ? (isRecommended ? ' (default · recommended)' : ' (default)') : '') + (isInstalled ? '' : ' · not downloaded');
+    option.textContent = name.replace(/:latest$/, '')
+      + (sizeLabel ? ' · ' + sizeLabel : '')
+      + (isDefault ? (isRecommended ? ' (default · recommended)' : ' (default)') : '')
+      + (isInstalled ? '' : ' · not downloaded');
     select.append(option);
   });
   selectedModel = options.includes(preferred) ? preferred : options[0] || 'qwen2.5:3b';
@@ -343,7 +368,7 @@ async function checkStatus() {
     if (!response.ok) throw new Error('Status request failed');
     const data = await response.json();
     refreshModels(data.models, data.model);
-    const selectedDownloaded = (data.models || []).some(name => normalizeModelName(name) === normalizeModelName(selectedModel));
+    const selectedDownloaded = (data.models || []).some(model => normalizeModelName(typeof model === 'string' ? model : model.name) === normalizeModelName(selectedModel));
     pill.replaceChildren();
     const dot = document.createElement('i');
     const status = data.online && selectedDownloaded ? ' Running locally' : data.online ? ' Model not downloaded' : ' Ollama not running';
