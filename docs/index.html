@@ -64,22 +64,22 @@
       <div class="brand">Puffx Ofline GPT<small>Powered by Puffx Host</small></div>
     </header>
     <section class="hero" aria-labelledby="title">
-      <span class="eyebrow"><i aria-hidden="true"></i> Live visual demo</span>
+      <span class="eyebrow"><i aria-hidden="true"></i> V1 live visual demo · V2 concept preview</span>
       <h1 id="title">Private AI.<br>Right on your device.</h1>
       <p class="lead">A first look at Puffx Ofline GPT: a clean local chat interface for an Ollama model running on your own computer.</p>
       <nav class="actions" aria-label="Project links">
-        <button class="button primary" type="button" id="openDemo">Try the interactive demo</button>
+        <button class="button primary" type="button" id="openDemo">Try the V1 interactive demo</button>\n        <a class="button" href="v2-preview.html">Preview the V2 concept ↗</a>
         <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT#quick-start">Set it up locally</a>
         <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT">View source on GitHub</a>
       </nav>
     </section>
-    <button class="frame preview-trigger" type="button" id="previewGraphic" aria-label="Click to open the interactive chat demo">
-      <span class="preview-hint">Click the preview to try the demo ↗</span>
+    <button class="frame preview-trigger" type="button" id="previewGraphic" aria-label="Click to open the V1 interactive chat demo">
+      <span class="preview-hint">V1 preview · click to try ↗</span>
       <img src="puffx-ui-motion.svg" alt="Animated preview of the Puffx Ofline GPT chat interface. Click to open the interactive chat demo.">
     </button>
     <dialog id="demoDialog" aria-labelledby="demoTitle">
       <div class="demo-head">
-        <div class="demo-brand" id="demoTitle">✳ Puffx Ofline GPT <small>Interactive UI preview · sample replies</small></div>
+        <div class="demo-brand" id="demoTitle">✳ Puffx Ofline GPT V1 <small>Interactive UI preview · sample replies</small></div>
         <button class="icon-button" id="closeDemo" type="button" aria-label="Close demo">×</button>
       </div>
       <div class="demo-feed" id="demoFeed" aria-live="polite">
@@ -99,7 +99,7 @@
     </dialog>
     <aside class="note">
       <span aria-hidden="true">ⓘ</span>
-      <div><strong>This hosted page is a visual preview only.</strong> GitHub Pages hosts static files; it does not run the Python server or Ollama model. To send real prompts, follow the setup guide and run the app and model on your own computer. This demo page does not collect or send chat prompts.</div>
+      <div><strong>V1 is a sample UI preview; V2 is a concept preview.</strong> GitHub Pages hosts static files and does not run Ollama, speech recognition, text-to-speech, or web search. The V1 and V2 demo pages use sample behavior only. V2 voice/search controls do not access your microphone or send requests. Nothing typed into either demo is sent anywhere. Run the app locally with Ollama for real AI chat.</div>
     </aside>
     <footer>Developed by <strong>Nitin Mehta</strong> · <a href="https://puffxhost.com/">Puffx Host</a></footer>
   </main>
@@ -144,7 +144,7 @@
       input.focus();
     }
     document.getElementById("openDemo").addEventListener("click", openDemo);
-    document.getElementById("previewGraphic").addEventListener("click", openDemo);
+    document.getElementById("previewGraphic").addEventListener("click", openDemo);\n    if (window.location.hash === "#v1-demo") openDemo();
     document.getElementById("closeDemo").addEventListener("click", () => dialog.close());
     dialog.addEventListener("close", stopPlaceholderRotation);
     input.addEventListener("input", () => {
