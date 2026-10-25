@@ -68,7 +68,8 @@
       <h1 id="title">Private AI.<br>Right on your device.</h1>
       <p class="lead">A first look at Puffx Ofline GPT: a clean local chat interface for an Ollama model running on your own computer.</p>
       <nav class="actions" aria-label="Project links">
-        <button class="button primary" type="button" id="openDemo">Try the V1 interactive demo</button>\n        <a class="button" href="v2-preview.html">Preview the V2 concept ↗</a>
+        <button class="button primary" type="button" id="openDemo">Try the V1 interactive demo</button>
+        <a class="button" href="v2-preview.html">Preview the V2 concept ↗</a>
         <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT#quick-start">Set it up locally</a>
         <a class="button" href="https://github.com/puffxhost/Puffx-Offline-GPT">View source on GitHub</a>
       </nav>
@@ -144,7 +145,8 @@
       input.focus();
     }
     document.getElementById("openDemo").addEventListener("click", openDemo);
-    document.getElementById("previewGraphic").addEventListener("click", openDemo);\n    if (window.location.hash === "#v1-demo") openDemo();
+    document.getElementById("previewGraphic").addEventListener("click", openDemo);
+    if (window.location.hash === "#v1-demo") openDemo();
     document.getElementById("closeDemo").addEventListener("click", () => dialog.close());
     dialog.addEventListener("close", stopPlaceholderRotation);
     input.addEventListener("input", () => {
