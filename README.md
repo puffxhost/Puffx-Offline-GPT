@@ -64,7 +64,7 @@ Model weights are downloaded separately by Ollama. Pick a model that fits your s
 
 ## Model choices and suggestions
 
-**Default and recommended for most users: `qwen2.5:3b` (~1.9 GB).** It is the project's default and a middle ground between download size and capability. If your computer has limited storage or memory, start with **`qwen2.5:0.5b` (~398 MB)** instead; it is smaller but may give simpler answers. Puffx can also use any text model downloaded in Ollama. The model dropdown marks the current default with **(default)**. These are example choices from the [Ollama model library](https://ollama.com/library):
+**Default and recommended for most users: `qwen2.5:3b` (~1.9 GB).** It is the project's default and a middle ground between download size and capability. If your computer has limited storage or memory, start with **`qwen2.5:0.5b` (~398 MB)** instead; it is smaller but may give simpler answers. Puffx can also use any text model downloaded in Ollama. The model dropdown marks the current default with **(default)** and shows the on-disk size Ollama reports for each installed model. These are example choices from the [Ollama model library](https://ollama.com/library):
 
 | Model tag | Approx. download | Suggested use |
 | --- | ---: | --- |
