@@ -16,6 +16,31 @@ This repository gives you a simple browser-based chat screen and a small local P
 
 Use it for local text conversations such as asking questions, explaining topics, brainstorming, drafting text, or getting coding help. The exact quality and speed depend on the model you choose and your computer. The default model is `qwen2.5:3b`; this is a compact text model, not a copy of ChatGPT. It does not provide general web search, image generation, or file attachments. For developer-related questions only, it refreshes a small allowlist of public profile pages when online; this is retrieval context, not model training.
 
+## 🧭 V1 vs V2 — feature comparison
+
+> **V1 is the current usable release. V2 is still a draft proposal** on the separate [v2-draft branch](https://github.com/puffxhost/Puffx-Offline-GPT/tree/v2-draft). V2 features listed here are planned and are not available in the V1 download or Docker image.
+
+| Feature | V1 — available now ✅ | V2 — planned draft 🛠️ |
+| --- | --- | --- |
+| AI chat | Local text chat through Ollama; choose an installed model. | Keep local Ollama as the default and improve the chat experience. |
+| Voice chat | Not included. | Call-like voice mode with push-to-talk or turn-taking, mute/stop, and spoken answers. Local speech processing is the priority; any browser/cloud speech fallback must be opt-in and clearly disclosed. |
+| Voice search | Not included. | Speak a query, review its transcript, then search and receive source-linked results. |
+| Web search | No general web search. | Explicit, configurable search with title, domain, link, and retrieval time. Developer questions check approved profile sources first; broader search needs a configured provider. |
+| Developer knowledge | Bundled professional profile plus refresh from listed public pages for developer-related questions; six-hour in-memory cache. | Profile panel with source status, last refresh, manual refresh, review-before-save, change history, and clear-data controls. |
+| Privacy | Chat goes to Ollama on this computer. Profile page requests contain no chat prompt. | Ask before using the microphone; never send full chat history to search; don't store raw audio; explain when a selected provider sends data online. |
+| Offline use | Text chat works offline after installing Ollama and downloading a model. | Preserve offline local chat and local voice where supported; search is unavailable offline and should say so. |
+| Install/version | Current GitHub release and the `latest` Docker image. | Separate V2 preview/release and Docker tags; keep V1 stable until V2 is reviewed and explicitly released. |
+
+### V2 roadmap
+
+1. 🧑‍💻 Build the profile panel and safe refresh/review controls.
+2. 🎙️ Add voice controls and speech adapters, prioritizing local speech-to-text and text-to-speech.
+3. 🔎 Add opt-in search-provider settings, citations, and voice-to-search.
+4. 📦 Document V2 setup, migration, and separate release tags.
+5. ✅ Review behavior and privacy before a stable release.
+
+Follow the [V2 draft plan](https://github.com/puffxhost/Puffx-Offline-GPT/blob/v2-draft/V2_DRAFT.md) and [draft pull request](https://github.com/puffxhost/Puffx-Offline-GPT/pull/1) for progress. These links describe planned work, not a released V2.
+
 ### How a message travels
 
 ```mermaid
