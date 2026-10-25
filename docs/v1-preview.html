@@ -27,6 +27,8 @@
     @media(max-width:760px){.sidebar{position:absolute;inset:0 auto 0 0;width:270px;box-shadow:20px 0 50px #0006}.sidebar.hidden{margin-left:-280px}.menu{display:grid}.collapse{display:grid}.topbar{padding:0 12px}.demo-link{display:none}.welcome{padding-top:24px}.suggestions{grid-template-columns:1fr;max-width:400px;margin:auto}.suggestion{padding:10px 12px}.suggestion small{font-size:9px}.welcome h1{font-size:32px}.welcome-sub{font-size:11px}.messages,.composer-wrap{width:calc(100% - 24px)}.composer-hint{font-size:8px}.disclaimer,.credits{font-size:8px}}
     @media(max-width:470px){.offline-pill{font-size:0;padding:7px}.offline-pill i{width:7px;height:7px}.model-select select{max-width:44vw}.topbar{gap:5px}.composer-tools{align-items:flex-start;flex-direction:column}.composer-actions{width:100%;justify-content:flex-end}.welcome{width:calc(100% - 28px)}}
     @media(min-width:761px){.sidebar.hidden~.main .menu{display:grid}}
+
+    .sidebar{overflow-y:auto}.founder-card{margin:0 2px 12px;padding:10px;border:1px solid #ffffff12;border-radius:11px;background:linear-gradient(145deg,#242126,#1e1e1f)}.founder-heading{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px;color:#ded7e7;font-size:9px;font-weight:700}.founder-heading span{color:#9f89bb;font-size:7px;letter-spacing:.6px}.founder-intro{display:flex;align-items:center;gap:9px}.founder-intro img{width:52px;height:52px;flex-shrink:0;object-fit:cover;object-position:center 34%;border-radius:12px;border:1px solid #ffffff20}.founder-intro div{display:flex;flex-direction:column;gap:4px;min-width:0}.founder-intro strong{font-size:11px;color:#f0edf3}.founder-intro small{font-size:8px;color:#aaa0b2}.founder-excerpt{margin:8px 0;color:#aaa4ad;font-size:9px;line-height:1.55}.founder-details{color:#c1bac7;font-size:9px;line-height:1.6}.founder-details summary{width:max-content;color:#cdb3ed;cursor:pointer;font-size:9px;font-weight:700}.founder-details p{margin:7px 0}.founder-details .founder-signoff{color:#e2d8ec;font-weight:700}.founder-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.founder-links a{padding:4px 6px;border:1px solid #ffffff16;border-radius:999px;color:#c5acdf;text-decoration:none;font-size:8px}.founder-links a:hover{border-color:#cbb4e766;background:#ffffff08}.close-preview{font-size:20px!important;text-decoration:none;flex-shrink:0}.light .founder-card{background:#fff;border-color:#00000016}.light .founder-heading,.light .founder-intro strong{color:#333}.light .founder-intro small,.light .founder-excerpt,.light .founder-details{color:#666}.light .founder-links a{color:#62487e;border-color:#00000020}
   </style>
 </head>
 <body>
@@ -44,6 +46,13 @@
       <button class="history-item" type="button" data-prompt="Write a short Python hello world">Write Python code</button>
     </nav>
     <div class="side-bottom">
+      <section class="founder-card" aria-labelledby="founderTitleV1">
+  <div class="founder-heading" id="founderTitleV1">🧑‍💻 Developer profile <span>FOUNDER STORY</span></div>
+  <div class="founder-intro"><img src="https://puffxhost.com/assets/nitin.jpg" alt="Nitin Mehta, Founder and CEO of Puffx Host" loading="lazy"><div><strong>Nitin Mehta</strong><small>Founder &amp; CEO · Puffx Host</small></div></div>
+  <p class="founder-excerpt">Built on a belief that every website owner deserves fast servers, honest pricing, and support that picks up the phone.</p>
+  <details class="founder-details"><summary>Read the founder’s story</summary><p>What started as a small effort to make reliable hosting affordable for Indian businesses has grown into a platform built to serve website owners across India. Nitin built Puffx Host on a simple belief: every website owner deserves fast servers, honest pricing, and support that actually picks up the phone. Today that mission continues to shape every plan, every server, and every customer conversation at Puffx Host.</p><p class="founder-signoff">— Nitin Mehta, Founder</p></details>
+  <div class="founder-links"><a href="https://nitinmehta.puffxhost.com/" target="_blank" rel="noopener noreferrer">Profile ↗</a><a href="https://wikipedia.puffxhost.com/index.php/Nitin_Mehta" target="_blank" rel="noopener noreferrer">Wikipedia ↗</a><a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">Puffx Host ↗</a><a href="https://app.morenastartup.com/#founder" target="_blank" rel="noopener noreferrer">Morena Startup ↗</a></div>
+</section>
       <div class="local-card"><span class="pulse"></span><div><strong>Private by design</strong><small>Your chats stay in this preview</small></div><span class="lock">⌑</span></div>
       <div class="profile"><div class="avatar">Y</div><div class="profile-copy"><strong>Your workspace</strong><small>Local model preview</small></div></div>
     </div>
@@ -52,7 +61,7 @@
     <header class="topbar">
       <button class="icon-btn menu" id="openSidebar" type="button" aria-label="Open sidebar">☰</button>
       <label class="model-select"><span class="model-dot"></span><select id="modelSelect" aria-label="Select preview model"><option value="qwen2.5:3b">qwen2.5:3b · 1.9 GB (default)</option><option value="qwen2.5:0.5b">qwen2.5:0.5b · 398 MB</option><option value="qwen2.5:1.5b">qwen2.5:1.5b · 986 MB</option><option value="qwen2.5:7b">qwen2.5:7b · 4.7 GB</option></select></label>
-      <div class="top-actions"><a class="demo-link" href="v2-preview.html">V2 concept ↗</a><span class="offline-pill"><i></i> V1 demo · sample replies</span><button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme" aria-pressed="false">☼</button></div>
+      <div class="top-actions"><a class="demo-link" href="v2-preview.html">V2 concept ↗</a><span class="offline-pill"><i></i> V1 demo · sample replies</span><a class="icon-btn close-preview" href="./" aria-label="Close preview and return home" title="Close preview">×</a><button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme" aria-pressed="false">☼</button></div>
     </header>
     <section class="conversation" id="conversation">
       <div class="welcome" id="welcome">
