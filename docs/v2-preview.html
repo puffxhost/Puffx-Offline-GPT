@@ -25,6 +25,7 @@
     .messages{width:min(720px,calc(100% - 40px));margin:0 auto;padding:20px 0 26px;display:flex;flex-direction:column;gap:20px}.message{display:flex;gap:12px;align-items:flex-start;animation:appear .2s ease}.message.user{flex-direction:row-reverse}.message-avatar{width:28px;height:28px;flex-shrink:0;border-radius:9px;display:grid;place-items:center;font-size:10px}.assistant .message-avatar{color:#d7c3ff;background:#342e3d}.user .message-avatar{color:#eee;background:#514458}.message-content{max-width:calc(100% - 42px);font-size:13px;line-height:1.75;color:#ddd;white-space:pre-wrap;overflow-wrap:anywhere;padding-top:2px}.user .message-content{background:#2c2c2c;border:1px solid #ffffff0b;padding:9px 13px;border-radius:14px 4px 14px 14px;color:#eee}.assistant .message-content{padding-top:2px}.sample-sources{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.sample-sources a{color:#c9b1e8;text-decoration:none;border:1px solid #d2b8ff2a;border-radius:999px;padding:4px 7px;font-size:9px}.sample-sources a:hover{border-color:#d2b8ff66}
     .composer-wrap{width:min(720px,calc(100% - 40px));margin:0 auto;padding:10px 0 7px;flex-shrink:0}.composer{border:1px solid #ffffff1a;background:#2a2a2a;border-radius:16px;padding:12px 12px 9px;box-shadow:0 10px 45px #0002;transition:border-color .2s}.composer:focus-within{border-color:#bda8df55}.composer textarea{display:block;width:100%;min-height:27px;max-height:100px;resize:none;border:0;outline:0;background:transparent;color:#f0f0f0;font:13px/1.55 'DM Sans';padding:2px 4px}.composer textarea::placeholder{color:#777}.composer-tools{display:flex;align-items:center;justify-content:space-between;margin-top:6px;gap:7px}.composer-hint{display:flex;align-items:center;gap:6px;color:#858187;font-size:9px;white-space:nowrap}.spark{color:#c7a9ff}.hint-sep{color:#555}.composer-actions{display:flex;align-items:center;gap:6px}.tool{min-height:28px;padding:5px 7px;border:1px solid #ffffff18;border-radius:8px;background:#ffffff07;color:#cfc2dd;font-size:9px;font-weight:700;cursor:pointer}.tool[aria-pressed=true]{border-color:#c9afff66;background:#c9afff16;color:#e8d9ff}.search-toggle{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#a69caf;cursor:pointer}.search-toggle input{width:12px;height:12px;margin:0;accent-color:#c5a2f1}.send-btn{width:30px;height:30px;border:0;border-radius:9px;background:#ded0f6;color:#30283a;display:grid;place-items:center;cursor:pointer}.send-btn:hover{background:#eee5ff;transform:translateY(-1px)}.send-btn svg{width:16px;height:16px}
     .disclaimer{text-align:center;color:#77747a;font-size:9px;margin-top:7px}.credits{text-align:center;color:#77747a;font-size:9px;margin-top:4px}.credits strong{color:#948c9a;font-weight:600}.credits span{padding:0 6px;color:#555}
+    .name-dialog{width:min(420px,calc(100% - 28px));padding:24px;border:1px solid #ffffff20;border-radius:20px;background:#242326;color:#eee;box-shadow:0 24px 80px #0009}.name-dialog::backdrop{background:#08070ad1;backdrop-filter:blur(5px)}.name-dialog form{position:relative}.name-close{position:absolute;right:-10px;top:-12px;width:34px;height:34px;border:0;border-radius:10px;background:#ffffff0a;color:#bbb;font-size:23px;cursor:pointer}.name-close:hover{background:#ffffff18;color:#fff}.name-dialog-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#392f46;color:#d8c2ff}.name-dialog h2{margin:15px 0 6px;font:600 20px Manrope,system-ui;letter-spacing:-.5px}.name-dialog p{margin:0 0 18px;color:#999;font-size:12px}.name-dialog label{display:block;margin-bottom:7px;color:#bbb;font-size:11px;font-weight:700}.name-dialog input{width:100%;padding:11px 12px;border:1px solid #ffffff22;border-radius:10px;background:#19191a;color:#eee;outline:none;font:13px 'DM Sans',system-ui}.name-dialog input:focus{border-color:#c8aaf0aa;box-shadow:0 0 0 3px #c8aaf022}.name-dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}.name-dialog-actions button{padding:9px 13px;border-radius:9px;font:600 11px 'DM Sans',system-ui;cursor:pointer}.name-cancel{border:1px solid #ffffff20;background:transparent;color:#ccc}.name-save{border:1px solid transparent;background:#ddcef5;color:#30273a}.light .name-dialog{background:#fff;color:#222;border-color:#0002}.light .name-dialog input{background:#f6f5f4;color:#222;border-color:#0002}.light .name-dialog p,.light .name-dialog label{color:#666}.light .name-close{color:#555}
     .toast{position:fixed;left:50%;bottom:72px;z-index:8;transform:translateX(-50%);max-width:min(520px,calc(100% - 24px));padding:9px 12px;border:1px solid #ffffff1e;border-radius:9px;background:#302a36;color:#f0e7fb;font-size:10px;box-shadow:0 9px 30px #0007}.hidden{display:none!important}
     .light{--bg:#f8f7f6;--side:#eeedeb;color:#222}.light .sidebar{background:var(--side)}.light .brand,.light .model-select,.light .welcome h1{color:#222}.light .welcome h1 span{color:#888}.light .suggestion,.light .composer{background:#fff;color:#333;border-color:#00000016}.light .profile-copy strong,.light .local-card strong{color:#333}.light .message-content{color:#333}.light .user .message-content{background:#eee;color:#333}.light .topbar .icon-btn{color:#555}
     @keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
@@ -104,12 +105,23 @@
   </main>
 </div>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+<dialog class="name-dialog" id="nameDialog" aria-labelledby="nameDialogTitle">
+  <form id="nameForm">
+    <button class="name-close" id="closeNameDialog" type="button" aria-label="Close name editor">×</button>
+    <div class="name-dialog-icon" aria-hidden="true">✎</div>
+    <h2 id="nameDialogTitle">Set your workspace name</h2>
+    <p>This preview name stays in this tab only.</p>
+    <label for="nameInput">Workspace name</label>
+    <input id="nameInput" name="workspace" maxlength="32" autocomplete="off" required>
+    <div class="name-dialog-actions"><button class="name-cancel" id="cancelName" type="button">Close</button><button class="name-save" type="submit">Save name</button></div>
+  </form>
+</dialog>
 <script>
   const $ = selector => document.querySelector(selector);
   const sidebar = $("#sidebar");
   const messages = $("#messages");
   const promptInput = $("#prompt");
-  let demoName = "Your workspace";
+  let demoName = "Puffx Host (Nitin Mehta)";
   let toastTimer;
   function showToast(message) {
     const toast = $("#toast");
@@ -212,19 +224,28 @@
     $("#conversation").scrollTop = 0;
     showToast("New preview chat. Messages are not saved.");
   });
+  const nameDialog = $("#nameDialog");
+  const nameInput = $("#nameInput");
   $("#editName").addEventListener("click", () => {
-    const current = demoName === "Your workspace" ? "" : demoName;
-    const value = window.prompt("Set a name for this preview. It resets when you close the page.", current);
-    if (value === null) return;
-    if (!String(value).trim()) {
-      demoName = "Your workspace";
-      $("#workspaceName").textContent = demoName;
-      $("#workspaceAvatar").textContent = "Y";
-      showToast("Preview name reset.");
-      return;
+    nameInput.value = demoName;
+    nameDialog.showModal();
+    nameInput.focus();
+    nameInput.select();
+  });
+  $("#closeNameDialog").addEventListener("click", () => nameDialog.close());
+  $("#cancelName").addEventListener("click", () => nameDialog.close());
+  $("#nameForm").addEventListener("submit", event => {
+    event.preventDefault();
+    if (setName(nameInput.value)) {
+      nameDialog.close();
+      showToast("Workspace name set to " + demoName + ". It is kept in this tab only.");
+    } else {
+      nameInput.focus();
+      showToast("Enter a workspace name.");
     }
-    if (setName(value)) showToast("This preview will call you " + demoName + ". Nothing is saved after closing.");
-    else showToast("Enter a name to preview the setting.");
+  });
+  nameDialog.addEventListener("click", event => {
+    if (event.target === nameDialog) nameDialog.close();
   });
   $("#voiceButton").addEventListener("click", event => {
     const active = event.currentTarget.getAttribute("aria-pressed") !== "true";
