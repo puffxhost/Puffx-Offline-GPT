@@ -34,6 +34,8 @@
     @media(max-width:760px){.demo-link{display:none}.sidebar{position:absolute;inset:0 auto 0 0;width:270px;box-shadow:20px 0 50px #0006}.sidebar.hidden{margin-left:-280px}.menu{display:grid}.collapse{display:grid}.topbar{padding:0 12px}.welcome{padding-top:24px}.suggestions{grid-template-columns:1fr;max-width:400px;margin:auto}.suggestion{padding:9px 11px}.suggestion small{font-size:9px}.welcome h1{font-size:32px}.welcome-sub{font-size:11px}.messages,.composer-wrap{width:calc(100% - 24px)}.composer-tools{flex-wrap:wrap}.composer-hint{order:2}.composer-actions{margin-left:auto}.disclaimer,.credits{font-size:8px}}
     @media(max-width:470px){.offline-pill{font-size:0;padding:7px}.offline-pill i{width:7px;height:7px}.model-label{font-size:10px}.topbar{gap:5px}.composer-hint{font-size:8px}.search-toggle{font-size:8px}.tool{font-size:8px;padding:5px}.welcome{width:calc(100% - 28px)}}
     @media(min-width:761px){.sidebar.hidden~.main .menu{display:grid}}
+
+    .sidebar{overflow-y:auto}.founder-card{margin:0 2px 12px;padding:10px;border:1px solid #ffffff12;border-radius:11px;background:linear-gradient(145deg,#242126,#1e1e1f)}.founder-heading{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px;color:#ded7e7;font-size:9px;font-weight:700}.founder-heading span{color:#9f89bb;font-size:7px;letter-spacing:.6px}.founder-intro{display:flex;align-items:center;gap:9px}.founder-intro img{width:52px;height:52px;flex-shrink:0;object-fit:cover;object-position:center 34%;border-radius:12px;border:1px solid #ffffff20}.founder-intro div{display:flex;flex-direction:column;gap:4px;min-width:0}.founder-intro strong{font-size:11px;color:#f0edf3}.founder-intro small{font-size:8px;color:#aaa0b2}.founder-excerpt{margin:8px 0;color:#aaa4ad;font-size:9px;line-height:1.55}.founder-details{color:#c1bac7;font-size:9px;line-height:1.6}.founder-details summary{width:max-content;color:#cdb3ed;cursor:pointer;font-size:9px;font-weight:700}.founder-details p{margin:7px 0}.founder-details .founder-signoff{color:#e2d8ec;font-weight:700}.founder-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.founder-links a{padding:4px 6px;border:1px solid #ffffff16;border-radius:999px;color:#c5acdf;text-decoration:none;font-size:8px}.founder-links a:hover{border-color:#cbb4e766;background:#ffffff08}.close-preview{font-size:20px!important;text-decoration:none;flex-shrink:0}.light .founder-card{background:#fff;border-color:#00000016}.light .founder-heading,.light .founder-intro strong{color:#333}.light .founder-intro small,.light .founder-excerpt,.light .founder-details{color:#666}.light .founder-links a{color:#62487e;border-color:#00000020}
   </style>
 </head>
 <body>
@@ -55,6 +57,13 @@
           <a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">↗ Puffx Host founder</a>
           <a href="https://app.morenastartup.com/#founder" target="_blank" rel="noopener noreferrer">↗ Morena Startup founder</a>
         </div>
+        <section class="founder-card" aria-labelledby="founderTitleV2">
+  <div class="founder-heading" id="founderTitleV2">🧑‍💻 Developer profile <span>FOUNDER STORY</span></div>
+  <div class="founder-intro"><img src="https://puffxhost.com/assets/nitin.jpg" alt="Nitin Mehta, Founder and CEO of Puffx Host" loading="lazy"><div><strong>Nitin Mehta</strong><small>Founder &amp; CEO · Puffx Host</small></div></div>
+  <p class="founder-excerpt">Built on a belief that every website owner deserves fast servers, honest pricing, and support that picks up the phone.</p>
+  <details class="founder-details"><summary>Read the founder’s story</summary><p>What started as a small effort to make reliable hosting affordable for Indian businesses has grown into a platform built to serve website owners across India. Nitin built Puffx Host on a simple belief: every website owner deserves fast servers, honest pricing, and support that actually picks up the phone. Today that mission continues to shape every plan, every server, and every customer conversation at Puffx Host.</p><p class="founder-signoff">— Nitin Mehta, Founder</p></details>
+  <div class="founder-links"><a href="https://nitinmehta.puffxhost.com/" target="_blank" rel="noopener noreferrer">Profile ↗</a><a href="https://wikipedia.puffxhost.com/index.php/Nitin_Mehta" target="_blank" rel="noopener noreferrer">Wikipedia ↗</a><a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">Puffx Host ↗</a><a href="https://app.morenastartup.com/#founder" target="_blank" rel="noopener noreferrer">Morena Startup ↗</a></div>
+</section>
         <button class="refresh-sources" id="refreshSources" type="button">↻ Refresh · preview only</button>
       </section>
       <div class="local-card"><span class="pulse"></span><div><strong>Private by design</strong><small>V2 concept · sample mode only</small></div><span class="lock">⌑</span></div>
@@ -69,7 +78,7 @@
     <header class="topbar">
       <button class="icon-btn menu" id="openSidebar" type="button" aria-label="Open sidebar">☰</button>
       <div class="model-select" aria-label="Planned default model and download size"><span class="model-dot"></span><span class="model-label">qwen2.5:3b · ~1.9 GB</span></div>
-      <div class="top-actions"><a class="demo-link" href="./#v1-demo">V1 demo ↗</a><span class="offline-pill"><i></i> V2 concept preview</span><button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">☼</button></div>
+      <div class="top-actions"><a class="demo-link" href="./#v1-demo">V1 demo ↗</a><span class="offline-pill"><i></i> V2 concept preview</span><a class="icon-btn close-preview" href="./" aria-label="Close preview and return home" title="Close preview">×</a><button class="icon-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">☼</button></div>
     </header>
     <section class="conversation" id="conversation">
       <div class="welcome" id="welcome">
@@ -88,7 +97,7 @@
     </section>
     <footer class="composer-wrap">
       <form class="composer" id="demoForm">
-        <textarea id="prompt" rows="1" placeholder="Message Puffx Ofline GPT… (try “Mujhe Riya bulao”)" aria-label="Type a sample message"></textarea>
+        <textarea id="prompt" rows="1" placeholder="Message Puffx Ofline GPT…" aria-label="Type a sample message"></textarea>
         <div class="composer-tools">
           <div class="composer-hint"><span class="spark">✳</span><span>Local-first concept</span><span class="hint-sep">·</span><span>qwen2.5:3b · ~1.9 GB</span></div>
           <div class="composer-actions">
