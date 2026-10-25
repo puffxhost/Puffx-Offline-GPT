@@ -46,6 +46,8 @@ The browser saves chat history in that browser profile's local storage. The mode
 - ChatGPT-inspired dark interface with light theme, prompt suggestions, and a conversation sidebar.
 - Runs inference through an Ollama model on your computer; no cloud AI API key is needed.
 - Keeps conversation history in your browser's local storage.
+- Includes a compact developer/founder profile with an expandable story and public profile links.
+- Lets you set the workspace label manually or by chat command; the label is saved only in this browser.
 - Copy any assistant response with one click; copied text remains on your device.
 - Python web server uses only Python's standard library; no Python packages or build tools are required.
 - Binds to `127.0.0.1` by default, so the web app is only available on the same computer.
@@ -100,6 +102,9 @@ On Windows, use `py -3 server.py` instead of `python3 server.py`, or double-clic
 4. Use **New chat** to start a separate conversation. Select a conversation in the sidebar to return to it. The theme button switches between dark and light mode.
 5. Use **Ctrl+K** on Windows/Linux or **Command+K** on macOS to start a new chat. On a narrow screen, use the menu button to show the sidebar.
 6. Choose an installed model from the model dropdown in the top bar. The default option is marked **(default)**; your selection is remembered in this browser. If a model is missing, download it with `ollama pull MODEL_TAG`, then wait for the model list to refresh (up to 20 seconds) or reload the page.
+
+7. Use the pencil beside the workspace name to edit it. You can also type **“mujhe Nitin bulao”**, **“mera naam Nitin hai”**, or **“call me Nitin”** in chat. The name command is handled locally, is not sent to Ollama, and is saved only in this browser.
+8. Open **Developer profile → Read story** in the sidebar to read about Nitin Mehta and visit the linked public profiles.
 
 The browser history belongs to the browser profile on this computer. It does not automatically sync between browsers or computers. If Ollama is not ready when you first open the page, start it and refresh the app.
 ## 🚀 Installation
