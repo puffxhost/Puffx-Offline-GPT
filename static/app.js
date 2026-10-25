@@ -6,6 +6,7 @@ const welcome = $('#welcome');
 const CHAT_KEY = 'offlinegpt_chats';
 const LIGHT_KEY = 'offlinegpt_light';
 const MODEL_KEY = 'offlinegpt_model';
+const WORKSPACE_NAME_KEY = 'offlinegpt_workspace_name';
 const VALID_ROLES = new Set(['user', 'assistant']);
 
 function readSetting(key, fallback = null) {
@@ -37,6 +38,55 @@ let chats = loadChats();
 let activeId = null;
 let busy = false;
 let selectedModel = readSetting(MODEL_KEY, '') || '';
+
+const DEFAULT_WORKSPACE_NAME = 'Your workspace';
+let workspaceName = normalizeWorkspaceName(readSetting(WORKSPACE_NAME_KEY, '')) || DEFAULT_WORKSPACE_NAME;
+
+function normalizeWorkspaceName(value) {
+  const cleaned = String(value || '')
+    .normalize('NFKC')
+    .replace(/[\u0000-\u001f\u007f<>]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^["'“”‘’]+|["'“”‘’]+$/g, '');
+  return Array.from(cleaned).slice(0, 32).join('');
+}
+function workspaceInitial() {
+  return Array.from(workspaceName.trim())[0]?.toLocaleUpperCase() || 'Y';
+}
+function renderWorkspaceName() {
+  const label = $('#workspaceName');
+  const avatar = $('#workspaceAvatar');
+  if (label) label.textContent = workspaceName;
+  if (avatar) avatar.textContent = workspaceInitial();
+}
+function setWorkspaceName(value) {
+  const cleaned = normalizeWorkspaceName(value);
+  try {
+    if (cleaned) localStorage.setItem(WORKSPACE_NAME_KEY, cleaned);
+    else localStorage.removeItem(WORKSPACE_NAME_KEY);
+  } catch { return false; }
+  workspaceName = cleaned || DEFAULT_WORKSPACE_NAME;
+  renderWorkspaceName();
+  return true;
+}
+function parseWorkspaceNameCommand(text) {
+  const patterns = [
+    /^\s*(?:call me|my name is|set (?:my )?name to|set (?:my )?workspace name to|rename me to)\s+([^.!?\n]+?)\s*[.!?]*\s*$/i,
+    /^\s*(?:मेरा\s+नाम|mera\s+naam)\s+(.+?)\s+(?:है|hai|रखो|rakho|रखना|rakhna)\s*[.!?।]*\s*$/iu,
+    /^\s*(?:मुझे|mujhe)\s+(.+?)\s+(?:बुलाओ|bulao|बोलो|bolo|कहो|kaho)\s*[.!?।]*\s*$/iu,
+    /^\s*(?:(?:my|meri|mera|मेरे|मेरी)\s+)?(?:workspace|वर्कस्पेस)\s+(?:ka\s+naam|का\s+नाम)\s+(.+?)\s+(?:रखो|rakho|रखना|rakhna|कर\s+दो|kar\s+do)\s*[.!?।]*\s*$/iu
+  ];
+  for (const pattern of patterns) {
+    const match = String(text || '').match(pattern);
+    if (!match) continue;
+    const name = normalizeWorkspaceName(match[1]);
+    if (name && name !== DEFAULT_WORKSPACE_NAME) return name;
+  }
+  return null;
+}
+renderWorkspaceName();
+
 
 function setModelName(name) {
   const label = (name || 'qwen2.5:3b').replace(/:latest$/, '').replace(/:/g, ' ');
@@ -108,7 +158,7 @@ function addMessage(role, content, typing = false) {
   row.className = 'message ' + (role === 'user' ? 'user' : 'assistant');
   const avatar = document.createElement('div');
   avatar.className = 'message-avatar';
-  avatar.textContent = role === 'user' ? 'Y' : '✳';
+  avatar.textContent = role === 'user' ? workspaceInitial() : '✳';
   const body = document.createElement('div');
   body.className = typing ? 'message-content typing' : 'message-content';
   if (typing) body.innerHTML = '<span></span><span></span><span></span>';
@@ -198,6 +248,17 @@ async function send(text = promptEl.value.trim()) {
   const chatId = chat.id;
   chat.messages.push({ role: 'user', content: text });
   addMessage('user', text);
+  const requestedWorkspaceName = parseWorkspaceNameCommand(text);
+  if (requestedWorkspaceName) {
+    const saved = setWorkspaceName(requestedWorkspaceName);
+    const confirmation = saved
+      ? `Theek hai, ab main tumhe ${workspaceName} bulaunga. Ye naam isi browser mein save rahega. Naam badalne ke liye chat mein “mujhe [naam] bulao” kehna ya pencil button use karna.`
+      : 'Naam is browser mein save nahi ho saka. Browser storage settings check karke dobara try karo.';
+    chat.messages.push({ role: 'assistant', content: confirmation });
+    addMessage('assistant', confirmation);
+    persist();
+    return;
+  }
   persist();
 
   busy = true;
@@ -207,7 +268,12 @@ async function send(text = promptEl.value.trim()) {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chat.messages, model: selectedModel })
+      body: JSON.stringify({
+        messages: workspaceName !== DEFAULT_WORKSPACE_NAME
+          ? [{ role: 'system', content: `The user's preferred name is ${workspaceName}. Address them by this name naturally, but do not overuse it.` }, ...chat.messages]
+          : chat.messages,
+        model: selectedModel
+      })
     });
     let data;
     try { data = await response.json(); }
@@ -233,6 +299,18 @@ async function send(text = promptEl.value.trim()) {
 }
 
 $('#send').onclick = () => send();
+$('#editWorkspaceName').addEventListener('click', () => {
+  const current = workspaceName === DEFAULT_WORKSPACE_NAME ? '' : workspaceName;
+  const value = window.prompt('What should Puffx call you? You can also set this in chat by saying “my name is Alex” or “mujhe Alex bulao”. Leave blank to reset.', current);
+  if (value === null) return;
+  if (!setWorkspaceName(value)) {
+    showNotice('Your name could not be saved in this browser. Check browser storage or privacy settings.');
+    return;
+  }
+  showNotice(workspaceName === DEFAULT_WORKSPACE_NAME
+    ? 'Workspace name reset.'
+    : `I’ll call you ${workspaceName}. This preference is saved in this browser.`);
+});
 promptEl.addEventListener('keydown', event => {
   if (event.isComposing || event.keyCode === 229) return;
   if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); }

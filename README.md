@@ -16,6 +16,39 @@ This repository gives you a simple browser-based chat screen and a small local P
 
 Use it for local text conversations such as asking questions, explaining topics, brainstorming, drafting text, or getting coding help. The exact quality and speed depend on the model you choose and your computer. The default model is `qwen2.5:3b`; this is a compact text model, not a copy of ChatGPT. It does not provide general web search, image generation, or file attachments. For developer-related questions only, it refreshes a small allowlist of public profile pages when online; this is retrieval context, not model training.
 
+## 🧭 V1 vs V2 — feature comparison
+
+> **V1 is the current usable release. V2 is still a draft proposal** on the separate [v2-draft branch](https://github.com/puffxhost/Puffx-Offline-GPT/tree/v2-draft). V2 features listed here are planned and are not available in the V1 download or Docker image.
+
+| Feature | V1 — available now ✅ | V2 — planned draft 🛠️ |
+| --- | --- | --- |
+| AI chat | ✅ Local text chat through Ollama; choose an installed model. | ✅ Planned: keep local Ollama as the default and improve the chat experience. |
+| Default chat model & download size | ✅ `qwen2.5:3b` (~1.9 GB download); other downloaded Ollama models can be selected. | ✅ Planned default: `qwen2.5:3b` (~1.9 GB download), same as V1. Additional local speech model sizes are not finalized yet. |
+| Voice chat | ❌ Not included. | ✅ Planned: call-like voice mode with push-to-talk or turn-taking, mute/stop, and spoken answers. Local speech processing is the priority; any browser/cloud speech fallback must be opt-in and clearly disclosed. |
+| Voice search | ❌ Not included. | ✅ Planned: speak a query, review its transcript, then search and receive source-linked results. |
+| Web search | ❌ No general web search. | ✅ Planned: explicit, configurable search with title, domain, link, and retrieval time. Developer questions check approved profile sources first; broader search needs a configured provider. |
+| Developer knowledge | ✅ Bundled professional profile plus refresh from listed public pages for developer-related questions; six-hour in-memory cache. | ✅ Planned: profile panel with source status, last refresh, manual refresh, review-before-save, change history, and clear-data controls. |
+| Privacy | ✅ Chat goes to Ollama on this computer. Profile page requests contain no chat prompt. | ✅ Planned: ask before using the microphone; never send full chat history to search; don't store raw audio; explain when a selected provider sends data online. |
+| Offline use | ✅ Text chat works offline after installing Ollama and downloading a model. | ✅ Planned: preserve offline local chat and local voice where supported; search is unavailable offline and should say so. |
+| Workspace name | ❌ Fixed generic label; no personal name setting. | ✅ Planned: set a preferred name manually or with a clear chat command; save it in this browser and use it for local Ollama replies. |
+| Install/version | ✅ Current GitHub release and the `latest` Docker image. | ✅ Planned: separate V2 preview/release and Docker tags; keep V1 stable until V2 is reviewed and explicitly released. |
+
+Model sizes are approximate downloads, not RAM requirements. See the [Ollama Qwen 2.5 model page](https://ollama.com/library/qwen2.5:3b) for the current tag size. V2's speech-to-text and text-to-speech models, if shipped locally, will be separate downloads and their sizes are not decided yet.
+
+### V2 roadmap
+
+### Set your workspace name
+
+V2 will let you choose the name shown in the sidebar with its pencil button, or tell Puffx in chat. Example commands include “My name is Alex,” “Call me Alex,” “Mera naam Alex hai,” “Mujhe Alex bulao,” and “workspace ka naam Alex rakho.” The app will confirm the change, save it in this browser, and use it as local context for Ollama replies. Leave the manual name field blank to reset it. This is a planned V2 feature; it is not part of V1 yet.
+
+1. 🧑‍💻 Build the profile panel and safe refresh/review controls.
+2. 🎙️ Add voice controls and speech adapters, prioritizing local speech-to-text and text-to-speech.
+3. 🔎 Add opt-in search-provider settings, citations, and voice-to-search.
+4. 📦 Document V2 setup, migration, and separate release tags.
+5. ✅ Review behavior and privacy before a stable release.
+
+Follow the [V2 draft plan](https://github.com/puffxhost/Puffx-Offline-GPT/blob/v2-draft/V2_DRAFT.md) and [draft pull request](https://github.com/puffxhost/Puffx-Offline-GPT/pull/1) for progress. These links describe planned work, not a released V2.
+
 ### How a message travels
 
 ```mermaid
@@ -594,7 +627,7 @@ Official site: [puffxhost.com](https://puffxhost.com/) · Support: [puffxhost.co
 
 ---
 
-Made with ❤️ by **Puffx Host**.
+Made with ❤️ by **Nitin Mehta**.
 
 ## 📜 License
 
