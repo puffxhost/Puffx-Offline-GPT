@@ -6,6 +6,7 @@ const welcome = $('#welcome');
 const CHAT_KEY = 'offlinegpt_chats';
 const LIGHT_KEY = 'offlinegpt_light';
 const MODEL_KEY = 'offlinegpt_model';
+const WORKSPACE_KEY = 'offlinegpt_workspace';
 const VALID_ROLES = new Set(['user', 'assistant']);
 
 function readSetting(key, fallback = null) {
@@ -203,10 +204,71 @@ function newChat() {
 function makeId() {
   return globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
+
 function newChatShortcut() {
   const label = $('.new-chat kbd');
   if (label) label.textContent = /mac/i.test(navigator.platform || '') ? '⌘ K' : 'Ctrl K';
 }
+function cleanWorkspaceName(value) {
+  return String(value || '').replace(/[<>\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 32);
+}
+function updateWorkspaceName(value) {
+  const name = cleanWorkspaceName(value);
+  if (!name) return null;
+  const saved = writeSetting(WORKSPACE_KEY, name);
+  $('#workspaceName').textContent = name;
+  $('#workspaceAvatar').textContent = Array.from(name)[0].toUpperCase();
+  return { name, saved };
+}
+function workspaceNameCommand(text) {
+  const value = String(text || '').trim();
+  const patterns = [
+    /^(?:please\s+)?call me\s+(.+?)[.!?]?$/i,
+    /^(?:please\s+)?(?:change|set)\s+(?:my\s+)?(?:workspace|display)\s+name\s+(?:to|as)\s+(.+?)[.!?]?$/i,
+    /^(?:please\s+)?set my name to\s+(.+?)[.!?]?$/i,
+    /^mujhe\s+(.+?)\s+bulao[.!?]?$/i,
+    /^mera naam\s+(.+?)\s+hai[.!?]?$/i,
+    /^(?:mera\s+)?workspace\s+ka\s+naam\s+(.+?)\s+(?:rakho|rakh do|kar do)[.!?]?$/i
+  ];
+  for (const pattern of patterns) {
+    const match = value.match(pattern);
+    if (match) {
+      const name = cleanWorkspaceName(match[1]);
+      if (name) return name;
+    }
+  }
+  return null;
+}
+const initialWorkspaceName = cleanWorkspaceName(readSetting(WORKSPACE_KEY, 'Puffx Host (Nitin Mehta)')) || 'Puffx Host (Nitin Mehta)';
+$('#workspaceName').textContent = initialWorkspaceName;
+$('#workspaceAvatar').textContent = Array.from(initialWorkspaceName)[0].toUpperCase();
+const nameDialog = $('#nameDialog');
+const workspaceNameInput = $('#workspaceNameInput');
+$('#editWorkspace').addEventListener('click', () => {
+  workspaceNameInput.value = $('#workspaceName').textContent;
+  nameDialog.showModal();
+  workspaceNameInput.focus();
+});
+$('#closeNameDialog').addEventListener('click', () => nameDialog.close());
+$('#cancelName').addEventListener('click', () => nameDialog.close());
+$('#nameForm').addEventListener('submit', event => {
+  event.preventDefault();
+  const result = updateWorkspaceName(workspaceNameInput.value);
+  if (!result) {
+    workspaceNameInput.setCustomValidity('Enter a workspace name.');
+    workspaceNameInput.reportValidity();
+    return;
+  }
+  workspaceNameInput.setCustomValidity('');
+  nameDialog.close();
+  showNotice(result.saved
+    ? 'Workspace name saved in this browser.'
+    : 'Workspace name changed for this session, but this browser could not save it.');
+});
+const founderDialog = $('#founderDialog');
+$('#openFounder').addEventListener('click', () => founderDialog.showModal());
+$('#closeFounder').addEventListener('click', () => founderDialog.close());
+$('#closeFounderBottom').addEventListener('click', () => founderDialog.close());
 newChatShortcut();
 
 async function send(text = promptEl.value.trim()) {
@@ -224,6 +286,18 @@ async function send(text = promptEl.value.trim()) {
   chat.messages.push({ role: 'user', content: text });
   addMessage('user', text);
   persist();
+
+  const requestedWorkspaceName = workspaceNameCommand(text);
+  if (requestedWorkspaceName) {
+    const result = updateWorkspaceName(requestedWorkspaceName);
+    const answer = result.saved
+      ? 'Theek hai — ab main tumhe “' + result.name + '” bulaunga. Naam isi browser mein save hai; yeh local command Ollama ko nahi bheji gayi.'
+      : 'Theek hai — ab main tumhe “' + result.name + '” bulaunga. Browser storage available nahi tha, isliye naam sirf is session ke liye hai.';
+    chat.messages.push({ role: 'assistant', content: answer });
+    if (activeId === chatId) addMessage('assistant', answer);
+    persist();
+    return;
+  }
 
   busy = true;
   $('#send').disabled = true;
