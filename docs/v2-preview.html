@@ -246,7 +246,7 @@
       toastTimer = window.setTimeout(() => toast.classList.add("hidden"), 3000);
     }
     function setDemoName(name) {
-      const clean = String(name || "").replace(/[<>\\u0000-\\u001f\\u007f]/g, " ").replace(/\\s+/g, " ").trim().slice(0, 32);
+      const clean = String(name || "").replace(/[<>\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 32);
       if (!clean) return false;
       workspaceName = clean;
       document.getElementById("workspaceName").textContent = workspaceName;
@@ -255,9 +255,9 @@
     }
     function nameFromCommand(text) {
       const patterns = [
-        /^\\s*(?:call me|my name is|set (?:my )?name to)\\s+([^.!?\\n]+?)\\s*[.!?]*\\s*$/i,
-        /^\\s*(?:mera naam|मेरा\\s+नाम)\\s+(.+?)\\s+(?:hai|है)\\s*[.!?।]*\\s*$/iu,
-        /^\\s*(?:mujhe|मुझे)\\s+(.+?)\\s+(?:bulao|बुलाओ|bolo|बोलो)\\s*[.!?।]*\\s*$/iu
+        /^\s*(?:call me|my name is|set (?:my )?name to)\s+([^.!?\n]+?)\s*[.!?]*\s*$/i,
+        /^\s*(?:mera naam|मेरा\s+नाम)\s+(.+?)\s+(?:hai|है)\s*[.!?।]*\s*$/iu,
+        /^\s*(?:mujhe|मुझे)\s+(.+?)\s+(?:bulao|बुलाओ|bolo|बोलो)\s*[.!?।]*\s*$/iu
       ];
       for (const pattern of patterns) {
         const match = String(text || "").match(pattern);
