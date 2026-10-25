@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17151c">
+  <meta name="description" content="Preview the planned Puffx Ofline GPT V2 interface for voice chat, web search, and developer profile controls.">
+  <title>Puffx Ofline GPT V2 — Concept Demo</title>
+  <style>
+    :root{color-scheme:dark;--bg:#111014;--panel:#1b191f;--panel2:#211e27;--line:#ffffff16;--text:#f2eff6;--muted:#aaa4b2;--lilac:#d2b8ff;--green:#7bd1a1}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 55% -18%,#49345d66,transparent 48%),var(--bg);color:var(--text);font:14px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,a{font:inherit}
+    .shell{width:min(1260px,calc(100% - 32px));margin:auto;padding:20px 0 38px}
+    header{display:flex;align-items:center;gap:11px;margin-bottom:22px}
+    .mark{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;color:var(--lilac);background:#b58bff16;border:1px solid #ceb2ff55;font-size:19px}
+    .brand{font-weight:750;letter-spacing:-.3px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase}
+    .top-actions{margin-left:auto;display:flex;align-items:center;gap:9px}
+    .link,.pill,.button{min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#ffffff08;color:var(--text);text-decoration:none;font-weight:650;font-size:12px;cursor:pointer}
+    .link:hover,.button:hover{border-color:#d2b8ff77;background:#ffffff10}
+    .pill{display:inline-flex;align-items:center;gap:7px;color:#c8f2d7}.pill i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+    .banner{display:flex;justify-content:center;align-items:center;gap:8px;margin:0 auto 18px;padding:8px 12px;border:1px solid #efc97939;border-radius:10px;background:#4b391d33;color:#f3dcae;font-size:11px;text-align:center}
+    .layout{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:690px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#17151b;box-shadow:0 30px 100px #0008}
+    aside{display:flex;flex-direction:column;padding:17px 12px;background:#17151b;border-right:1px solid var(--line)}
+    .side-brand{display:flex;align-items:center;gap:9px;padding:3px 7px 18px;font-weight:700}
+    .side-brand span{color:var(--lilac);font-size:18px}
+    .new-chat{width:100%;text-align:left;padding:10px 11px;border-radius:9px;border:1px solid #ffffff27;background:#ffffff08;color:var(--text);cursor:pointer}
+    .label{margin:22px 8px 9px;color:#87808d;font-size:9px;font-weight:750;letter-spacing:1.4px}
+    .history{display:grid;gap:5px}
+    .history div{padding:8px 9px;border-radius:8px;color:#aaa4b2;font-size:12px}
+    .history div:first-child{background:#ffffff0b;color:#eee}
+    .profile{margin-top:auto;padding:12px 9px;border:1px solid var(--line);border-radius:11px;background:#ffffff05}
+    .profile-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;font-weight:700;font-size:12px}
+    .profile p{margin:0 0 10px;color:var(--muted);font-size:11px}
+    .sources{display:grid;gap:6px}
+    .sources a{color:#d7c5f2;font-size:10px;text-decoration:none}
+    .sources a:hover{text-decoration:underline}
+    .refresh{margin-top:11px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:transparent;color:#ddd3e8;font-size:10px;cursor:pointer}
+    .main{min-width:0;display:flex;flex-direction:column}
+    .toolbar{display:flex;align-items:center;gap:10px;padding:12px 17px;border-bottom:1px solid var(--line)}
+    .model{color:#e9e1f2;font-size:12px;font-weight:700}.model::before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--green)}
+    .toolbar .pill{margin-left:auto;min-height:31px;padding:5px 9px;font-size:10px}
+    .chat{width:min(720px,calc(100% - 32px));margin:auto;display:flex;flex-direction:column;gap:17px;padding:28px 0 22px}
+    .hero{text-align:center;margin:5px 0 5px}
+    .hero .eyebrow{color:#c5afd9;font-size:9px;font-weight:750;letter-spacing:1.7px}
+    h1{margin:9px 0 5px;font-size:clamp(25px,4vw,36px);line-height:1.15;letter-spacing:-1.2px}
+    .sub{margin:0;color:var(--muted);font-size:12px}
+    .message{max-width:90%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#ffffff08;white-space:pre-wrap}
+    .message.user{align-self:flex-end;border-color:#cdb1ff33;background:#b995ff1b}
+    .message.assistant{align-self:flex-start}
+    .sources-inline{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .sources-inline a{padding:4px 8px;border:1px solid #d2b8ff35;border-radius:999px;color:#dfd0f6;text-decoration:none;font-size:10px}
+    .voice-card{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #cdb1ff26;border-radius:13px;background:#b995ff0c}
+    .wave{display:flex;align-items:center;gap:3px;height:25px}.wave i{width:3px;border-radius:4px;background:#cdb1ff;height:8px}.wave i:nth-child(2n){height:16px}.wave i:nth-child(3n){height:22px}
+    .voice-copy{flex:1;min-width:0}.voice-copy strong{display:block;font-size:11px}.voice-copy small{color:var(--muted);font-size:10px}
+    .voice-actions{display:flex;gap:7px}
+    .voice-actions button,.tool{padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:#ffffff08;color:#eee5fa;font-size:10px;font-weight:650;cursor:pointer}
+    .voice-actions button:hover,.tool:hover{border-color:#d2b8ff77}
+    .composer{padding:12px;border:1px solid #ffffff22;border-radius:15px;background:#201e25;box-shadow:0 10px 35px #0004}
+    textarea{display:block;width:100%;min-height:38px;max-height:100px;resize:vertical;border:0;outline:0;background:transparent;color:var(--text);font:13px/1.5 inherit}
+    textarea::placeholder{color:#88818e}
+    .composer-row{display:flex;align-items:center;gap:8px;margin-top:7px}
+    .search-toggle{display:inline-flex;align-items:center;gap:6px;color:#b8b0c0;font-size:10px;cursor:pointer}
+    .search-toggle input{accent-color:#c9aaff}
+    .microphone{margin-left:auto}
+    .send{padding:7px 11px;border:0;border-radius:9px;background:linear-gradient(100deg,#e2d1ff,#bea0f3);color:#211a2c;font-size:11px;font-weight:800;cursor:pointer}
+    .footnote{text-align:center;color:#8e8795;font-size:10px}
+    .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:10px 14px;border:1px solid #ffffff22;border-radius:10px;background:#26212d;color:#f4eaff;font-size:12px;box-shadow:0 10px 35px #0009}
+    .hidden{display:none!important}
+    @media(max-width:760px){.shell{width:min(100% - 18px,1260px);padding-top:12px}.layout{grid-template-columns:1fr;min-height:0}.layout aside{display:none}.chat{padding:20px 0}.top-actions .link:first-child{display:none}.toolbar{padding:10px 12px}.banner{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="mark" aria-hidden="true">✳</div>
+      <div class="brand">Puffx Ofline GPT<small>V2 concept preview</small></div>
+      <div class="top-actions">
+        <a class="link" href="./#v1-demo">← V1 demo</a>
+        <a class="link" href="https://github.com/puffxhost/Puffx-Offline-GPT/pull/1">V2 draft plan ↗</a>
+      </div>
+    </header>
+    <div class="banner"><span aria-hidden="true">ⓘ</span><span><strong>Concept preview only.</strong> No AI model, microphone, or web search is connected here. Nothing you type is sent anywhere.</span></div>
+    <section class="layout" aria-label="V2 interface concept">
+      <aside>
+        <div class="side-brand"><span>✳</span> Puffx Ofline GPT</div>
+        <button class="new-chat" id="newChat" type="button">＋ &nbsp; New chat</button>
+        <div class="label">YOUR SPACE</div>
+        <div class="history"><div>Developer profile sources</div><div>Voice and web search</div><div>Offline AI basics</div></div>
+        <section class="profile" aria-labelledby="profileTitle">
+          <div class="profile-head"><span id="profileTitle">🧑‍💻 Developer profile</span><span style="color:#83d3a7;font-size:10px">● Ready</span></div>
+          <p>Approved public sources · last refreshed for this preview</p>
+          <nav class="sources" aria-label="Example profile sources">
+            <a href="https://nitinmehta.puffxhost.com/" target="_blank" rel="noopener noreferrer">↗ Nitin Mehta profile</a>
+            <a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">↗ Puffx Host founder</a>
+            <a href="https://app.morenastartup.com/#founder" target="_blank" rel="noopener noreferrer">↗ Morena Startup founder</a>
+            <a href="https://dev.to/nitinmehta" target="_blank" rel="noopener noreferrer">↗ DEV Community</a>
+          </nav>
+          <button class="refresh" id="refreshProfile" type="button">↻ Preview refresh control</button>
+        </section>
+      </aside>
+      <section class="main">
+        <div class="toolbar"><span class="model">Local model · concept</span><span class="pill"><i></i> Preview mode</span></div>
+        <div class="chat" id="chat">
+          <div class="hero">
+            <div class="eyebrow">V2 CONCEPT · LOCAL-FIRST</div>
+            <h1>Talk naturally.<br><span style="color:#bcb1c8">Find answers with sources.</span></h1>
+            <p class="sub">A preview of the planned voice, search, and profile controls.</p>
+          </div>
+          <div class="voice-card">
+            <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="voice-copy"><strong>Call-like voice mode</strong><small id="voiceStatus">Local speech is planned · microphone is off</small></div>
+            <div class="voice-actions"><button id="voiceButton" type="button">🎙 Preview voice</button></div>
+          </div>
+          <div class="message user">Who is Nitin Mehta?</div>
+          <div class="message assistant">Sample V2 response: Nitin Mehta's public profile describes him as the founder of Puffx Host and a software developer. In the finished V2, answers like this are intended to show their sources.
+            <div class="sources-inline"><a href="https://nitinmehta.puffxhost.com/" target="_blank" rel="noopener noreferrer">Example source · profile</a><a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">Example source · founder page</a></div>
+          </div>
+          <div class="composer">
+            <textarea id="prompt" rows="1" placeholder="Ask a question in the V2 preview…" aria-label="Type a sample question"></textarea>
+            <div class="composer-row">
+              <label class="search-toggle"><input type="checkbox" id="searchToggle"> 🔎 Search option</label>
+              <button class="tool microphone" id="micButton" type="button">🎙 Voice input</button>
+              <button class="send" id="sendButton" type="button">Send ↗</button>
+            </div>
+          </div>
+          <div class="footnote">Sample replies only · search and speech controls are visual prototypes.</div>
+        </div>
+      </section>
+    </section>
+    <footer style="padding:18px 0;text-align:center;color:#817b89;font-size:11px">Developed by <strong>Nitin Mehta</strong> · <a style="color:#c8aff4" href="https://puffxhost.com/">Puffx Host</a></footer>
+  </main>
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.add("hidden"), 3200);
+    }
+    document.getElementById("voiceButton").addEventListener("click", () => showToast("Concept preview only — this demo does not request microphone access."));
+    document.getElementById("micButton").addEventListener("click", () => showToast("Voice input is planned for V2. Microphone stays off in this preview."));
+    document.getElementById("refreshProfile").addEventListener("click", () => showToast("Preview only — no profile refresh or network request was made."));
+    document.getElementById("searchToggle").addEventListener("change", event => {
+      showToast(event.target.checked ? "Search UI preview enabled. No web search is performed here." : "Search UI preview disabled.");
+    });
+    document.getElementById("newChat").addEventListener("click", () => {
+      document.getElementById("prompt").value = "";
+      showToast("New chat preview — this demo does not store messages.");
+    });
+    function addMessage(text, role) {
+      const item = document.createElement("div");
+      item.className = "message " + role;
+      item.textContent = text;
+      const chat = document.getElementById("chat");
+      chat.insertBefore(item, document.querySelector(".composer"));
+    }
+    function sendDemoMessage() {
+      const input = document.getElementById("prompt");
+      const value = input.value.trim();
+      if (!value) return;
+      addMessage(value, "user");
+      input.value = "";
+      window.setTimeout(() => {
+        addMessage("This V2 page is a concept preview with sample UI only. The finished app is planned to answer through your local Ollama model and show links when search is enabled.", "assistant");
+      }, 250);
+    }
+    document.getElementById("sendButton").addEventListener("click", sendDemoMessage);
+    document.getElementById("prompt").addEventListener("keydown", event => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendDemoMessage();
+      }
+    });
+  </script>
+</body>
+</html>
