@@ -55,6 +55,8 @@
     @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
     @media(max-width:600px){.wrap{width:min(100% - 22px,1180px);padding-top:17px}header{margin-bottom:38px}.hero{margin-bottom:24px}h1{letter-spacing:-1.8px}.lead{font-size:14px}.frame{border-radius:12px}.note{font-size:12px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+    .founder-story{display:grid;grid-template-columns:116px minmax(0,1fr);gap:22px;align-items:center;max-width:850px;margin:28px auto 0;padding:18px;border:1px solid #d2b8ff27;border-radius:17px;background:linear-gradient(115deg,#211d27,#17151c 68%);box-shadow:0 18px 55px #0004}.founder-photo{width:116px;height:136px;object-fit:cover;object-position:center 34%;border:1px solid #ffffff22;border-radius:13px}.founder-label{display:flex;gap:8px;align-items:center}.founder-label span:first-child{padding:3px 7px;border:1px solid #d2b8ff44;border-radius:999px;color:#d8c4f4;font-size:8px;line-height:1.4;letter-spacing:1px;font-weight:800}.founder-label span:last-child{color:#8f8797;font-size:8px;letter-spacing:1px}.founder-copy h2{margin:7px 0 0;font-size:21px;line-height:1.2;letter-spacing:-.6px}.founder-role{margin:2px 0 9px;color:#c4b0dc;font-size:11px;font-weight:650}.founder-text{margin:0;color:#b9b2c0;font-size:11px;line-height:1.65}.founder-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;color:#8f8797;font-size:9px}.founder-bottom a{color:#d0b9f2;text-decoration:none;font-weight:700}.founder-bottom a:hover{text-decoration:underline}
+    @media(max-width:600px){.founder-story{grid-template-columns:78px minmax(0,1fr);gap:13px;margin-top:20px;padding:12px}.founder-photo{width:78px;height:98px;border-radius:10px}.founder-copy h2{font-size:17px}.founder-text{font-size:10px;line-height:1.5}.founder-bottom{align-items:flex-start;flex-direction:column;gap:3px}}
   </style>
 </head>
 <body>
@@ -78,6 +80,16 @@
       <span class="preview-hint">V1 preview · click to try ↗</span>
       <img src="puffx-ui-motion.svg" alt="Animated preview of the Puffx Ofline GPT chat interface. Click to open the interactive chat demo.">
     </button>
+    <section class="founder-story" id="founder-story" aria-labelledby="founder-story-title">
+      <img class="founder-photo" src="https://puffxhost.com/assets/nitin.jpg" alt="Nitin Mehta, Founder of Puffx Host" loading="lazy">
+      <div class="founder-copy">
+        <div class="founder-label"><span>FOUNDER STORY</span><span>PUFFX HOST</span></div>
+        <h2 id="founder-story-title">Nitin Mehta</h2>
+        <p class="founder-role">Founder, Puffx Host</p>
+        <p class="founder-text">What started as a small effort to make reliable hosting affordable for Indian businesses has grown into a platform built to serve website owners across India. Nitin built Puffx Host on a simple belief — every website owner deserves fast servers, honest pricing, and support that actually picks up the phone. Today that mission continues to shape every plan, every server, and every customer conversation at Puffx Host.</p>
+        <div class="founder-bottom"><span>— Nitin Mehta, Founder</span><a href="https://puffxhost.com/founder" target="_blank" rel="noopener noreferrer">Meet the founder ↗</a></div>
+      </div>
+    </section>
     <dialog id="demoDialog" aria-labelledby="demoTitle">
       <div class="demo-head">
         <div class="demo-brand" id="demoTitle">✳ Puffx Ofline GPT V1 <small>Interactive UI preview · sample replies</small></div>
