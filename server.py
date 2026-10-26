@@ -35,6 +35,29 @@ DEVELOPER_PROFILE_ALLOWED_HOSTS = {
     "app.morenastartup.com",
     "dev.to",
 }
+def _is_allowed_profile_url(url):
+    try:
+        parsed = urllib.parse.urlsplit(url)
+        return (
+            parsed.scheme.lower() == "https"
+            and parsed.hostname in DEVELOPER_PROFILE_ALLOWED_HOSTS
+            and parsed.username is None
+            and parsed.password is None
+            and parsed.port in (None, 443)
+        )
+    except (TypeError, ValueError):
+        return False
+
+
+class _AllowedProfileRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if not _is_allowed_profile_url(newurl):
+            raise urllib.error.HTTPError(
+                newurl, code, "Profile redirect target is not allowed.", headers, fp
+            )
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 DEVELOPER_QUERY_PATTERN = re.compile(
     r"\b(?:nitin(?:\s+mehta)?|mehta|puffx\s*host|puffxhost|morena\s*startup|puffx\s*tools)\b"
     r"|\b(?:your|the|this app'?s?)\s+(?:developer|creator|founder|author)\b"
@@ -76,6 +99,8 @@ class _ProfileTextParser(HTMLParser):
 
 def _fetch_developer_profile_source(source):
     label, url = source
+    if not _is_allowed_profile_url(url):
+        return ""
     request = urllib.request.Request(
         url,
         headers={
@@ -84,9 +109,9 @@ def _fetch_developer_profile_source(source):
         },
     )
     try:
-        with urllib.request.urlopen(request, timeout=3.5) as response:
-            final_host = urllib.parse.urlparse(response.geturl()).hostname
-            if response.status != 200 or final_host not in DEVELOPER_PROFILE_ALLOWED_HOSTS:
+        opener = urllib.request.build_opener(_AllowedProfileRedirectHandler())
+        with opener.open(request, timeout=3.5) as response:
+            if response.status != 200 or not _is_allowed_profile_url(response.geturl()):
                 return ""
             charset = response.headers.get_content_charset() or "utf-8"
             html = response.read(500_000).decode(charset, errors="replace")
