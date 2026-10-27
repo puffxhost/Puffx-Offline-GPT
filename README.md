@@ -535,7 +535,27 @@ PORT=8001 python3 server.py
 
 Then open `http://127.0.0.1:8001`. To use a different Ollama endpoint, set `OLLAMA_URL` in the same terminal before starting the app. For example, PowerShell: `$env:OLLAMA_URL = 'http://127.0.0.1:11434'`; CMD: `set OLLAMA_URL=http://127.0.0.1:11434`; macOS/Linux: `OLLAMA_URL=http://127.0.0.1:11434 python3 server.py`.
 
-The server binds to loopback by design. Other computers and phones cannot connect to it through your PC's network address.
+The server binds to loopback by design. Other computers and phones cannot connect to it through your PC's network address.## Switch from V1 to V2.0.0
+
+You do not need to reinstall Ollama or download `qwen2.5:3b` again. V2.0.0 uses the model already downloaded by Ollama. V2.0.0 is published as a source release. It includes the features listed below; the remaining roadmap items are not included yet.
+
+### If you installed with Git
+
+Stop Puffx with **Ctrl+C** in the terminal running `server.py`. Open a terminal in the existing `Puffx-Offline-GPT` folder. If you have local code edits, save or stash them before switching versions. Then run:
+
+```bash
+git fetch origin --tags
+git switch --detach v2.0.0
+python3 server.py
+```
+
+On Windows, use `py -3 server.py` instead of `python3 server.py`. Open or refresh [http://127.0.0.1:8000](http://127.0.0.1:8000). To return to V1 later, stop the server and run `git switch main` from the project folder.
+
+### If you installed from a ZIP
+
+Keep your existing V1 folder. Download the [v2.0.0 source ZIP](https://github.com/puffxhost/Puffx-Offline-GPT/archive/refs/tags/v2.0.0.zip), extract it into a separate folder, then start `server.py` from that new folder. This lets you switch back to V1 by using its original folder.
+
+V2.0.0 adds workspace-name controls and model-size labels. Voice chat, voice search, web search, and the developer profile management panel are still planned and are not included yet. See the [v2.0.0 release notes](https://github.com/puffxhost/Puffx-Offline-GPT/releases/tag/v2.0.0).
 
 ## Update the project
 
